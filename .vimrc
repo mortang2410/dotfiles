@@ -31,6 +31,8 @@ Plug 'ervandew/supertab'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'lambdalisue/vim-manpager'
 Plug 'lambdalisue/vim-pager'
+Plug 'mbbill/undotree'
+
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -180,7 +182,7 @@ let g:ale_completion_enabled = 1
 
 
 "for gundo
-nnoremap <F4> :GundoToggle<CR>
+nnoremap <F4> :UndotreeToggle<CR>
 
 
 
@@ -270,5 +272,11 @@ let g:vimpager = {}
 let g:less     = {}
 let g:vimpager.passthrough = 0
 let g:less.enabled = 0
+
+" persistent undos between sessions
+" then clean up stale undo files
+set undofile
+set undodir=~/.vim/undodir
+command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -name '.gitignore' -delete
 
 " vim: set ft=vim :
