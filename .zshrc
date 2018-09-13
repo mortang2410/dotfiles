@@ -10,7 +10,7 @@ bindkey '^I' complete-word
 setopt extendedglob
 unsetopt caseglob
 setopt GLOB_DOTS
-export PATH=$HOME/localpath:$HOME/.local/bin:$PATH:/usr/local/bin
+export PATH=$HOME/localpath:$HOME/.local/bin:$PATH:/usr/local/bin:/home/wilder/.gem/ruby/2.5.0/bin
 
 # 10ms for key sequences 
 KEYTIMEOUT=1 
@@ -128,9 +128,12 @@ export XDG_CACHE_HOME=~/.cache
 
 export MANPAGER="vim -c MANPAGER -"
 
- export PAGER=/usr/bin/vimpager
-alias less=$PAGER
-alias zless=$PAGER
+ 
+if [[ -a /usr/bin/vimpager ]]; then
+  	export PAGER=/usr/bin/vimpager
+  	alias less=$PAGER
+	alias zless=$PAGER
+fi
 
 
 if [[ -n "$TMUX" ]]; then
