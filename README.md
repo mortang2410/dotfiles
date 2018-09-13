@@ -9,15 +9,15 @@ yourself, depending on your enviroment / distribution. If
 you don't install them, vim will just give a few error
 messages but is otherwise usable without such features.
 
--[vimpager](https://github.com/rkitover/vimpager) 
+- [vimpager](https://github.com/rkitover/vimpager) 
 
--Linters
+- Linters
 for ALE, which is an awesome linting engine for
 autocompletion / finding references in languages (for
 instance,
 [pyls](https://github.com/palantir/python-language-server)).
 
--Make sure the binary .fzf/bin/fzf (fuzzy finder) can be
+- Make sure the binary .fzf/bin/fzf (fuzzy finder) can be
 found in PATH. For instance, by putting a symlink in
 .local/bin (assuming ~/.local/bin is in your PATH
 variable).
