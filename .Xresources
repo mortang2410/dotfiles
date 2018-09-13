@@ -38,7 +38,7 @@ URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 !! URxvt.kuake.hotkey: F10
 
 !background ricing
-URxvt.background.expr: center cover keep { shade -0.3, blur 3, load "/mnt/seagate/pictures/newscreenshot/nig2.png" }
+URxvt.background.expr: center cover keep { shade -0.3, blur 3, load "/mnt/seagate/pictures/newscreenshot/zen2.png" }
 
 
 
