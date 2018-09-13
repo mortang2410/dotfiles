@@ -32,7 +32,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'lambdalisue/vim-manpager'
 Plug 'lambdalisue/vim-pager'
 Plug 'mbbill/undotree'
-
+Plug 'cohama/lexima.vim'
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
