@@ -83,15 +83,16 @@ Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:c
 
 - Language servers for
   [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim).
-  Basically, language servers take care of the internals of  programming
+  Basically, language servers (langservers) take care of the internals of  programming
   languages like syntax-checking, autocompletion, finding references etc. so
   that any text editors can have access to such goodness. [ Read about them
-  here ](https://langserver.org/). For instance, I use
+  here](https://langserver.org/). For instance, I use
   [pyls](https://github.com/palantir/python-language-server) for python and
   [ccls](https://github.com/MaskRay/ccls) for C++. To install pyls on Ubuntu 18.04:
 ```shell
-  pip3 install 'python-language-server[all]' 
+  pip3 install --user 'python-language-server[all]' 
 ```
+Then pyls will be installed into `.local/bin`  (again, make sure that directory is in `$PATH`). Then LanguageClient-neovim should see pyls and automatically work. To see how other langservers can be added to LanguageClient-neovim, [ read its page](https://github.com/autozimu/LanguageClient-neovim#quick-start).
 
 - Make sure the binary .fzf/bin/fzf (fuzzy finder) can be found in `$PATH`. For
   instance, by putting a symlink in `.local/bin` (assuming `~/.local/bin` is in your
