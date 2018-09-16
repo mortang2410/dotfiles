@@ -1,0 +1,9 @@
+[
+	{ 
+		"keys": [";", "<character>"], 
+		"command": "easy_motion",
+        "args": {"select_text": false},
+		"context": [{"key": "setting.command_mode"}]
+    },
+
+]

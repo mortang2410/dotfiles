@@ -1,0 +1,11 @@
+{
+  "env":
+  {
+    "Linux": 
+    {
+      "PATH": "$HOME/localpath:$HOME/.local/bin:$PATH:/usr/local/bin:$HOME/.gem/ruby/2.5.0/bin",
+      "PYTHONPATH":"/usr/lib/python36.zip:/usr/lib/python3.6:/usr/lib/python3.6/lib-dynload:$HOME/.local/lib/python3.6/site-packages:/usr/local/lib/python3.6/dist-packages:/usr/lib/python3/dist-packages",
+      "MYPYPATH":"/usr/lib/python36.zip:/usr/lib/python3.6:/usr/lib/python3.6/lib-dynload"
+    }
+  }
+}

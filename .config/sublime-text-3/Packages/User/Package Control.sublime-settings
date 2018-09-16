@@ -1,0 +1,21 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Dotfiles Syntax Highlighting",
+		"EasyMotion",
+		"Environment Settings",
+		"FileBrowser",
+		"FileManager",
+		"GotoWindow",
+		"Hermes",
+		"LSP",
+		"NeoVintageous",
+		"Package Control",
+		"QuickGotoAnything",
+		"Sublundo"
+	]
+}
