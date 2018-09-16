@@ -35,6 +35,13 @@ it contains my configuration for
 
 Things to install after cloning: 
 
+- **Important**: if you
+don't like nvim and want to use vim, then look in `.zshrc` for the line `export
+EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
+file for both vim and nvim (technically, nvim uses init.vim, which just lazily
+sources .vimrc). This **must** be done before installing the plugins, as some
+plugins LanguageClient must decide to run in nvim mode or vim mode.
+
 - the programs themselves: vim, nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
   vim needs to be up-to-date, and obviously compiled with support for python3,
   ruby and all that jazz (sadly in Ubuntu 18.04 the default package sucks so you
@@ -55,18 +62,11 @@ Things to install after cloning:
 ```
 then just run nvim.appimage directly. I symlink `nvim.appimage` to
 `$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs, there might be errors since plugins are missing. Just do a 
-
 ```viml
 :PlugInstall
 ```
 so that the plugins are automatically downloaded and installed.
 Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
-
-
-- **Important**: if you
-don't like nvim and want to use vim, then look in `.zshrc` for the line `export
-EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
-file for both vim and nvim (by clever use of `if has('nvim') ...` )
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
 
@@ -93,7 +93,7 @@ file for both vim and nvim (by clever use of `if has('nvim') ...` )
 
 - Make sure the binary .fzf/bin/fzf (fuzzy finder) can be found in `$PATH`. For
   instance, by putting a symlink in `.local/bin` (assuming `~/.local/bin` is in your
-  PATH variable).
+  PATH variable). Then we can do funny things like `ls ~ | fzf` in the shell.
 
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex opions.
