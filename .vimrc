@@ -31,6 +31,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mbbill/undotree'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
+Plug 'junegunn/vim-peekaboo'
 
 " Plug 'JuliaEditorSupport/julia-vim'
 
