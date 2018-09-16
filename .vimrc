@@ -45,6 +45,11 @@ Plug 'iamcco/markdown-preview.vim'
 
 " Plug 'w0rp/ale'
 
+" if !has('nvim')
+	Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+
+Plug 'roxma/nvim-yarp'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -63,11 +68,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 " Plug 'zchee/deoplete-zsh'
 ""--------------------
 "" setup ncm
-if !has('nvim')
-	Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 
 " NOTE: you need to install completion sources to get completions. Check
