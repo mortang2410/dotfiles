@@ -111,6 +111,7 @@ If you have done everything correctly, navigating between tmux and vim  should
 be seamless with C-h,C-j,C-k,C-l
 
 ![desktop](https://i.imgur.com/I85XCh4.jpg)
+.center[caption]
 
 Vim tips (messy, for personal use) 
 ----
