@@ -105,8 +105,6 @@ Then pyls will be installed into `.local/bin`  (again, make sure that directory 
 I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
 works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated (before that vim / nvim might display some errors).
 
-Also probably change urxvt_wallpaper2 to something less weeb. 
-
 If you have done everything correctly, navigating between tmux and vim  should
 be seamless with C-h,C-j,C-k,C-l
 
