@@ -27,7 +27,7 @@ it contains my configuration for
 
 - urxvt (a great and lean terminal with various extensions)
 
-- weechat (great IRC client. [ Better than irrsi in every way
+- weechat (great IRC client. [ Better than irssi in every way
   ](https://xkcd.com/1782/) ). Obviously my personal network list (irc.conf) is
   not included.
 
