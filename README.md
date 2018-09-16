@@ -45,7 +45,7 @@ plugins LanguageClient must decide to run in nvim mode or vim mode.
 - the programs themselves: vim, nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
   vim needs to be up-to-date, and obviously compiled with support for python3,
   ruby and all that jazz (sadly in Ubuntu 18.04 the default package sucks so you
-  need to compile it yourself!). One way around this is by using nvim, which
+  need to compile it yourself!). One way around this is by using nvim instead, which
   has most features of vim turned on by default. The transition to nvim was so
   painless  I now prefer it to Vim. People on Ubuntu can install nvim as
   follows: 
@@ -67,6 +67,8 @@ then just run nvim.appimage directly. I symlink `nvim.appimage` to
 ```
 so that the plugins are automatically downloaded and installed.
 Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
+
+- To change the default shell to zsh, execute `chsh` in your currrent shell. You might need to log out and return for the change to take effect.
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
 
