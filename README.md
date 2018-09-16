@@ -88,7 +88,7 @@ Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:c
   that any text editors can have access to such goodness. [ Read about them
   here ](https://langserver.org/). For instance, I use
   [pyls](https://github.com/palantir/python-language-server) for python and
-  [ccls](https://github.com/MaskRay/ccls). To install pyls on Ubuntu 18.04:
+  [ccls](https://github.com/MaskRay/ccls) for C++. To install pyls on Ubuntu 18.04:
 ```shell
   pip3 install 'python-language-server[all]' 
 ```
