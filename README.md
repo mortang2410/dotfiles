@@ -7,7 +7,11 @@ Typos abound.
 
 To download/clone this repository, call
 
-`git clone --recurse-submodules -j8 https://github.com/mortang2410/dotfiles`
+```shell
+git clone  https://github.com/mortang2410/dotfiles
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
 
 These are my dotfiles. Useful for setting up quickly on new machines. Right now
 it contains my configuration for 
@@ -29,8 +33,7 @@ it contains my configuration for
 
 - mpv (best video player around, with lots of options).
 
-A few things not included here, which you need to install yourself, depending on
-your environment / distribution. 
+Things to install after cloning: 
 
 - the programs themselves: vim, nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
   vim needs to be up-to-date, and obviously compiled with support for python3,
@@ -51,7 +54,13 @@ your environment / distribution.
 	pip3 install --user neovim-remote
 ```
 then just run nvim.appimage directly. I symlink `nvim.appimage` to
-`$HOME/.local/bin/nvim` so that `$PATH` can find it. Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
+`$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs, there might be errors since plugins are missing. Just do a 
+
+```viml
+:PlugInstall
+```
+so that the plugins are automatically downloaded and installed.
+Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
 
 
 - **Important**: if you
@@ -59,6 +68,7 @@ don't like nvim and want to use vim, then look in `.zshrc` for the line `export
 EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
 file for both vim and nvim (by clever use of `if has('nvim') ...` )
 
+- Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
 
 - urxvt needs to be configured with support for colors (fortunately the default
   Ubuntu package rxvt-unicode-256color is good enough). The urxvt extensions I
@@ -175,7 +185,18 @@ then we might need to hit q to make prompt appear if list is too long
 
 Or :capture ol  , then use gf to jump to file
 
+Tmux tips
+------------
 
+dump pane: C-b P
+
+reload config: C-b C-r
+
+clear pane: C-b k
+
+vi mode: C-b [, select with Space, then y to yank into system clipboard
+
+with mouse mode on, use shift with mouse to select stuff / copy
 
 
 

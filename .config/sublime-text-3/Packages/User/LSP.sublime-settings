@@ -1,0 +1,19 @@
+{
+	"clients":
+	{
+		"pyls":
+		{
+			"enabled": true
+		},
+		"ccls":
+		{
+			"command": ["ccls"],
+			"scopes": ["source.c", "source.c++", "source.objc", "source.objc++"],
+			"syntaxes": ["Packages/C++/C.sublime-syntax", "Packages/C++/C++.sublime-syntax", "Packages/Objective-C/Objective-C.sublime-syntax", "Packages/Objective-C/Objective-C++.sublime-syntax"],
+			"languageId": "objc++",
+			"enabled":true
+		},
+	},
+	"shoa_diagnostics_count_in_vieb_status": true,
+	  "log_debug": true
+}
