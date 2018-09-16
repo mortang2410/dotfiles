@@ -3,6 +3,9 @@ autoload -U compinit promptinit
 compinit
 promptinit
 
+source ~/env.sh
+
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' completer _expand _complete _match
 zstyle -e ':completion:*' list-colors 'thingy=${PREFIX##*/} reply=( "=(#b)($thingy)(?)*=00=$color[green]=$color[bg-green]" )'
@@ -10,10 +13,19 @@ bindkey '^I' complete-word
 setopt extendedglob
 unsetopt caseglob
 setopt GLOB_DOTS
-export PATH=$HOME/localpath:$HOME/.local/bin:$PATH:/usr/local/bin:/home/wilder/.gem/ruby/2.5.0/bin
 
 # 10ms for key sequences 
 KEYTIMEOUT=1 
+
+## setting editor
+export EDITOR='nvim'
+export VISUAL=$EDITOR
+alias vim=$EDITOR
+alias vi=$EDITOR
+alias vimdiff='$EDITOR -d'
+alias nvims='NVIM_LISTEN_ADDRESS=/tmp/vimtex nvim'
+alias gvimr='gvim --remote'
+alias vims='vim --servername vim'
 
 pastebin () { curl -F "c=@${1:--}" https://ptpb.pw/ }
 alias pdfzip='gs -dEmbedAllFonts=true -dCompatibilityLevel=1.5 -dAutoRotatePages=/None -dQUIET -sDEVICE=pdfwrite -o out.pdf'
@@ -21,13 +33,11 @@ alias zinstall='sudo apt-fast -y install'
 alias zaudio='sudo chmod 777 /dev/snd -R; pulseaudio -k; pulseaudio --start'
 alias zup='sudo apt-fast -y dist-upgrade'
 alias beep='paplay /usr/share/sounds/KDE-Im-Irc-Event.ogg'
-alias myebwin='env LANG=ja_JP.utf8 wine "/home/wilder/.wine/drive_c/Program Files/EBWin/EBWin.exe"'
+alias myebwin='env LANG=ja_JP.utf8 wine "$HOME/.wine/drive_c/Program Files/EBWin/EBWin.exe"'
 alias mylatex='latexmk -pdf -pvc'
 alias tmux='tmux -2'
 alias grepc='grep -i --color=always'
 alias lsc='ls --color=always --group-directories-first -a'
-alias gvim='gvim --remote'
-alias vim='vim --servername vim'
 alias mysu="su -c \"ZDOTDIR=$HOME zsh\""
 alias emat='emacs --daemon &!'
 alias reload='source ~/.zshrc'
@@ -44,7 +54,7 @@ alias urlz='urlscan -c -r "firefox {}"'
 alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
-alias dotfilesgit='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME'
 ec() {emacsclient -c "$*" &!; }
 run() {xdg-open "$*" &!;}
 
@@ -117,30 +127,42 @@ export QT_IM_MODULE=ibus
 # export _JAVA_OPTIONS =$_JAVA_OPTIONS ' -Dawt.useSystemAAFontSettings=gasp'
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 # export _JAVA_OPTIONS ="-Dawt.useSystemAAFontSettings=on"
-export JAVA_FONTS=/usr/share/fonts/TTF
-export COWPATH=/usr/share/cowsay/cows:~/cows/
-export KDEDIRS=/usr/local/:/home/wilder/build/kdevelop_platform_combined_bin/:$KDEDIRS
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib 
 
-export XDG_CACHE_HOME=~/.cache
 
-## obsolete as I use vim-manpager now
+# now i just use nvim as manpager
+# thanks magic function from Adam Byrtek
+man() {
+  /usr/bin/man "$@" | \
+    col -b | \
+    vim -R -c 'set ft=man nomod nolist' -
+}
 
-export MANPAGER="vim -c MANPAGER -"
 
- 
-if [[ -a /usr/bin/vimpager ]]; then
-  	export PAGER=/usr/bin/vimpager
+if [[ -n $(whence vimpager)  ]]; then
+  	export PAGER=vimpager
   	alias less=$PAGER
 	alias zless=$PAGER
 fi
-
 
 if [[ -n "$TMUX" ]]; then
 	bindkey -e '"\e[1~":"\e[7~"'
 	bindkey -e '"\e[4~":"\e[8~'
 fi
 
-
+#add git submodule to dotfilesgit
+dotf-addmodule(){
+for x in "$@"
+if [ -d "${x}/.git" ] ; then
+    cd "${x}"
+    origin="$(git config --get remote.origin.url)"
+    cd - 1>/dev/null
+	dotfilesgit
+	git rm --cached "${x}"
+	git submodule add "${origin}" "${x}"
+fi
+}
+zmodload zsh/zpty
+stty stop undef
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
