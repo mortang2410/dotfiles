@@ -35,8 +35,8 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'godlygeek/tabular'
+" Plug 'gabrielelana/vim-markdown' 
 
 " Plug 'JuliaEditorSupport/julia-vim'
 
@@ -488,8 +488,8 @@ command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -
 "" settings for text  & markdown file
 
 
-""auto formatting
-set fo+=a
+""auto formatting. Slow with syntax checking
+" set fo+=a
 
 ""setup lexical
 let g:lexical#spelllang = ['en_us','en_ca','en_gb']
