@@ -40,7 +40,8 @@ URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 !background ricing
 URxvt.background.expr: center cover keep { blur 3, load "$HOME/urxvt_wallpaper2.jpg" }
 
-
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 
 URxvt.depth: 32
@@ -62,7 +63,7 @@ URxvt*letterSpace: -1
 
 ! Cursor
 URxvt.cursorBlink: true
-URxvt.cursorColor: #657b83
+URxvt.cursorColor: #24B038  
 URxvt.cursorUnderline: false
  
 ! Pointer

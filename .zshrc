@@ -59,7 +59,11 @@ ec() {emacsclient -c "$*" &!; }
 run() {xdg-open "$*" &!;}
 
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' matcher-list '' \
+  'm:{a-z\-}={A-Z\_}' \
+  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+  'r:|?=** m:{a-z\-}={A-Z\_}'
 add-zsh-hook precmd zdelicious
 unset LESS
 remakedwm() {cd ~/dwm; makepkg -efi --skipinteg; }
@@ -74,8 +78,11 @@ normalize_audio() {
 }
 
 trim50() {
-        integer z=$(($(wc -l <$1)/2)) ;
-        sed -i -e 1,$[z]d $1 ;
+	for x in "$@"
+	do
+        integer z=$(($(wc -l <$x)/2)) ;
+        sed -i -e 1,$[z]d $x ;
+    done
 }
 zdelicious() {
 
@@ -166,3 +173,5 @@ stty stop undef
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
