@@ -35,7 +35,8 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
-Plug 'vheon/vim-cursormode'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " Plug 'JuliaEditorSupport/julia-vim'
 
@@ -308,16 +309,6 @@ set relativenumber
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 		  	\,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
 		  	\,sm:block-blinkwait175-blinkoff150-blinkon175
-" endif
-let cursormode_color_map = {
-      \   "n":      "#FFFFFF",
-      \   "i":      "#0000FF",
-      \   "v":      "#00FF00",
-      \   "V":      "#FF0000",
-      \   "\<C-V>": "#FFFF00",
-      \ }
-
-hi Cursor ctermfg=yellow ctermbg=green guifg=blue guibg=red
 
 " " " setting cursor colors in urxvt/xterm
 "
@@ -495,6 +486,10 @@ set undodir=~/.vim/undodir
 command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -name '.gitignore' -delete
 
 "" settings for text  & markdown file
+
+
+""auto formatting
+set fo+=a
 
 ""setup lexical
 let g:lexical#spelllang = ['en_us','en_ca','en_gb']
