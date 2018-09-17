@@ -134,7 +134,7 @@ This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
 package managers.  Besides, Archers and Gentoomen need no guides. ;)
 People on Mac OS already have `zsh` installed by default (which was
-surprising to me to find out), though they might need to update it with
+surprising for me to find out), though they might need to update it with
 [ homebrew ](https://brew.sh/). They could also use homebrew to install
 `nvim`, `tmux` etc. So without loss of generality, assume we're using Ubuntu.
 
