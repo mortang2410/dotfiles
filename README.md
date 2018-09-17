@@ -1,55 +1,136 @@
-Dotfiles
+Dotfile 
 ==============
 
+Legal disclaimer: This config is not responsible for blowing your PC
+up yadda yadda.  Typos abound.
 
-Legal disclaimer: This config is not responsible for blowing your PC up yadda yadda.
-Typos abound.
+These are my dotfiles. Useful for setting up quickly on new machines.
+Right now it contains my configuration for 
 
-This guide is meant for Ubuntu users, but it should be the same for other
-distributions, as long as one knows the equivalent packages / package manager. 
-Besides, Archers and Gentoomen need no guides. ;)
+- vim (THE text editor) and nvim/neovim (a newer version of vim, with
+  fewer hassles and very active development).
 
-To download/clone this repository, call
+- tmux: a program that lets terminal applications run in the
+  background, as well as rearranging them on the terminal screen
+
+- zsh: an awesome shell, which is the interactive program that allows
+  you to launch stuff / execute commands in terminals.
+  `zsh` is much better than the default `bash` shell on Linux /
+  MacOS, with cool tabcompletion etc. The default shell on Windows,
+  `cmd`, that probably a lot of people including me learned in IT
+  classes, is **horrible**, and  for many years why I hated the
+  command line. Microsoft is switching to PowerShell, inspired by Bash / Zsh, but I've tried it and found it wanting for many reasons.
+
+- urxvt: a great and lean terminal with various extensions
+
+- weechat: great IRC client. [ Better than irssi in every way
+  ](https://xkcd.com/1782/). Obviously my personal network list
+  (irc.conf) is not included.
+
+- mpv: best video player around, with lots of options.
+
+
+
+Why use vim/nvim
+---------------
+
+Let's get right to the point, here is `nvim` running in the `urxvt` terminal as a pure text writer/reader in
+distraction-free mode (with the command `:Zen`)
+
+![Zen mode](https://i.imgur.com/BiKIEZY.jpg Zen)
+
+Ok it looks cool, but how about features? Let's say, I want to
+jump to the letter `.`  at the end of Holmes' sentence, `the vital
+essence of the whole matter.` Now think about your favorite text
+editors. You would either clumsily use the mouse, or press a huge
+amount of keys to get there. In nvim, I only need to press 3 keys,
+`s.w` and I'm there. What did I just do? `s` brings up the
+EasyMotion plugin for nvim, which will search for the next
+character. As I type `.`, nvim displays all the possible matches
+as red letters, as seen below
+
+![red letters](https://i.imgur.com/FXiUaeq.jpg)
+
+I always kept my eyes on my target location, so as I saw the red
+letter `w` pop up, I hit it like I was playing [ Typer
+Shark](https://youtu.be/hcJtsrIit8M?t=10m14s). And that is just one
+trivial example, made possible by vim/nvim's flexibility. [ It is like casting a *teleportation* spell](https://youtu.be/sz-9tcUq5yg?t=43s). Now think **DEEPLY** about what it means. We can teleport around like this, select and delete stuff at lightning speed. The possibilities are just endless. It's like discovering fast travel in a game and no more walking from town to town. It is just impossible for me to use other programs that don't learn from nvim/vim.
+
+- "How to
+delete everything from the cursor to the end of the current line?"
+`D`. 
+
+- "How to delete the whole current line?" `dd`. 
+
+- "I undoed a change, and tried to redo, but accidentally inserted
+  some text. Is my redo lost forever?" Nothing is ever lost in
+  nvim.  Press F4 to toggle the legendary undo tree. In fact, all
+  your undos are saved across sessions, so *every possible state
+  since the beginning of time* of your file is remembered by nvim
+  (as long as, of course, you don't use other stuff to change the
+  file while nvim is not running). Realistically though, you might
+  wanna prune the history unless you have unlimited storage, so I
+  set the cutoff at 300 days.
+
+These are just the tips of the icebergs. There are *hundreds* of
+commands within nvim, and they can be combined to create the one
+you want. Use `:help` and `:Helptags` prodigiously.  Finally, for
+all its powers, nvim starts and runs as fast as Notepad. 
+
+*This is what I think software should be like.* Efficient, elegant
+and endlessly customizable, whether I just want a simple fullscreen
+Notepad for writing a text novel, or a powerhouse development
+environment for programming languages. 
+
+
+## Why use zsh or the command line
+
+Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being *somewhere* in the `.vim` directory, and it is a big directory. I could do a search, then copy the result to open in `vim`. Or I could just type `nvim .vim/**/ncm2.vim` into the terminal (using zsh as the shell) and hit Enter. And that is zsh's greatest magic: autocompletion. It autocompletes everything from program names, to program options, file paths,... and we can pick the matches we want from a menu. Any programmer knows the usefulness of good autocompletion, and zsh's autocompletion is **endlessly** customizable (and to this date, I still haven't read the whole manual for it).
+
+For a more complicated example, let's say my chat log text files have grown far too big, and I want to cut them in half (saving only the recent half), I can script up my own command (don't worry if you have no idea about scripting yet, just know how it is possible)
+```shell
+trim50() {
+	for x in "$@"
+	do
+        integer z=$(($(wc -l <$x)/2)) ;
+        sed -i -e 1,$[z]d $x ;
+    done
+}
+```
+and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
+
+Finally, we can run shell commands within nvim itself, to either edit or insert into the current file. The flexibility of terminal programs allow them to be combined in creative ways.
+
+## Installation guide
+
+This guide is meant for Ubuntu users, but it should be the same for
+other distributions, as long as one knows the equivalent packages /
+package manager.  Besides, Archers and Gentoomen need no guides. ;)
+
+Firstly, `~` is your home folder, such as `/home/wilder`. Among the programs, nvim, tmux and zsh are the most important as they affect each other and are indispensable on any Linux server; while urxvt, weechat, mpv are optional: 
+
+ To download/clone this repository, call
 
 ```shell
-git clone  https://github.com/mortang2410/dotfiles
-
+sudo apt install git 
+git clone  https://github.com/mortang2410/dotfiles ~/dotfiles
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
 ```
 
-These are my dotfiles. Useful for setting up quickly on new machines. Right now
-it contains my configuration for 
+Then copy things in `~/dotfiles` to `~`. Things to install after cloning: 
 
-- vim (THE text editor) and nvim/neovim (a newer version of vim, with fewer
-  hassles) 
-
-- tmux (a program that lets terminal applications run in the background like
-  screen)
-
-- zsh (an awesome shell that is much better than the default bash shell on Linux
-  / MacOS, with cool tabcompletion etc. ) 
-
-- urxvt (a great and lean terminal with various extensions)
-
-- weechat (great IRC client. [ Better than irssi in every way
-  ](https://xkcd.com/1782/) ). Obviously my personal network list (irc.conf) is
-  not included.
-
-- mpv (best video player around, with lots of options).
-
-Things to install after cloning: 
-
-- To change the default shell to zsh, execute `chsh` in your currrent shell.
+- To change the default shell to zsh, execute `chsh` in your current shell.
   You might need to log out and return for the change to take effect.
 
 - **Important**: if you
-don't like nvim and want to use vim, then look in `.zshrc` for the line `export
+don't like nvim and want to use vim (though I don't recommend so), then look in `.zshrc` for the line `export
 EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
 file for both vim and nvim (technically, nvim uses init.vim, which just lazily
-sources .vimrc). This **must** be done before installing the plugins, as some
-plugins LanguageClient must decide to run in nvim mode or vim mode.
+sources .vimrc). This **must** be done before installing the plugins for nvim/vim, as some
+plugins like  LanguageClient must decide to run in nvim mode or vim mode (otherwise reinstall them).
 
-- the programs themselves: vim, nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
+- the programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
   vim needs to be up-to-date, and obviously compiled with support for python3,
   ruby and all that jazz (sadly in Ubuntu 18.04 the default package sucks so you
   need to compile it yourself!). One way around this is by using nvim instead, which
@@ -58,22 +139,19 @@ plugins LanguageClient must decide to run in nvim mode or vim mode.
   follows: 
 ```shell 
 	sudo apt install python3-pip curl
-
 	curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
-
 	chmod u+x nvim.appimage
-	
 	pip3 install --user --upgrade neovim 
-
 	pip3 install --user neovim-remote
 ```
 then just run nvim.appimage directly. I symlink `nvim.appimage` to
-`$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs, there might be errors since plugins are missing. Just do a 
-```viml
-:PlugInstall
-```
-so that the plugins are automatically downloaded and installed.
-Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
+`$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs,
+there might be errors since plugins are missing. Just do a
+`:PlugInstall` so that the plugins are automatically downloaded and
+installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what
+have changed. Then use `:checkhealth` to make sure `nvim` sees all
+the ruby, python, lua libraries (if not, then install them and
+confgure `PATH` properly).
 
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
@@ -253,6 +331,8 @@ C-x C-t  in Insert mode in Markdown: thesaurus via vim-lexical
 C-x C-k as above : dictionary via vim-lexical
 
 Zen : modified distraction free mode
+
+Spell and Unspell for... spelling with vim-lexical.
 
 Tmux tips
 ------------

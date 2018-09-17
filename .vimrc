@@ -35,6 +35,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
+Plug 'vheon/vim-cursormode'
 
 " Plug 'JuliaEditorSupport/julia-vim'
 
@@ -294,8 +295,7 @@ if &cp | set nocp | endif
 
 map \b :Buffers<CR>
 map \t :Files<CR>
-map <F10> <c-L>
-noremap :WW :w !sudo tee %
+
 inoremap <C-/> <C-X><C-U>
 
 map <F7> mwgg=G`w<CR>
@@ -309,7 +309,29 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 		  	\,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
 		  	\,sm:block-blinkwait175-blinkoff150-blinkon175
 " endif
+let cursormode_color_map = {
+      \   "n":      "#FFFFFF",
+      \   "i":      "#0000FF",
+      \   "v":      "#00FF00",
+      \   "V":      "#FF0000",
+      \   "\<C-V>": "#FFFF00",
+      \ }
 
+hi Cursor ctermfg=yellow ctermbg=green guifg=blue guibg=red
+
+" " " setting cursor colors in urxvt/xterm
+"
+" if &term =~ "xterm\\|rxvt"
+"     " use an orange cursor in insert mode
+"     let &t_SI = "\<Esc>]12;orange\x7"
+"     " use a red cursor otherwise
+"     let &t_EI = "\<Esc>]12;red\x7"
+"     silent !echo -ne "\033]12;red\007"
+"     " reset cursor when vim exits
+"     autocmd VimLeave * silent !echo -ne "\033]112\007"
+"     " use \003]12;gray\007 for gnome-terminal
+" endif
+" highlight Cursor ctermfg=white ctermbg=green
 
 " set cursorshape to Ibeam in insert
 " if exists('$TMUX')
@@ -345,24 +367,26 @@ let g:CSApprox_hook_post = ['hi Normal  ctermbg=NONE ctermfg=NONE',
  filetype indent on
  let g:tex_flavor='latex'
 
-"here we give cnext and cprev som shortcuts
-nnoremap <expr> <silent> <F3>   (&diff ? "]c" : ":cnext\<CR>")
-nnoremap <expr> <silent> <S-F3> (&diff ? "[c" : ":cprev\<CR>")
-map <F4> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-  exec "w"
-  exec "! if [[  -f %< ]] then rm ./%<; fi"
-  exec "!gcc % -o %<" 
-  exec "! if [[  -f %< ]] then {cowsay 'successful' && ./%<} ; else cowsay 'Compile unsuccessful';fi "
-endfunc
+" "here we give cnext and cprev som shortcuts
+" nnoremap <expr> <silent> <F3>   (&diff ? "]c" : ":cnext\<CR>")
+" nnoremap <expr> <silent> <S-F3> (&diff ? "[c" : ":cprev\<CR>")
+" map <F4> :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+"   exec "w"
+"   exec "! if [[  -f %< ]] then rm ./%<; fi"
+"   exec "!gcc % -o %<" 
+"   exec "! if [[  -f %< ]] then {cowsay 'successful' && ./%<} ; else cowsay 'Compile unsuccessful';fi "
+" endfunc
 
 "setup markdown-preview
-let g:mkdp_auto_open = 1
+" let g:mkdp_auto_open = 1
 let g:mkdp_refresh_slow = 1
+let g:mkdp_auto_close = 0
 
 "setup undotree
 nnoremap <F4> :UndotreeToggle<CR>
 
+nnoremap <F3> :noh<CR>
 
 
 "vim-latex
@@ -483,6 +507,9 @@ augroup lexical
   autocmd FileType textile call lexical#init()
   autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
+
+command! Spell :call lexical#init({ 'spell': 1 })
+command! UnSpell :call lexical#init({ 'spell': 0 })
 
 "" setup goyo with limelight
 "" user functions that add on to goyo
