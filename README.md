@@ -7,8 +7,7 @@ up yadda yadda.  Typos abound.
 These are my dotfiles. Useful for setting up quickly on new machines.
 Right now it contains my configuration for 
 
-- vim (THE text editor) and nvim/neovim (a newer version of vim, with
-  fewer hassles and very active development).
+- vim (THE text editor) and nvim/neovim (a newer version of vim, with fewer hassles and very active development). They can mostly use the same plugins.
 
 - tmux: a program that lets terminal applications run in the
   background, as well as rearranging them on the terminal screen
@@ -37,7 +36,7 @@ Why use vim/nvim
 Let's get right to the point, here is `nvim` running in the `urxvt` terminal as a pure text writer/reader in
 distraction-free mode (with the command `:Zen`)
 
-![Zen mode](https://i.imgur.com/BiKIEZY.jpg)
+![Zen mode](https://camo.githubusercontent.com/cb6e158954d0ae35de742409d504115ffef87013/68747470733a2f2f692e696d6775722e636f6d2f42694b49455a592e6a7067)
     
 Ok it looks cool, but how about features? Let's say, I want to
 jump to the letter `.`  at the end of Holmes' sentence, `the vital
@@ -49,7 +48,7 @@ EasyMotion plugin for nvim, which will search for the next
 character. As I type `.`, nvim displays all the possible matches
 as red letters, as seen below
 
-![red letters](https://i.imgur.com/FXiUaeq.jpg)
+![red letters](https://camo.githubusercontent.com/c215c324245e3099f029a401e57e47a59611f133/68747470733a2f2f692e696d6775722e636f6d2f465869556165712e6a7067)
 
 I always kept my eyes on my target location, so as I saw the red
 letter `w` pop up, I hit it like I was playing [ Typer
@@ -74,13 +73,20 @@ delete everything from the cursor to the end of the current line?"
 
 These are just the tips of the icebergs. There are *hundreds* of
 commands within nvim, and they can be combined to create the one
-you want. Use `:help` and `:Helptags` prodigiously.  Finally, for
-all its powers, nvim starts and runs as fast as Notepad. 
+you want. And most importantly, there are countless plugins which
+extend functionality for nvim/vim. For instance, snippets
+(often-used code blocks by programmers) are provided by dozens of
+plugins. Many plugins, like EasyMotion, provides features that
+seem indispensable in hindsight. Use `:help` and `:Helptags`
+prodigiously.  Finally, for all its powers, nvim starts and runs
+as fast as Notepad. 
 
 *This is what I think software should be like.* Efficient, elegant
 and endlessly customizable, whether I just want a simple fullscreen
 Notepad for writing a text novel, or a powerhouse development
-environment for programming languages. 
+environment for programming languages. Even this readme is being
+written with vim in
+[Markdown](https://guides.github.com/features/mastering-markdown/). 
 
 
 ## Why use zsh or the command line
@@ -100,6 +106,13 @@ trim50() {
 and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
 
 Finally, we can run shell commands within nvim itself, to either edit or insert into the current file. The flexibility of terminal programs allow them to be combined in creative ways.
+
+## Why use tmux
+
+![]
+
+
+
 
 ## Installation guide
 
