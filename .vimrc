@@ -32,6 +32,9 @@ Plug 'mbbill/undotree'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/goyo.vim'
+Plug 'reedes/vim-lexical'
+Plug 'junegunn/limelight.vim'
 
 " Plug 'JuliaEditorSupport/julia-vim'
 
@@ -76,7 +79,9 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+
 Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+Plug 'filipekiss/ncm2-look.vim'
 
 " "---------------------
 
@@ -104,6 +109,38 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:ncm2#matcher="substrfuzzy"
 set completeopt+=preview
+
+"" configure ncm2 for text
+function! Ncm2SourcesFunc()
+	Capture echo ncm2#_s('sources')
+	%s/},/},\r/g 
+	match Keyword /'enable/
+endfunction
+
+"" run Ncm2Sources to see enabled completion sources
+command! Ncm2Sources :silent! call Ncm2SourcesFunc() 
+
+if !exists("au_txt")
+  let au_txt = 1
+  let off_src = [ 'vim' , 'bufpath' , 'rootpath' , 'cwdpath' ]
+  autocmd BufEnter *.txt,*.md :call Enter_txt(off_src) 
+  autocmd BufLeave *.txt.*.md :call Leave_txt(off_src) 
+endif
+
+function! Enter_txt(off_src)
+	for x in a:off_src
+		call ncm2#override_source(x, {'enable': 0})
+	endfor
+	let b:ncm2_look_enabled = 1
+endfunction
+
+function! Leave_txt(off_src)
+	for x in a:off_src
+		call ncm2#override_source(x, {'enable': 1})
+	endfor
+endfunction
+
+
 " "============
 " " setting up asyncomplete
 " let g:asyncomplete_remove_duplicates = 1
@@ -378,6 +415,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.i
 "nvim only stuff
 if has('nvim')
 	let g:vimtex_compiler_progname = 'nvr'
+	set fcs=eob:\ 
 endif
 
 
@@ -432,5 +470,59 @@ let g:vimtex_view_method = 'zathura'
 set undofile
 set undodir=~/.vim/undodir
 command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -name '.gitignore' -delete
+
+"" settings for text  & markdown file
+
+""setup lexical
+let g:lexical#spelllang = ['en_us','en_ca','en_gb']
+
+let g:lexical#thesaurus = ['~/.vim/thesaurus/words.txt']
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init({ 'spell': 0 })
+  autocmd FileType textile call lexical#init()
+  autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
+
+"" setup goyo with limelight
+"" user functions that add on to goyo
+let g:limelight_conceal_ctermfg = 241
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  set linebreak
+  " Limelight
+  ConoLineDisable
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+  " Limelight!
+  ConoLineEnable
+  hi! Normal ctermbg=NONE 
+  " ...
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+"my Zen version of Goyo (modified geometry)
+command! Zen :call ZenFunc()
+function! ZenFunc()
+	if !exists('#goyo') 
+		Goyo 40%x85%
+	else 
+		Goyo
+	endif
+endfunction
+
+
 
 " vim: set ft=vim :
