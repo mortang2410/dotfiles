@@ -124,11 +124,11 @@ ready to view later on. This is useful for running IRC clients, torrent clients,
 
 ## Installation guide
 
-** The rest is about installation. In my opinion, using other people's
+**The rest is about installation. In my opinion, using other people's
 configuration files, or borrowing parts from them, can indeed save time,
 but it also means there are many options and (ingenious) workarounds in
 those files that you will know nothing about. So, as with most things in
-life, there is a tradeoff. If you can accept that, proceed. **
+life, there is a tradeoff. If you can accept that, proceed.**
 
 This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
