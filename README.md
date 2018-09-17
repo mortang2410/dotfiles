@@ -7,7 +7,7 @@ Typos abound.
 
 This guide is meant for Ubuntu users, but it should be the same for other
 distributions, as long as one knows the equivalent packages / package manager. 
-Besides, Archers and Gentoomen need no guides.
+Besides, Archers and Gentoomen need no guides. ;)
 
 To download/clone this repository, call
 
