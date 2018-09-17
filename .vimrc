@@ -206,11 +206,11 @@ let g:EasyMotion_smartcase = 1
 map s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
-"Go through wrapped lines
-imap <silent> <Down> <C-o>gj
-imap <silent> <Up> <C-o>gk
-nmap <silent> <Down> gj
-nmap <silent> <Up> gk
+" "Go through wrapped lines. Doesn't work with autocompletion.
+" imap <silent> <Down> <C-o>gj
+" imap <silent> <Up> <C-o>gk
+" nmap <silent> <Down> gj
+" nmap <silent> <Up> gk
 
 "Set CTRL-P UP
 map <C-p>l :CtrlPLine<CR>
