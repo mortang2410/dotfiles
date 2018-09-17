@@ -124,6 +124,12 @@ ready to view later on. This is useful for running IRC clients, torrent clients,
 
 ## Installation guide
 
+** The rest is about installation. In my opinion, using other people's
+configuration files, or borrowing parts from them, can indeed save time,
+but it also means there are many options and (ingenious) workarounds in
+those files that you will know nothing about. So, as with most things in
+life, there is a tradeoff. If you can accept that, proceed. **
+
 This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
 package managers.  Besides, Archers and Gentoomen need no guides. ;)
@@ -136,6 +142,7 @@ Firstly, `~` is your home folder, such as `/home/wilder`. Among the
 programs, nvim, tmux and zsh are the most important as they affect each
 other and are indispensable on any Linux server; while urxvt, weechat, mpv
 are optional. In particular, urxvt is not a CLI application, so no need to install it on servers.
+
 
 To download/clone this repository, call
 
