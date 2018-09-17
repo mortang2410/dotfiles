@@ -58,7 +58,7 @@ trivial example, made possible by vim/nvim's flexibility. [ It is like casting a
 delete everything from the cursor to the end of the current line?"
 `D`. 
 
-- "How to delete the whole current line?" `dd`. 
+- "How to delete 5 lines starting from the current one?" `5dd`. 
 
 - "I undoed a change, and tried to redo, but accidentally inserted
   some text. Is my redo lost forever?" Nothing is ever lost in
@@ -90,7 +90,7 @@ written with nvim in
 
 ## Why use zsh or the command line
 
-Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being *somewhere* in the `.vim` directory, and it is a big directory. I could do a search, then copy the result to open in `nvim`. Or I could just type `nvim .vim/**/ncm2.vim` into the terminal (using zsh as the shell) and hit Enter. And that is zsh's greatest magic: autocompletion. It autocompletes everything from program names, to program options, file paths,... and we can pick the matches we want from a menu. Any programmer knows the usefulness of good autocompletion, and zsh's autocompletion is **endlessly** customizable (and to this date, I still haven't read the whole manual for it).
+Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being *somewhere* in the `.vim` directory, and it is a big directory. I could do a search, then copy the result to open in `nvim`. Or I could just type `nvim .vim/**/ncm2.vim` into the `urxvt` terminal (using `zsh` as the shell) and hit Enter. And that is zsh's greatest magic: autocompletion. It autocompletes everything from program names, to program options, file paths,... and we can pick the matches we want from a menu. Any programmer knows the usefulness of good autocompletion, and zsh's autocompletion is **endlessly** customizable (and to this date, I still haven't read the whole manual for it).
 
 In this screenshot, I want to execute a command whose name starts with
 `apt`, so I type `apt` and then  `<Tab>`. zsh automatically pops up a
