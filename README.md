@@ -37,7 +37,7 @@ Why use vim/nvim
 Let's get right to the point, here is `nvim` running in the `urxvt` terminal as a pure text writer/reader in
 distraction-free mode (with the command `:Zen`)
 
-![Zen mode](https://i.imgur.com/BiKIEZY.jpg Zen)
+![Zen mode](https://i.imgur.com/BiKIEZY.jpg)
 
 Ok it looks cool, but how about features? Let's say, I want to
 jump to the letter `.`  at the end of Holmes' sentence, `the vital
