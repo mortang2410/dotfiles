@@ -1,16 +1,15 @@
 Dotfile 
 ==============
 
-Legal disclaimer: This config is not responsible for blowing your PC
-up yadda yadda.  Typos abound.
+Legal disclaimer: This config is not responsible for blowing your PC up yadda yadda.  Typos abound. 
 
 These are my dotfiles. Useful for setting up quickly on new machines.
 Right now it contains my configuration for 
 
 - vim (THE text editor) and nvim/neovim (a newer version of vim, with fewer hassles and very active development). They can mostly use the same plugins.
 
-- tmux: a program that lets terminal applications run in the
-  background, as well as rearranging them on the terminal screen
+- tmux: a program that lets CLI applications (command line interface) run
+  in the  background, as well as rearranging them on the terminal screen.
 
 - zsh: an awesome shell, which is the interactive program that allows
   you to launch stuff / execute commands in terminals.
@@ -91,7 +90,14 @@ written with vim in
 
 ## Why use zsh or the command line
 
-Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being *somewhere* in the `.vim` directory, and it is a big directory. I could do a search, then copy the result to open in `vim`. Or I could just type `nvim .vim/**/ncm2.vim` into the terminal (using zsh as the shell) and hit Enter. And that is zsh's greatest magic: autocompletion. It autocompletes everything from program names, to program options, file paths,... and we can pick the matches we want from a menu. Any programmer knows the usefulness of good autocompletion, and zsh's autocompletion is **endlessly** customizable (and to this date, I still haven't read the whole manual for it).
+Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being *somewhere* in the `.vim` directory, and it is a big directory. I could do a search, then copy the result to open in `nvim`. Or I could just type `nvim .vim/**/ncm2.vim` into the terminal (using zsh as the shell) and hit Enter. And that is zsh's greatest magic: autocompletion. It autocompletes everything from program names, to program options, file paths,... and we can pick the matches we want from a menu. Any programmer knows the usefulness of good autocompletion, and zsh's autocompletion is **endlessly** customizable (and to this date, I still haven't read the whole manual for it).
+
+In this screenshot, I want to execute a command whose name starts with
+`apt`, so I type `apt` and then  `<Tab>`. zsh automatically pops up a
+menu of possible choices for me to choose with arrow keys, much more
+convenient than having to keep pressing `<Tab>`. I could also press `Ctrl+r` to search through all past commands if I want to.
+
+![zsh](https://camo.githubusercontent.com/a43cfdcf299d31be8274a372d6cbe65d62e2c7be/68747470733a2f2f692e696d6775722e636f6d2f683041586e79622e706e67)
 
 For a more complicated example, let's say my chat log text files have grown far too big, and I want to cut them in half (saving only the recent half), I can script up my own command (don't worry if you have no idea about scripting yet, just know how it is possible)
 ```shell
@@ -105,7 +111,7 @@ trim50() {
 ```
 and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
 
-Finally, we can run shell commands within nvim itself, to either edit or insert into the current file. The flexibility of terminal programs allow them to be combined in creative ways.
+Finally, we can run shell commands within nvim itself, to either edit or insert into the current file. The flexibility of CLI programs allow them to be combined in creative ways.
 
 ## Why use tmux
 
@@ -120,11 +126,18 @@ ready to view later on. This is useful for running IRC clients, torrent clients,
 
 This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
-package manager.  Besides, Archers and Gentoomen need no guides. ;)
+package managers.  Besides, Archers and Gentoomen need no guides. ;)
+People on Mac OS already have `zsh` installed by default (which was
+surprising to me to find out), though they might need to update it with
+[ homebrew ](https://brew.sh/). They could also use homebrew to install
+`nvim`, `tmux` etc. So without loss of generality, assume we're using Ubuntu.
 
-Firstly, `~` is your home folder, such as `/home/wilder`. Among the programs, nvim, tmux and zsh are the most important as they affect each other and are indispensable on any Linux server; while urxvt, weechat, mpv are optional: 
+Firstly, `~` is your home folder, such as `/home/wilder`. Among the
+programs, nvim, tmux and zsh are the most important as they affect each
+other and are indispensable on any Linux server; while urxvt, weechat, mpv
+are optional. In particular, urxvt is not a CLI application, so no need to install it on servers.
 
- To download/clone this repository, call
+To download/clone this repository, call
 
 ```shell
 sudo apt install git 
