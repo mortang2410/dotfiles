@@ -43,8 +43,8 @@ URxvt.background.expr: center cover keep { blur 3, load "$HOME/urxvt_wallpaper2.
 
 
 
- 
 URxvt.depth: 32
+URxvt.lsp: 5
 URxvt.geometry: 90x30
 URxvt.fading: 0
 ! URxvt.urgentOnBell: true
