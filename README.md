@@ -111,10 +111,10 @@ Finally, we can run shell commands within nvim itself, to either edit or insert 
 
 I heard you liked terminal so I put terminals inside your terminal.
 
-![tmux](https://i.imgur.com/vwzqdaX.jpg)
+![tmux](https://camo.githubusercontent.com/80cdcf36b54cb5dff64bea3f32807826ad2c0dc3/68747470733a2f2f692e696d6775722e636f6d2f76777a716461582e6a7067)
 
 Also, you can close your terminal and tmux will still be running,
-ready to view later on.
+ready to view later on. This is useful for running IRC clients, torrent clients, shell scripts, encoding etc.
 
 ## Installation guide
 
