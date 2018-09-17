@@ -5,6 +5,10 @@ Dotfiles
 Legal stuff: This config is not responsible for blowing your PC up yadda yadda.
 Typos abound.
 
+This guide is meant for Ubuntu users, but it should be the same for other
+distributions, as long as one knows the equivalent packages / package manager. 
+Besides, Archers and Gentoomen need no guides.
+
 To download/clone this repository, call
 
 ```shell
@@ -35,7 +39,8 @@ it contains my configuration for
 
 Things to install after cloning: 
 
-- To change the default shell to zsh, execute `chsh` in your currrent shell. You might need to log out and return for the change to take effect.
+- To change the default shell to zsh, execute `chsh` in your currrent shell.
+  You might need to log out and return for the change to take effect.
 
 - **Important**: if you
 don't like nvim and want to use vim, then look in `.zshrc` for the line `export
@@ -109,7 +114,7 @@ I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
 works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated (before that vim / nvim might display some errors).
 
 If you have done everything correctly, navigating between tmux and vim  should
-be seamless with C-h,C-j,C-k,C-l
+be seamless with C-h,C-j,C-k,C-l.
 
 
 
