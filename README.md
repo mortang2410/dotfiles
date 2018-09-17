@@ -109,10 +109,12 @@ Finally, we can run shell commands within nvim itself, to either edit or insert 
 
 ## Why use tmux
 
-![]
+I heard you liked terminal so I put terminals inside your terminal.
 
+![tmux](https://i.imgur.com/vwzqdaX.jpg)
 
-
+Also, you can close your terminal and tmux will still be running,
+ready to view later on.
 
 ## Installation guide
 
