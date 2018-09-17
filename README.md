@@ -2,7 +2,7 @@ Dotfiles
 ==============
 
 
-Legal stuff: This config is not responsible for blowing your PC up yadda yadda.
+Legal disclaimer: This config is not responsible for blowing your PC up yadda yadda.
 Typos abound.
 
 This guide is meant for Ubuntu users, but it should be the same for other
@@ -151,25 +151,25 @@ m<Space>     Delete all marks from the current buffer
 
 s/abc/123/gc : replace with confirmation
 
+s/\n/&\r/g : replace end-of-line with empty new line
+
 gd: go to definition
 
 gq : reformat text to pretty up
 
-C-p l to open CTRLP in lines mode, then C-f to switch between modes
-(lines,files, buffers, MRU...). 
+C-p l to open CTRLP in lines mode, then C-f to switch between modes (lines,files, buffers, MRU...). 
 
-C-p f to open CTRLP in files mode. I use Notes for vim:CtrlP for current dir by
-setting max depth to 1, and fzf for deep dirs.
+C-p f to open CTRLP in files mode. I use Notes for vim:CtrlP for current dir by setting max depth to 1, and fzf for deep dirs.
+
+
 
 C-x C-f in insert mode to insert a filename with fzf.
 
 M-x : like emacs command with fzf. 
 
-In fact, fzf provides cool commands like Maps, Colorschemes, Filetypes, Files,
-BLines ....
+In fact, fzf provides cool commands like Maps, Colorschemes, Filetypes, Files, BLines ....
 
-s: easy motion!! (overwritten vim's default s), with \\ as prefix for other
-stuff
+s: easy motion!! (overwritten vim's default s), with \\ as prefix for other stuff
 
 S: easy motion by 2 characters
 
@@ -177,8 +177,7 @@ Use SudoEdit from vim-eunuch (:h enuch)
 
 Use Locate from fuzzy finder
 
-Press cd while in Nerdtree to change vim's working directory (for the sake of
-fzf \t)
+Press cd while in Nerdtree to change vim's working directory (for the sake of fzf \t)
 
 \T : Nerdtree toggle
 
@@ -195,6 +194,65 @@ Browse old files:
 then we might need to hit q to make prompt appear if list is too long
 
 Or :capture ol  , then use gf to jump to file
+
+
+vim and tmux navigation between panes: use C-h,C-j,C-k,C-l
+
+zshrc makes   vim --servername to play well with vimtex
+
+:helpgrep something, then :copen to see results
+
+To comment out blocks in vim:
+
+	press Esc (to leave editing or other mode)
+
+	hit ctrl+v (visual block mode)
+
+	use the up/down arrow keys to select lines you want (it won't 	highlight everything - it's OK!)
+
+	Shift+i (capital I)
+
+	insert the text you want, i.e. %
+
+	press EscEsc
+
+
+For file name omni completion in insert mode, you can use:
+
+Ctrl-X Ctrl-F
+
+Edit in command bar: C-f
+
+See ex-commands' output in new buffer:
+:Capture <command>
+
+To see what linters ALE is using:
+
+:ALEInfo
+
+Install vimpager
+
+vim-tex: 
+
+\ll compile
+
+\lv view with synctex. Ctrl-click on zathura to do reverse.
+
+
+F4 for undotree toggle. Double click to jump to the one you want. Persistent undos between sessions.
+
+To select and surround: use v to enter visual mode and select abc, then S[ to surround -> [abc]
+
+:Ncm2Sources
+
+My own hackish function to look at enabled sources in ncm2.
+
+
+C-x C-t  in Insert mode in Markdown: thesaurus via vim-lexical
+
+C-x C-k as above : dictionary via vim-lexical
+
+Zen : modified distraction free mode
 
 Tmux tips
 ------------
