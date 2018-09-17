@@ -225,7 +225,7 @@ there might be errors since plugins are missing. Just do a
 installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what
 have changed. Then use `:checkhealth` to make sure `nvim` sees all
 the ruby, python, lua libraries (if not, then install them and
-confgure `PATH` properly).
+configure `PATH` properly).
 
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
