@@ -1,4 +1,4 @@
-Dotfile 
+Dotfiles
 ==============
 
 Legal disclaimer: This config is not responsible for blowing your PC up yadda yadda.  Typos abound. 
@@ -8,7 +8,7 @@ Right now it contains my configuration for
 
 - vim (THE text editor) and nvim/neovim (a newer version of vim, with fewer hassles and very active development). They can mostly use the same plugins.
 
-- tmux: a program that lets CLI applications (command line interface) run
+- tmux: a program that lets TUI applications (text-based user interface) run
   in the  background, as well as rearranging them on the terminal screen.
 
 - zsh: an awesome shell, which is the interactive program that allows
@@ -111,7 +111,9 @@ trim50() {
 ```
 and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
 
-Finally, we can run shell commands within nvim itself, to either edit or insert into the current file. The flexibility of CLI programs allow them to be combined in creative ways.
+Finally, we can run shell commands within nvim itself, to either edit
+or insert into the current file. The flexibility of text-based programs
+allow them to be combined in creative ways.
 
 ## Why use tmux
 
@@ -122,13 +124,49 @@ I heard you liked terminal so I put terminals inside your terminal.
 Also, you can close your terminal and tmux will still be running,
 ready to view later on. This is useful for running IRC clients, torrent clients, shell scripts, encoding etc.
 
+## Final caveats
+
+As you can hopefully see by this point, these programs can be
+incredibly useful, *once you know how to use them*. Before that, what
+should appear clear is that they are quite **unfriendly** for
+beginners. Where are buttons that we can click? How do we discover
+new features? Well, technically we can click the tabs and resize
+windows in tmux / nvim with the mouse, but most features don't have
+buttons to represent them (I can't even begin to imagine the number
+of buttons required to fully represent nvim).  And we *can* read the
+manuals, but they are like references to search through, not guides
+to read from beginning to end. We usually search the internet for
+quickstart guides on how to use them, and what popular options people
+use.  Programs like `nvim` will never run out of commands / switches
+for a user to discover, and that can be both a blessing and a curse.
+It can be intimidating to new users, before they finally understand
+that, hey, 80% of users only ever use 20% of features, and there's no
+need for them to know everything. Think of these programs as lovely
+gift boxes that keep on giving the more one looks into them.
+
+Using text-based programs require *not* intelligence, but experience.
+One must have experience with using text-based applications, editing
+configuration files (which, incidentally, `nvim` is very good at),
+reading the manuals and Google. There is never going to be a world
+where everybody is comfortable with learning the finer points of
+their tools, otherwise there wouldn't be car mechanics and tech
+support. So, this is not going to be for everybody. And `nvim` is not
+going to replace Visual Studio or Notepad++ for everyone. Though
+people like to rationalize the effort they spent on learning a tool,
+they must also be clear-headed about its faults. With that being
+said, I am just content with what I have figured out, and maybe
+contentment is the best metric. Best to only learn a new tool when
+one feels like it, and hopefully enjoys the journey.
+
+
 ## Installation guide
 
 **The rest is about installation. In my opinion, using other people's
-configuration files, or borrowing parts from them, can indeed save time,
-but it also means there are many options and (ingenious) workarounds in
-those files that you will know nothing about. So, as with most things in
-life, there is a tradeoff. If you can accept that, proceed.**
+configuration files, or borrowing parts from them, can indeed save
+time, but it also means there are many options and (ingenious)
+workarounds in those files that you will know nothing about. So, as
+with most things in life, there is a tradeoff. If you can accept
+that, proceed.**p
 
 This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
@@ -139,9 +177,10 @@ surprising for me to find out), though they might need to update it with
 `nvim`, `tmux` etc. So without loss of generality, assume we're using Ubuntu.
 
 Firstly, `~` is your home folder, such as `/home/wilder`. Among the
-programs, nvim, tmux and zsh are the most important as they affect each
-other and are indispensable on any Linux server; while urxvt, weechat, mpv
-are optional. In particular, urxvt is not a CLI application, so no need to install it on servers.
+programs, nvim, tmux and zsh are the most important as they affect
+each other and are indispensable on any Linux server; while urxvt,
+weechat, mpv are optional. In particular, urxvt is a GUI application,
+so no need to install it on servers.
 
 
 To download/clone this repository, call

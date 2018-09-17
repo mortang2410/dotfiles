@@ -296,6 +296,8 @@ if &cp | set nocp | endif
 
 map \b :Buffers<CR>
 map \t :Files<CR>
+"formatting current paragraph
+map \f gwap
 
 inoremap <C-/> <C-X><C-U>
 
