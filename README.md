@@ -35,6 +35,8 @@ it contains my configuration for
 
 Things to install after cloning: 
 
+- To change the default shell to zsh, execute `chsh` in your currrent shell. You might need to log out and return for the change to take effect.
+
 - **Important**: if you
 don't like nvim and want to use vim, then look in `.zshrc` for the line `export
 EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
@@ -68,7 +70,6 @@ then just run nvim.appimage directly. I symlink `nvim.appimage` to
 so that the plugins are automatically downloaded and installed.
 Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby, python, lua libraries (if not, then install them and confgure `PATH` properly).
 
-- To change the default shell to zsh, execute `chsh` in your currrent shell. You might need to log out and return for the change to take effect.
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
 
@@ -94,9 +95,11 @@ Vim oldtimers can use  `:h nvim-from-vim` to see what have changed. Then use `:c
 ```
 Then pyls will be installed into `.local/bin`  (again, make sure that directory is in `$PATH`). Then LanguageClient-neovim should see pyls and automatically work. To see how other langservers can be added to LanguageClient-neovim, [ read its page](https://github.com/autozimu/LanguageClient-neovim#quick-start).
 
-- Make sure the binary .fzf/bin/fzf (fuzzy finder) can be found in `$PATH`. For
-  instance, by putting a symlink in `.local/bin` (assuming `~/.local/bin` is in your
-  PATH variable). Then we can do funny things like `ls ~ | fzf` in the shell.
+- By default, the `:PlugInstall` of nvim above will also install fzf (fuzzy
+  finder) into `~/.fzf`. But we still need to make sure the binary `~/.fzf/bin/fzf`
+  can be found in `$PATH`. For instance, by putting a symlink in `~/.local/bin`
+  (assuming `~/.local/bin` is in your PATH variable). Then we can do funny
+  things like `ls ~ | fzf` in the shell.
 
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex opions.
@@ -108,8 +111,9 @@ works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated 
 If you have done everything correctly, navigating between tmux and vim  should
 be seamless with C-h,C-j,C-k,C-l
 
+
+
 ![desktop](https://i.imgur.com/I85XCh4.jpg)
-.center[caption]
 
 Vim tips (messy, for personal use) 
 ----
