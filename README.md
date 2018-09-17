@@ -37,7 +37,7 @@ distraction-free mode (with the command `:Zen`)
 
 ![Zen mode](https://camo.githubusercontent.com/cb6e158954d0ae35de742409d504115ffef87013/68747470733a2f2f692e696d6775722e636f6d2f42694b49455a592e6a7067)
     
-Ok it looks cool, but how about features? Let's say, I want to
+OK it looks cool, but how about features? Let's say, I want to
 jump to the letter `.`  at the end of Holmes' sentence, `the vital
 essence of the whole matter.` Now think about your favorite text
 editors. You would either clumsily use the mouse, or press a huge
@@ -84,7 +84,7 @@ as fast as Notepad.
 and endlessly customizable, whether I just want a simple fullscreen
 Notepad for writing a text novel, or a powerhouse development
 environment for programming languages. Even this readme is being
-written with vim in
+written with nvim in
 [Markdown](https://guides.github.com/features/mastering-markdown/). 
 
 
