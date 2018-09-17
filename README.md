@@ -38,7 +38,7 @@ Let's get right to the point, here is `nvim` running in the `urxvt` terminal as 
 distraction-free mode (with the command `:Zen`)
 
 ![Zen mode](https://i.imgur.com/BiKIEZY.jpg)
-
+    
 Ok it looks cool, but how about features? Let's say, I want to
 jump to the letter `.`  at the end of Holmes' sentence, `the vital
 essence of the whole matter.` Now think about your favorite text
@@ -90,8 +90,8 @@ Let's say, I want to edit a file called `ncm2.vim`. But I only remember it being
 For a more complicated example, let's say my chat log text files have grown far too big, and I want to cut them in half (saving only the recent half), I can script up my own command (don't worry if you have no idea about scripting yet, just know how it is possible)
 ```shell
 trim50() {
-	for x in "$@"
-	do
+    for x in "$@"
+    do
         integer z=$(($(wc -l <$x)/2)) ;
         sed -i -e 1,$[z]d $x ;
     done
@@ -138,11 +138,11 @@ plugins like  LanguageClient must decide to run in nvim mode or vim mode (otherw
   painless  I now prefer it to Vim. People on Ubuntu can install nvim as
   follows: 
 ```shell 
-	sudo apt install python3-pip curl
-	curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
-	chmod u+x nvim.appimage
-	pip3 install --user --upgrade neovim 
-	pip3 install --user neovim-remote
+    sudo apt install python3-pip curl
+    curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
+    chmod u+x nvim.appimage
+    pip3 install --user --upgrade neovim 
+    pip3 install --user neovim-remote
 ```
 then just run nvim.appimage directly. I symlink `nvim.appimage` to
 `$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs,
@@ -217,7 +217,7 @@ mx           Toggle mark 'x' and display it in the leftmost column
 
 `x : jump to mark x. 
 
-`0 :	jump to position in last file edited (when exited vim)
+`0 :    jump to position in last file edited (when exited vim)
 
 m<Space>     Delete all marks from the current buffer
 
@@ -282,17 +282,17 @@ zshrc makes   vim --servername to play well with vimtex
 
 To comment out blocks in vim:
 
-	press Esc (to leave editing or other mode)
+    press Esc (to leave editing or other mode)
 
-	hit ctrl+v (visual block mode)
+    hit ctrl+v (visual block mode)
 
-	use the up/down arrow keys to select lines you want (it won't 	highlight everything - it's OK!)
+    use the up/down arrow keys to select lines you want (it won't   highlight everything - it's OK!)
 
-	Shift+i (capital I)
+    Shift+i (capital I)
 
-	insert the text you want, i.e. %
+    insert the text you want, i.e. %
 
-	press EscEsc
+    press EscEsc
 
 
 For file name omni completion in insert mode, you can use:
