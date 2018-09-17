@@ -211,7 +211,7 @@ be seamless with C-h,C-j,C-k,C-l.
 
 
 
-![desktop](https://i.imgur.com/I85XCh4.jpg)
+![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
 
 Vim tips (messy, for personal use) 
 ----
