@@ -37,7 +37,8 @@ distraction-free mode (with the command `:Zen`)
 
 ![Zen mode](https://camo.githubusercontent.com/cb6e158954d0ae35de742409d504115ffef87013/68747470733a2f2f692e696d6775722e636f6d2f42694b49455a592e6a7067)
     
-OK it looks cool, but how about features? Well, at least we can read text novels. :)
+OK it looks cool, but how about features? Well, at least we can read
+text novels. :) I'm not entirely joking as `nvim` has bookmarks and jump lists by default.
 
 More seriously, let's say, I want to jump to the letter `.`  at the
 end of Holmes' sentence in the third paragraph, `the vital essence of
@@ -83,7 +84,9 @@ delete everything from the cursor to the end of the current line?"
 
 - "I just can't quit using the program!" If you mean you love it so
   much, that's awesome to hear. If you mean you *literally*  can't
-  exit `nvim`, type `:quit` in Normal mode. 
+  exit `nvim`, type `:quit` in Normal mode. It is probably the most
+  common meme about vim/nvim: people not knowing the command to exit
+  it (to be fair, the command is shown on the login screen).
 
 
 These are just the tips of the icebergs. There are *hundreds* of
@@ -91,7 +94,7 @@ commands within nvim, and they can be combined to create the one
 you want. And most importantly, there are countless plugins which
 extend functionality for nvim/vim. For instance, snippets
 (often-used code blocks by programmers) are provided by dozens of
-plugins. Many plugins, like EasyMotion, provides features that
+plugins. Many plugins, like EasyMotion, provide features that
 seem indispensable in hindsight. Use `:help` and `:Helptags`
 prodigiously.  Finally, for all its powers, nvim starts and runs
 as fast as Notepad. 
@@ -166,16 +169,22 @@ only ever use 20% of features, and there's no need for them to know
 everything. Think of these programs as lovely gift boxes that keep on
 giving the more one looks into them. 
 
-Using text-based programs requires *not* intelligence, but experience.
-One must have experience with using text-based applications, editing
-configuration files (which, incidentally, `nvim` is very good at),
-reading the manuals and Google. There is never going to be a world
-where everybody is comfortable with learning the finer points of
-their tools, otherwise there wouldn't be car mechanics and tech
-support. So, this is not going to be for everybody. And `nvim` is not
-going to replace Visual Studio or Notepad++ for everyone. Though
-people like to rationalize the effort they spent on learning a tool,
-they must also be clear-headed about its faults. With that being
+Using text-based programs requires *not* intelligence, but
+experience.  One must have experience with using text-based
+applications, editing configuration files (which, incidentally,
+`nvim` is very good at), reading the manuals and Google. There is
+never going to be a world where everybody is comfortable with
+learning the finer points of their tools, otherwise there wouldn't be
+car mechanics and tech support. So, this is not going to be for
+everybody. And `nvim` is not going to replace Visual Studio or
+Notepad++ for everyone. Though people like to rationalize the effort
+they spent on learning a tool, *they must also be clear-headed about
+its faults*.  For instance, up until a few years ago, vim/nvim could
+not handle certain programming languages very well (stuff like
+autocompletion, checking syntax etc.). But now `nvim` can use
+language servers, which take care of such things; and Visual Studio
+now has a Vim mode (though pretty basic), so there is some kind of
+convergence of awesomeness happening on both sides. With that being
 said, I am just content with what I have figured out, and maybe
 contentment is the best metric. Best to only learn a new tool when
 one feels like it, and hopefully enjoys the journey as well. 
