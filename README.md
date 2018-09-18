@@ -54,7 +54,15 @@ displays all the possible matches as red letters, as seen below
 I always kept my eyes on my target location, so as I saw the red
 letter `w` pop up, I hit it like I was playing [ Typer
 Shark](https://youtu.be/hcJtsrIit8M?t=10m14s). And that is just one
-trivial example, made possible by vim/nvim's flexibility. [ It is like casting a *teleportation* spell](https://youtu.be/sz-9tcUq5yg?t=43s). Now think **DEEPLY** about what it means. We can teleport around like this, select and delete stuff at lightning speed, or combine it with other actions. The possibilities are just endless. It's like discovering fast travel in a game and no more walking from town to town. It is just impossible for me to use other programs that don't learn from nvim/vim.
+trivial example, made possible by vim/nvim's flexibility. [ It is
+like casting a *teleportation*
+spell](https://youtu.be/sz-9tcUq5yg?t=43s). Now think **DEEPLY**
+about what it means. We can teleport around like this, select and
+delete stuff at lightning speed, or combine it with other actions.
+The possibilities are just endless. It's like discovering fast travel
+in a game: no more walking from town to town, and after that it is
+just impossible for me to use other programs that don't learn from
+nvim/vim.
 
 
 - "How to
