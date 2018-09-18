@@ -182,7 +182,8 @@ one feels like it, and hopefully enjoys the journey as well.
 
 There is no need to read anything further until you actually want to
 try it out. Even then, the installation guide is a bit rough and
-unpolished.
+unpolished. It demands some knowledge of how life in the terminal
+works.
 
 ## Installation guide
 
