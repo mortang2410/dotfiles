@@ -37,22 +37,24 @@ distraction-free mode (with the command `:Zen`)
 
 ![Zen mode](https://camo.githubusercontent.com/cb6e158954d0ae35de742409d504115ffef87013/68747470733a2f2f692e696d6775722e636f6d2f42694b49455a592e6a7067)
     
-OK it looks cool, but how about features? Let's say, I want to
-jump to the letter `.`  at the end of Holmes' sentence, `the vital
-essence of the whole matter.` Now think about your favorite text
-editors. You would either clumsily use the mouse, or press a huge
-amount of keys to get there. In nvim, I only need to press 3 keys,
-`s.w` and I'm there. What did I just do? `s` brings up the
-EasyMotion plugin for nvim, which will search for the next
-character. As I type `.`, nvim displays all the possible matches
-as red letters, as seen below
+OK it looks cool, but how about features? Well, at least we can read text novels. :)
+
+More seriously, let's say, I want to jump to the letter `.`  at the
+end of Holmes' sentence in the third paragraph, `the vital essence of
+the whole matter.` Now think about your favorite text editors. You
+would either clumsily use the mouse, or press a huge amount of keys
+to get there. In nvim, I only need to press 3 keys, `s.w` and I'm
+there. What did I just do?  `s` brings up the EasyMotion plugin for
+nvim, which will search for the next character. As I type `.`, nvim
+displays all the possible matches as red letters, as seen below
 
 ![red letters](https://camo.githubusercontent.com/c215c324245e3099f029a401e57e47a59611f133/68747470733a2f2f692e696d6775722e636f6d2f465869556165712e6a7067)
 
 I always kept my eyes on my target location, so as I saw the red
 letter `w` pop up, I hit it like I was playing [ Typer
 Shark](https://youtu.be/hcJtsrIit8M?t=10m14s). And that is just one
-trivial example, made possible by vim/nvim's flexibility. [ It is like casting a *teleportation* spell](https://youtu.be/sz-9tcUq5yg?t=43s). Now think **DEEPLY** about what it means. We can teleport around like this, select and delete stuff at lightning speed. The possibilities are just endless. It's like discovering fast travel in a game and no more walking from town to town. It is just impossible for me to use other programs that don't learn from nvim/vim.
+trivial example, made possible by vim/nvim's flexibility. [ It is like casting a *teleportation* spell](https://youtu.be/sz-9tcUq5yg?t=43s). Now think **DEEPLY** about what it means. We can teleport around like this, select and delete stuff at lightning speed, or combine it with other actions. The possibilities are just endless. It's like discovering fast travel in a game and no more walking from town to town. It is just impossible for me to use other programs that don't learn from nvim/vim.
+
 
 - "How to
 delete everything from the cursor to the end of the current line?"
@@ -60,15 +62,29 @@ delete everything from the cursor to the end of the current line?"
 
 - "How to delete 5 lines starting from the current one?" `5dd`. 
 
+- "But I just want to enter text normally like in Notepad?" Press `i`
+  to enter a special mode call Insert, where you enter text just like
+  in Notepad. Press `<Esc>` to go back to Normal mode (terribly
+  named, I know), where you can do all the teleportation commands as
+  above. The reason `nvim` has multiple modes is so that you can use
+  the same keys to do different things, depending on your intent. To
+  paraphrase a developer, true Vim fanatics sacrifice goats to the
+  modal gods.
+
 - "I undoed a change, and tried to redo, but accidentally inserted
-  some text. Is my redo lost forever?" Nothing is ever lost in
-  nvim.  Press F4 to toggle the legendary undo tree. In fact, all
-  your undos are saved across sessions, so *every possible state
-  since the beginning of time* of your file is remembered by nvim
-  (as long as, of course, you don't use other stuff to change the
-  file while nvim is not running). Realistically though, you might
-  wanna prune the history unless you have unlimited storage, so I
-  set the cutoff at 300 days.
+  some text. Is my redo lost forever?" Nothing is ever lost in nvim.
+  Press F4 to toggle the legendary undo tree. In fact, all your undos
+  are saved across sessions, so *every possible state since the
+  beginning of time* of your file is remembered by nvim (as long as,
+  of course, you don't use other stuff to change the file while nvim
+  is not running). Realistically though, you might wanna prune the
+  history unless your name is Bezos and you have unlimited storage,
+  so I set the cutoff at 300 days.
+
+- "I just can't quit using the program!" If you mean you love it so
+  much, that's awesome to hear. If you mean you *literally*  can't
+  exit `nvim`, type `:quit` in Normal mode. 
+
 
 These are just the tips of the icebergs. There are *hundreds* of
 commands within nvim, and they can be combined to create the one
@@ -84,8 +100,9 @@ as fast as Notepad.
 and endlessly customizable, whether I just want a simple fullscreen
 Notepad for writing a text novel, or a powerhouse development
 environment for programming languages. Even this readme is being
-written with nvim in
-[Markdown](https://guides.github.com/features/mastering-markdown/). 
+written with nvim in the
+[Markdown](https://guides.github.com/features/mastering-markdown/)
+langage.
 
 
 ## Why use zsh or the command line
@@ -117,18 +134,21 @@ allow them to be combined in creative ways.
 
 ## Why use tmux
 
-I heard you liked terminal so I put terminals inside your terminal.
+I heard you liked the terminal so I put terminals inside your terminal.
 
 ![tmux](https://camo.githubusercontent.com/80cdcf36b54cb5dff64bea3f32807826ad2c0dc3/68747470733a2f2f692e696d6775722e636f6d2f76777a716461582e6a7067)
 
 Also, you can close your terminal and tmux will still be running,
-ready to view later on. This is useful for running IRC clients, torrent clients, shell scripts, encoding etc.
+ready to view later on. This is useful for running IRC clients,
+torrent clients, shell scripts, encoding etc. Also very useful for
+running programs on remote servers, which often don't have a GUI
+(graphical user interface).
 
 ## Final caveats
 
 As you can hopefully see by this point, these programs can be
-incredibly useful, *once you know how to use them*. Before that, what
-should appear clear is that they are quite **unfriendly** for
+incredibly useful, *once you know how to use them*.  Before that,
+what should appear clear is that they are quite **unfriendly** for
 beginners. Where are buttons that we can click? How do we discover
 new features? Well, technically we can click the tabs and resize
 windows in tmux / nvim with the mouse, but most features don't have
@@ -142,7 +162,7 @@ for a user to discover, and that can be both a blessing and a curse.
 It can be intimidating to new users, before they finally understand
 that, hey, 80% of users only ever use 20% of features, and there's no
 need for them to know everything. Think of these programs as lovely
-gift boxes that keep on giving the more one looks into them.
+gift boxes that keep on giving the more one looks into them. 
 
 Using text-based programs require *not* intelligence, but experience.
 One must have experience with using text-based applications, editing
@@ -156,8 +176,7 @@ people like to rationalize the effort they spent on learning a tool,
 they must also be clear-headed about its faults. With that being
 said, I am just content with what I have figured out, and maybe
 contentment is the best metric. Best to only learn a new tool when
-one feels like it, and hopefully enjoys the journey.
-
+one feels like it, and hopefully enjoys the journey as well. 
 
 ## Installation guide
 
