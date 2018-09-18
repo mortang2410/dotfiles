@@ -198,9 +198,14 @@ This guide is meant for Ubuntu users, but it should be the same for
 other distributions, as long as one knows the equivalent packages /
 package managers.  Besides, Archers and Gentoomen need no guides. ;)
 People on Mac OS already have `zsh` installed by default (which was
-surprising for me to find out), though they might need to update it with
-[ homebrew ](https://brew.sh/). They could also use homebrew to install
-`nvim`, `tmux` etc. So without loss of generality, assume we're using Ubuntu.
+surprising for me to find out), though they might need to update it
+with [ homebrew ](https://brew.sh/). They could also use homebrew to
+install `nvim`, `tmux` etc. People on Windows can also install these
+programs via the [ Windows Subsystem for Linux feature
+](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
+That requires some expertise though, in case something goes wrong. 
+
+So without loss of generality, assume we're using Ubuntu.
 
 Some obvious reminders: 
 - `~` or `$HOME` is your home folder, such as `/home/wilder`. 
