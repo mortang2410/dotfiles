@@ -166,7 +166,7 @@ only ever use 20% of features, and there's no need for them to know
 everything. Think of these programs as lovely gift boxes that keep on
 giving the more one looks into them. 
 
-Using text-based programs require *not* intelligence, but experience.
+Using text-based programs requires *not* intelligence, but experience.
 One must have experience with using text-based applications, editing
 configuration files (which, incidentally, `nvim` is very good at),
 reading the manuals and Google. There is never going to be a world
@@ -179,6 +179,10 @@ they must also be clear-headed about its faults. With that being
 said, I am just content with what I have figured out, and maybe
 contentment is the best metric. Best to only learn a new tool when
 one feels like it, and hopefully enjoys the journey as well. 
+
+There is no need to read anything further until you actually want to
+try it out. Even then, the installation guide is a bit rough and
+unpolished.
 
 ## Installation guide
 
@@ -200,7 +204,9 @@ surprising for me to find out), though they might need to update it with
 Some obvious reminders: 
 - `~` or `$HOME` is your home folder, such as `/home/wilder`. 
 
-- Use `ln` to create [ symlinks ](https://kb.iu.edu/d/abbe). 
+- Use `ln` to create [ symlinks ](https://kb.iu.edu/d/abbe). Make
+  sure to use the **FULL PATH** for everything with `ln`, otherwise
+  you might run into some funny infinite recursion. I've been there.
 
 ### A crash course in `PATH`
 
