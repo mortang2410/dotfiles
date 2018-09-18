@@ -294,11 +294,16 @@ be seamless with C-h,C-j,C-k,C-l.
 Vim tips (messy, for personal use) 
 ----
 
+
+:Voom <mode> to see outline in markdown / latex
+
 gO: outline in man and help pages
 
 gq : format by 'formatexpr'
 
 gw : format without 'formatexpr'
+
+\f: format current paragraph
 
 :lopen to open loclist (local to window)
 
@@ -310,7 +315,7 @@ mx           Toggle mark 'x' and display it in the leftmost column
 
 `x : jump to mark x. 
 
-`0 :    jump to position in last file edited (when exited vim)
+`0 :	jump to position in last file edited (when exited vim)
 
 m<Space>     Delete all marks from the current buffer
 
@@ -364,7 +369,7 @@ Browse old files:
 
 then we might need to hit q to make prompt appear if list is too long
 
-Or :capture ol  , then use gf to jump to file
+Or :Capture ol  , then use gf to jump to file
 
 
 vim and tmux navigation between panes: use C-h,C-j,C-k,C-l
@@ -375,17 +380,17 @@ zshrc makes   vim --servername to play well with vimtex
 
 To comment out blocks in vim:
 
-    press Esc (to leave editing or other mode)
+	press Esc (to leave editing or other mode)
 
-    hit ctrl+v (visual block mode)
+	hit ctrl+v (visual block mode)
 
-    use the up/down arrow keys to select lines you want (it won't   highlight everything - it's OK!)
+	use the up/down arrow keys to select lines you want (it won't 	highlight everything - it's OK!)
 
-    Shift+i (capital I)
+	Shift+i (capital I)
 
-    insert the text you want, i.e. %
+	insert the text you want, i.e. %
 
-    press EscEsc
+	press EscEsc
 
 
 For file name omni completion in insert mode, you can use:
@@ -395,6 +400,7 @@ Ctrl-X Ctrl-F
 Edit in command bar: C-f
 
 See ex-commands' output in new buffer:
+
 :Capture <command>
 
 To see what linters ALE is using:
@@ -421,11 +427,21 @@ My own hackish function to look at enabled sources in ncm2.
 
 C-x C-t  in Insert mode in Markdown: thesaurus via vim-lexical
 
-C-x C-k as above : dictionary via vim-lexical
+C-x C-k as above: dictionary via vim-lexical
 
 Zen : modified distraction free mode
 
 Spell and Unspell for... spelling with vim-lexical.
+
+
+
+:syntime on
+
+play around
+
+:Capture syntime report
+
+to see what is slowing down vim
 
 Tmux tips
 ------------
