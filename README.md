@@ -157,12 +157,14 @@ of buttons required to fully represent nvim).  And we *can* read the
 manuals, but they are like references to search through, not guides
 to read from beginning to end. We usually search the internet for
 quickstart guides on how to use them, and what popular options people
-use.  Programs like `nvim` will never run out of commands / switches
-for a user to discover, and that can be both a blessing and a curse.
-It can be intimidating to new users, before they finally understand
-that, hey, 80% of users only ever use 20% of features, and there's no
-need for them to know everything. Think of these programs as lovely
-gift boxes that keep on giving the more one looks into them. 
+use. We can even search within the programs with autocompletion and
+help utilities etc.  to discover new stuff.  Programs like `nvim`
+will never run out of commands / switches for a user to discover, and
+that can be both a blessing and a curse.  It can be intimidating to
+new users, before they finally understand that, hey, 80% of users
+only ever use 20% of features, and there's no need for them to know
+everything. Think of these programs as lovely gift boxes that keep on
+giving the more one looks into them. 
 
 Using text-based programs require *not* intelligence, but experience.
 One must have experience with using text-based applications, editing
