@@ -86,9 +86,10 @@ delete everything from the cursor to the end of the current line?"
   are saved across sessions, so *every possible state since the
   beginning of time* of your file is remembered by nvim (as long as,
   of course, you don't use other stuff to change the file while nvim
-  is not running). Realistically though, you might wanna prune the
-  history unless your name is Bezos and you have unlimited storage,
-  so I set the cutoff at 300 days.
+  is not running). **Why would anyone want to live without this killer
+  feature?** Realistically though, you might wanna prune the history
+  unless your name is Bezos and you have unlimited storage, so I set
+  the cutoff at 300 days.
 
 - "I just can't quit using the program!" If you mean you love it so
   much, that's awesome to hear. If you mean you *literally*  can't
