@@ -197,11 +197,52 @@ surprising for me to find out), though they might need to update it with
 [ homebrew ](https://brew.sh/). They could also use homebrew to install
 `nvim`, `tmux` etc. So without loss of generality, assume we're using Ubuntu.
 
-Firstly, `~` is your home folder, such as `/home/wilder`. Among the
-programs, nvim, tmux and zsh are the most important as they affect
-each other and are indispensable on any Linux server; while urxvt,
-weechat, mpv are optional. In particular, urxvt is a GUI application,
-so no need to install it on servers.
+Some obvious reminders: 
+- `~` or `$HOME` is your home folder, such as `/home/wilder`. 
+
+- Use `ln` to create [ symlinks ](https://kb.iu.edu/d/abbe). 
+
+### A crash course in `PATH`
+
+Look within the `env.sh` file to edit the `PATH` variable. `PATH`
+tells zsh where to look for executable files to use as commands. It 
+should look something like this
+
+  ```
+    export PATH=$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/bin:$PATH
+  ```
+
+  Notice another `PATH` within the definition of `PATH`. It means the
+  system already has a built-in `PATH` variable, and we are simply
+  adding more to it.   I used to put `PATH` in the `.zshrc` file, but
+  then found it useful to separate such variables away from `.zshrc`,
+  so I created `env.sh` and tell `.zshrc` to load `env.sh` instead.
+  The reason for using 2 files is so that I might switch to another
+  shell in the future and tell that shell to load the same `env.sh`.
+  `PATH` is an example of an *environment variable*. Normally, when
+  things don't run and programs don't see each other, it's usually
+  because they have their environment variables set up wrong.
+
+  Try running
+
+  ```
+    which ls
+    echo $PATH
+  ```  
+
+  You will see that the command `ls`, often  used to list files in a
+  folder, is really just the executable file `/bin/ls`, and `/bin` is
+  indeed contained in `PATH`. That's how zsh sees it, and uses `ls`
+  as a command. Otherwise, we would have to type the full location of
+  the executable file every time we wish to run it.  Finally, restart
+  zsh whenever you edit `.zshrc` or `env.sh`.
+
+### Downloading the repo
+
+Among the programs, nvim, tmux and zsh are the most important as they
+affect each other and are indispensable on any Linux server; while
+urxvt, weechat, mpv are optional. In particular, urxvt is a GUI
+application, so there is no need to install it on servers.
 
 
 To download/clone this repository, call
@@ -215,38 +256,43 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-
 
 Then copy things in `~/dotfiles` to `~`. Things to install after cloning: 
 
-- To change the default shell to zsh, execute `chsh` in your current shell.
-  You might need to log out and return for the change to take effect.
+- To change the default shell to zsh, install zsh (duh), then execute
+  `chsh` in your current shell.  You might need to log out and return
+  for the change to take effect.
 
-- **Important**: if you
-don't like nvim and want to use vim (though I don't recommend so), then look in `.zshrc` for the line `export
-EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the same .vimrc
-file for both vim and nvim (technically, nvim uses init.vim, which just lazily
-sources .vimrc). This **must** be done before installing the plugins for nvim/vim, as some
-plugins like  LanguageClient must decide to run in nvim mode or vim mode (otherwise reinstall them).
+- **Important**: if you don't like nvim and want to use vim (though I
+  don't recommend so), then look in `.zshrc` for the line `export
+  EDITOR='nvim'`, and change `nvim` to `vim`. Note that I use the
+  same .vimrc file for both vim and nvim (technically, nvim uses
+  init.vim, but I tell it to just lazily source .vimrc). This
+  **must** be done before installing the plugins for nvim/vim, as
+  some plugins like  LanguageClient must decide to run in nvim mode
+  or vim mode (otherwise reinstall them).
 
-- the programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv. In particular,
-  vim needs to be up-to-date, and obviously compiled with support for python3,
-  ruby and all that jazz (sadly in Ubuntu 18.04 the default package sucks so you
-  need to compile it yourself!). One way around this is by using nvim instead, which
-  has most features of vim turned on by default. The transition to nvim was so
-  painless  I now prefer it to Vim. People on Ubuntu can install nvim as
-  follows: 
-```shell 
-    sudo apt install python3-pip curl
-    curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
-    chmod u+x nvim.appimage
-    pip3 install --user --upgrade neovim 
-    pip3 install --user neovim-remote
-```
-then just run nvim.appimage directly. I symlink `nvim.appimage` to
-`$HOME/.local/bin/nvim` so that `$PATH` can find it. Once nvim runs,
-there might be errors since plugins are missing. Just do a
-`:PlugInstall` so that the plugins are automatically downloaded and
-installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what
-have changed. Then use `:checkhealth` to make sure `nvim` sees all
-the ruby, python, lua libraries (if not, then install them and
-configure `PATH` properly).
+- the programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv.
+  In particular, vim needs to be up-to-date, and obviously compiled
+  with support for python3, ruby and all that jazz (sadly in Ubuntu
+  18.04 the default package sucks so you need to compile it
+  yourself!). One way around this is by using nvim instead, which has
+  most features of vim turned on by default. The transition to nvim
+  was so painless  I now prefer it to Vim. People on Ubuntu can
+  install nvim as follows: 
+  ```shell 
+      sudo apt install python3-pip curl 
+      curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
+      chmod u+x nvim.appimage
+      pip3 install --user --upgrade neovim 
+      pip3 install --user neovim-remote
+  ```
+
+  then just run nvim.appimage directly. I symlink `nvim.appimage` to
+  `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs,
+  there might be errors since plugins are missing. Just do a
+  `:PlugInstall` so that the plugins are automatically downloaded and
+  installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what
+  have changed. Then use `:checkhealth` to make sure `nvim` sees all
+  the ruby, python, lua libraries (if not, then install them and
+  configure `PATH` properly).
 
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
@@ -262,22 +308,30 @@ configure `PATH` properly).
 
 - Language servers for
   [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim).
-  Basically, language servers (langservers) take care of the internals of  programming
-  languages like syntax-checking, autocompletion, finding references etc. so
-  that any text editors can have access to such goodness. [ Read about them
+  Basically, language servers (langservers) take care of the
+  internals of  programming languages like syntax-checking,
+  autocompletion, finding references etc. so that any text editors
+  can have access to such goodness. [ Read about them
   here](https://langserver.org/). For instance, I use
-  [pyls](https://github.com/palantir/python-language-server) for python and
-  [ccls](https://github.com/MaskRay/ccls) for C++. To install pyls on Ubuntu 18.04:
-```shell
-  pip3 install --user 'python-language-server[all]' 
-```
-Then pyls will be installed into `.local/bin`  (again, make sure that directory is in `$PATH`). Then LanguageClient-neovim should see pyls and automatically work. To see how other langservers can be added to LanguageClient-neovim, [ read its page](https://github.com/autozimu/LanguageClient-neovim#quick-start).
+  [pyls](https://github.com/palantir/python-language-server) for
+  python and [ccls](https://github.com/MaskRay/ccls) for C++. To
+  install pyls on Ubuntu 18.04:
 
-- By default, the `:PlugInstall` of nvim above will also install fzf (fuzzy
-  finder) into `~/.fzf`. But we still need to make sure the binary `~/.fzf/bin/fzf`
-  can be found in `$PATH`. For instance, by putting a symlink in `~/.local/bin`
-  (assuming `~/.local/bin` is in your PATH variable). Then we can do funny
-  things like `ls ~ | fzf` in the shell.
+  ```shell
+  pip3 install --user 'python-language-server[all]' 
+  ```
+  
+  Then pyls will be installed into `.local/bin`  (again, make sure
+  that directory is in `$PATH`). Then LanguageClient-neovim should
+  see pyls and automatically work. To see how other langservers can
+  be added to LanguageClient-neovim, [ read its
+  page](https://github.com/autozimu/LanguageClient-neovim#quick-start).
+
+- By default, the `:PlugInstall` of nvim above will also install fzf
+  (fuzzy finder) into `~/.fzf`. But we still need to make sure the
+  binary `~/.fzf/bin/fzf` can be found in `$PATH`. For instance, by
+  putting a symlink in `~/.local/bin` (assuming `~/.local/bin` is in
+  your PATH variable). 
 
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex opions.
@@ -286,9 +340,16 @@ Then pyls will be installed into `.local/bin`  (again, make sure that directory 
 I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
 works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated (before that vim / nvim might display some errors).
 
-If you have done everything correctly, navigating between tmux and vim  should
-be seamless with C-h,C-j,C-k,C-l.
+You're done. Now just find some quickstart guides to see how those
+programs work.
 
+If you have set up everything correctly:
+- Navigating between tmux and
+vim  should be seamless with C-h,C-j,C-k,C-l.
+
+- Man pages can be viewed with nvim (try `man git`).
+
+- We can do fuzzy completion in the shell. Try running `ls ~ | fzf` in zsh.
 
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
