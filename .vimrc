@@ -29,12 +29,16 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'lambdalisue/vim-manpager'
 " Plug 'lambdalisue/vim-pager'
 Plug 'mbbill/undotree'
+
+Plug 'vim-scripts/VOoM'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
+
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
+
 " Plug 'godlygeek/tabular'
 " Plug 'gabrielelana/vim-markdown' 
 
