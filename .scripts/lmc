@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# A general audio interface for LARBS.
+
+newvol="pkill -RTMIN+10 i3blocks"
+# Uncomment if i3mpdupdate isn't running:
+
+case "$1" in
+	"up") pamixer --allow-boost -i "$2" ; $newvol ;;
+	"down") pamixer --allow-boost -d "$2" ; $newvol ;;
+	"mute") pamixer --allow-boost -t ; $newvol ;;
+	"truemute") pamixer --allow-boost -m ; $newvol ;;
+	"toggle") mpc toggle ;;
+	"pause") mpc pause ; pauseallmpv ;;
+	"forward") mpc seek +"$2" ;;
+	"back") mpc seek -"$2" ;;
+	"next") mpc next ;;
+	"prev") mpc prev ;;
+	"replay") mpc seek 0% ;;
+esac
