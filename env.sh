@@ -1,4 +1,4 @@
-export PATH=$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/bin:$PATH
+export PATH=$HOME/.scripts:$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/usr/bin:$HOME/.local/bin:$PATH
 
 export JAVA_FONTS=/usr/share/fonts/TTF
 export COWPATH=/usr/share/cowsay/cows:~/cows/
