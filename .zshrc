@@ -63,11 +63,14 @@ ec() {emacsclient -c "$*" &!; }
 run() {xdg-open "$*" &!;}
 
 
+##fuzzy completion, case insensitive
 # zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' matcher-list '' \
-  'm:{a-z\-}={A-Z\_}' \
-  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-  'r:|?=** m:{a-z\-}={A-Z\_}'
+zstyle ':completion:*' matcher-list                                      \
+    ''                                                                \
+    '                                   m:{[:lower:]}={[:upper:]}' \
+    '                                   m:{[:lower:]\-}={[:upper:]_}' \
+    'r:[^[:alpha]]||[[:alpha]]=** r:|=* m:{[:lower:]\-}={[:upper:]_}' \
+    'r:|?=**                            m:{[:lower:]\-}={[:upper:]_}'
 add-zsh-hook precmd zdelicious
 unset LESS
 remakedwm() {cd ~/dwm; makepkg -efi --skipinteg; }
@@ -179,3 +182,4 @@ stty stop undef
 
 
 source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval "$(fasd --init auto)"
