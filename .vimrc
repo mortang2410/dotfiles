@@ -38,6 +38,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
+Plug 'lambdalisue/suda.vim'
 
 " Plug 'godlygeek/tabular'
 " Plug 'gabrielelana/vim-markdown' 
@@ -125,6 +126,7 @@ endfunction
 
 "" run Ncm2Sources to see enabled completion sources
 command! Ncm2Sources :silent! call Ncm2SourcesFunc() 
+command! SudoWrite :w suda://% 
 
 if !exists("au_txt")
   let au_txt = 1
@@ -344,7 +346,7 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 
 " here we toggle line numbers
-:nmap <C-N><C-N> :set invnumber<CR>
+nmap <C-N><C-N> :set invnumber<CR>
 " time to get efficient
 nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -383,7 +385,7 @@ let g:mkdp_auto_close = 0
 "setup undotree
 nnoremap <F4> :UndotreeToggle<CR>
 
-nnoremap <F3> :noh<CR>
+nnoremap <silent> <M-l>  :noh<CR>
 
 
 "vim-latex

@@ -55,6 +55,10 @@ alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
 alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME'
+#ranger exit with cd
+ 
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
 ec() {emacsclient -c "$*" &!; }
 run() {xdg-open "$*" &!;}
 

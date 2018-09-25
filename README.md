@@ -27,7 +27,7 @@ Right now it contains my configuration for
 
 - mpv: best video player around, with lots of options.
 
-
+- ranger: terminal file manager with vim's keybindings for lightning-fast navigation.
 
 Why use vim/nvim
 ---------------
@@ -190,13 +190,15 @@ Notepad++ for everyone. Though people like to rationalize the effort
 they spent on learning a tool, *they must also be clear-headed about
 its faults*.  For instance, up until a few years ago, vim/nvim could
 not handle certain programming languages very well (stuff like
-autocompletion, checking syntax etc.). But now `nvim` can use
-language servers, which take care of such things; and Visual Studio
-now has a Vim mode (though pretty basic), so there is some kind of
-convergence of awesomeness happening on both sides. With that being
-said, I am just content with what I have figured out, and maybe
-contentment is the best metric. Best to only learn a new tool when
-one feels like it, and hopefully enjoys the journey as well. 
+autocompletion, checking syntax etc.). But now `nvim` can use [
+language servers](https://langserver.org/), which take care of such
+things. In fact, langservers are what inspired me to take a second
+look at vim/nvim.  Additionally, Visual Studio now has a Vim mode
+(though pretty basic), so there is some kind of convergence of
+awesomeness happening on both sides.  With that being said, I am just
+content with what I have figured out, and maybe contentment is the
+best metric. Best to only learn a new tool when one feels like it,
+and hopefully enjoys the journey as well. 
 
 There is no need to read anything further until you actually want to
 try it out. Even then, the installation guide is a bit rough and
@@ -282,6 +284,7 @@ sudo apt install git
 git clone  https://github.com/mortang2410/dotfiles ~/dotfiles
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
+fc-cache -vf
 ```
 
 Then copy things in `~/dotfiles` to `~`. Things to install after cloning: 
@@ -366,6 +369,11 @@ Then copy things in `~/dotfiles` to `~`. Things to install after cloning:
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex opions.
 
+- ranger itself. We also need w3m (for previewing images) and highlight (for syntax highlighting). Install them by apt.
+
+  ```
+  sudo apt install ranger w3m highlight
+  ```
 
 I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
 works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated (before that vim / nvim might display some errors).
@@ -387,8 +395,16 @@ vim  should be seamless with C-h,C-j,C-k,C-l.
 Vim tips (messy, for personal use) 
 ----
 
+```text
+:r <filename>  : insert file into current buffer, filename CAN contain spaces
 
-:Voom <mode> to see outline in markdown / latex
+df" : delete until next "
+
+use [[:diffthis]]  on 2 panes to diff
+
+M-l : turn off search hilighting
+
+[[:Voom]] <mode> to see outline in markdown / latex
 
 gO: outline in man and help pages
 
@@ -442,7 +458,7 @@ s: easy motion!! (overwritten vim's default s), with \\ as prefix for other stuf
 
 S: easy motion by 2 characters
 
-Use SudoEdit from vim-eunuch (:h enuch)
+Use [[SudoWrite]] from suda.vim
 
 Use Locate from fuzzy finder
 
@@ -535,6 +551,7 @@ play around
 :Capture syntime report
 
 to see what is slowing down vim
+```
 
 Tmux tips
 ------------

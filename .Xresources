@@ -11,7 +11,7 @@ URxvt.perl-ext:      default
 URxvt.underlineURLs: true
 URxvt.jumpScroll:true
 URxvt.skipScroll:true
-URxvt*buffered: true 
+URxvt*buffered: false 
 URxvt.inputMethod: ibus
 URxvt.preeditType: OverTheSpot
 
@@ -21,7 +21,7 @@ URxvt.scrollStyle: rxvt
 URxvt.scrollBar: false
  
 ! Perl extensions
-URxvt.perl-ext-common: default,matcher,resize-font,keyboard-select,background,fullscreen
+URxvt.perl-ext-common: default,matcher,background,resize-font,keyboard-select,fullscreen
 URxvt.keysym.M-f: perl:fullscreen:switch
 URxvt.matcher.button: 1
 URxvt.url-launcher: firefox
@@ -44,10 +44,10 @@ URxvt.iso14755: false
 URxvt.iso14755_52: false
 
 
-URxvt.depth: 32
+! URxvt.depth: 32
 URxvt.lsp: 5
 URxvt.geometry: 90x30
-URxvt.fading: 35
+URxvt.fading: 25
 ! URxvt.urgentOnBell: true
 ! URxvt.visualBell: true
 URxvt.loginShell: true
@@ -55,10 +55,12 @@ URxvt.saveLines: 2000
 URxvt.internalBorder: 3
 URxvt.lineSpace: 0
  
-URxvt.transparent: true
+! URxvt.transparent: true
 ! Fonts
 /* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
-URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=16
+! URxvt.font:  -*-terminus-medium-r-*-*-18-*-*-*-*-*-*-*
+! URxvt.font: xft:Terminess Powerline
+URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=16,xft:Symbola
 ! Fix font space
 URxvt*letterSpace: -1
 
@@ -68,14 +70,14 @@ URxvt.cursorColor: #24B038
 URxvt.cursorUnderline: false
  
 ! Pointer
-URxvt.pointerBlank: true
+! URxvt.pointerBlank: true
  
 !!Source http://github.com/altercation/solarized
 
 
 ! special
 *.foreground:   #a3b1b2
-*.background:   #000000
+*.background:  #2A2A2A
 
 ! black
 *.color0:       #66686b
