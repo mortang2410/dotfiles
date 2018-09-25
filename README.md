@@ -1,7 +1,8 @@
 Dotfiles
 ==============
 
-Legal disclaimer: This config is not responsible for blowing your PC up yadda yadda.  Typos abound. 
+Legal disclaimer: This config is not responsible for blowing your PC up. Many
+hacks/workarounds are due to the great people of the internet.  Typos abound. 
 
 These are my dotfiles. Useful for setting up quickly on new machines.
 Right now it contains my configuration for 
@@ -156,6 +157,18 @@ torrent clients, shell scripts, encoding etc. Also very useful for
 running programs on remote servers, which often don't have a GUI
 (graphical user interface).
 
+## Why use ranger
+
+It can do anything, from previewing files (in the terminal!), to integrating
+with fzf, vim, zsh etc. And it does everything via vim shortcuts. Even just
+jumping to bookmarks in 2 key presses is enough for me to like it.  You can
+also write custom python commands for it to run, and redefine every option /
+file association / launchers etc. 
+
+![ranger](https://camo.githubusercontent.com/4db9a6ef7a3ab049f1c5bbdd4aad09a9f092d05e/68747470733a2f2f692e696d6775722e636f6d2f5a7472334155562e6a7067)
+
+
+
 ## Final caveats
 
 As you can hopefully see by this point, these programs can be
@@ -284,14 +297,22 @@ sudo apt install git
 git clone  https://github.com/mortang2410/dotfiles ~/dotfiles
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
-fc-cache -vf
 ```
 
-Then copy things in `~/dotfiles` to `~`. Things to install after cloning: 
+Then copy things in `~/dotfiles` to `~`. There are some new font files in `~/.fonts`, so
+remember to run `fc-cache -vf` to refresh the font cache (or just restart your
+computer).  Things to install after cloning: 
 
-- To change the default shell to zsh, install zsh (duh), then execute
-  `chsh` in your current shell.  You might need to log out and return
-  for the change to take effect.
+- To change the default shell to zsh, install zsh (duh). I also use
+  [fasd](https://github.com/clvv/fasd) for fast completion in zsh, so install
+  it as well.
+
+  ```shell
+  sudo apt install zsh fasd 
+  ```
+  
+  then execute `chsh` in your current shell to change to the Z shell.  You
+  might need to log out and return for the change to take effect.
 
 - **Important**: if you don't like nvim and want to use vim (though I
   don't recommend so), then look in `.zshrc` for the line `export
@@ -556,6 +577,7 @@ to see what is slowing down vim
 Tmux tips
 ------------
 
+```text
 dump pane: C-b P
 
 reload config: C-b C-r
@@ -565,6 +587,39 @@ clear pane: C-b k
 vi mode: C-b [, select with Space, then y to yank into system clipboard
 
 with mouse mode on, use shift with mouse to select stuff / copy
+```
 
 
 
+Ranger tips
+---------
+
+```text
+`h : fzf through opened files' dirs in history
+/ : filter current dir
+S: start shell in current dir
+yy to yank then [[:extracthere]] to extract archive with atool (WARNING: no dir created, all files are just extracted)
+
+yp : yank file path
+yd : yank dir path
+
+or use X for shell extract (a script from .scripts) into same-named dir
+
+I added .scripts to $PATH
+
+mkd: makedir and cd
+om: sort by mtime
+F: toggle flat
+[[:flat]] 1 (flat 1 level)
+m<key> : bookmark, and `<key> to get there
+c-n : new tab, and <Tab> to switch
+c-w : close tab
+
+zV .  -> shell vim . -> enter
++x : add x to file
+w : open task window
+W : open log window
+V to enter select mode
+uv to deselect all
+H, L : jump back and forth in history 
+```
