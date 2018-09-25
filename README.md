@@ -163,7 +163,8 @@ It can do anything, from previewing files (in the terminal!), to integrating
 with fzf, vim, zsh etc. And it does everything via vim shortcuts. Even just
 jumping to bookmarks in 2 key presses is enough for me to like it.  You can
 also write custom python commands for it to run, and redefine every option /
-file association / launchers etc. 
+file association / launchers etc. Press `/` to quick filter, `F` to flatten
+directories, <code>`h</code>  to search through frequently used dirs.
 
 ![ranger](https://camo.githubusercontent.com/4db9a6ef7a3ab049f1c5bbdd4aad09a9f092d05e/68747470733a2f2f692e696d6775722e636f6d2f5a7472334155562e6a7067)
 
@@ -388,12 +389,21 @@ computer).  Things to install after cloning:
   your PATH variable). 
 
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
-  pdf viewer and modify vimtex opions.
+  pdf viewer and modify vimtex options.
 
-- ranger itself. We also need w3m (for previewing images) and highlight (for syntax highlighting). Install them by apt.
+- ranger itself. We also need w3m (for previewing images) and highlight (for
+  syntax highlighting). Also, for previewing pdf and djvu, we need
+  djvulibre-bin and poppler-utils. Install them by apt. For ranger, however, we
+  probably want the [ git version](https://github.com/ranger/ranger), which
+  contains many new updates at this time of writing. Check their page for the
+  optional dependencies as well. Make sure you install the dependencies you
+  want, then
 
-  ```
-  sudo apt install ranger w3m highlight
+  ```shell
+  sudo apt install w3m highlight poppler-utils djvulibre-bin checkinstall
+  git clone https://github.com/ranger/ranger ~/ranger
+  cd ~/ranger
+  sudo checkinstall
   ```
 
 I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
