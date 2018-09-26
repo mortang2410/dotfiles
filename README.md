@@ -414,16 +414,18 @@ computer).  Things to install after cloning:
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex options.
 
-- ranger itself. We also need w3m (for previewing images) and highlight (for
-  syntax highlighting). Also, for previewing pdf and djvu, we need
-  djvulibre-bin and poppler-utils. Install them by apt. For ranger, however, we
-  probably want the [ git version](https://github.com/ranger/ranger), which
-  contains many new updates at this time of writing. Check their page for the
-  optional dependencies as well. Make sure you install the dependencies you
-  want, then
+- ranger itself. We also need `w3m` (for previewing images) and highlight (for
+  syntax highlighting). For previewing pdf and djvu, we need `djvulibre-bin`
+  and `poppler-utils`. There's also `fasd` Install them by apt. For ranger,
+  however, we probably want the [ git
+  version](https://github.com/ranger/ranger), which contains many new updates
+  at this time of writing. Check their page for the optional dependencies as
+  well. Make sure you install the dependencies. On Ubuntu you should have most
+  things already installed, so it will probably look like this 
 
   ```shell
-  sudo apt install w3m highlight poppler-utils djvulibre-bin checkinstall
+  sudo apt-get build-dep ranger
+  sudo apt install w3m highlight atool poppler-utils djvulibre-bin fasd checkinstall python python-urwid
   git clone https://github.com/ranger/ranger ~/ranger
   cd ~/ranger
   sudo checkinstall
