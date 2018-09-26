@@ -164,7 +164,7 @@ with fzf, vim, zsh etc. And it does everything via vim shortcuts. Even just
 jumping to bookmarks in 2 key presses is enough for me to like it.  You can
 also write custom python commands for it to run, and redefine every option /
 file association / launchers etc. Press `/` to quick filter, `F` to flatten
-directories, <code>`h</code>  to search through frequently used dirs.
+directories, <code>`H</code>  to search through frequently used dirs.
 
 ![ranger](https://camo.githubusercontent.com/4db9a6ef7a3ab049f1c5bbdd4aad09a9f092d05e/68747470733a2f2f692e696d6775722e636f6d2f5a7472334155562e6a7067)
 
@@ -605,7 +605,9 @@ Ranger tips
 ---------
 
 ```text
-`h : fzf through opened files' dirs in history
+
+`h : fzf through navigation history (this session)
+`H : fzf through fasd's history globally
 / : filter current dir
 S: start shell in current dir
 yy to yank then [[:extracthere]] to extract archive with atool (WARNING: no dir created, all files are just extracted)

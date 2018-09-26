@@ -88,6 +88,27 @@ class fzf_select(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
+
+
+class fzf_nav_history(Command):
+    def execute(self):
+        import subprocess
+        mypath=os.path.expanduser("~/pythontest.txt")
+        tmp = open(mypath,'w')
+        for i in self.fm.thistab.history.history: 
+            tmp.write(str(i)+'\n')
+        tmp.close()
+        command="fzf +m < " + mypath
+        fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
+        stdout, stderr = fzf.communicate()
+        if fzf.returncode == 0:
+            fzf_file = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
+            if os.path.isdir(fzf_file):
+                self.fm.cd(fzf_file)
+            else:
+                self.fm.select_file(fzf_file)
+        os.remove(mypath)
+
 # fzf_locate
 class fzf_locate(Command):
     """
@@ -115,7 +136,7 @@ class fzf_locate(Command):
                 self.fm.select_file(fzf_file)
 
 
-class fzf_history(Command):
+class fzf_fasd_history(Command):
     """
     :fzf_locate
 
@@ -300,3 +321,5 @@ class fasd(Command):
         if arg:
             directory = subprocess.check_output(["fasd", "-d"]+arg.split(), universal_newlines=True).strip()
             self.fm.cd(directory)
+
+
