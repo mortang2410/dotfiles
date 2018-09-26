@@ -28,7 +28,7 @@ Right now it contains my configuration for
 
 - mpv: best video player around, with lots of options.
 
-- ranger: terminal file manager with vim's keybindings for lightning-fast navigation.
+- ranger: a terminal file manager with vim's keybindings for lightning-fast navigation.
 
 Why use vim/nvim
 ---------------
@@ -157,18 +157,41 @@ torrent clients, shell scripts, encoding etc. Also very useful for
 running programs on remote servers, which often don't have a GUI
 (graphical user interface).
 
-## Why use ranger
+## Why use ranger 
 
 It can do anything, from previewing files (in the terminal!), to integrating
-with fzf, vim, zsh etc. And it does everything via vim shortcuts. Even just
+with vim, zsh etc. And it does everything via vim shortcuts. Even just
 jumping to bookmarks in 2 key presses is enough for me to like it.  You can
 also write custom python commands for it to run, and redefine every option /
-file association / launchers etc. Press `/` to quick filter, `F` to flatten
-directories, <code>`H</code>  to search through frequently used dirs.
+file association / launchers etc. In my configuration, press `/` to quick filter, `F` to flatten
+directories, `` `H ``  to search through frequently used dirs with `fzf`
+(an awesome search tool which I also use for zsh and vim), `S` to start a zsh
+shell in the current dir, and `<Right>` on a text file to edit with vim.
+
+
 
 ![ranger](https://camo.githubusercontent.com/8a58777090e5ac46500819d4f7f2c6f312c07d64/68747470733a2f2f692e696d6775722e636f6d2f475139774f32722e6a7067)
 
 
+Ranger allows easy scripting in python, as it has a minimal core that one can
+easily explore. In other file managers, which I shall not name, trying to
+extend their functionality is much harder, and even frowned upon as developers
+don't bother to consider such use cases. Meanwhile, I was able to cook up a
+way to use `fzf` to search through ranger's navigation history just from poking
+around the source files and the default commands. I've mentioned
+[fzf](https://github.com/junegunn/fzf) twice now, but it's easier to understand
+what fzf does once you see it in
+[action](https://github.com/junegunn/fzf/wiki/examples).
+
+![fzf](https://camo.githubusercontent.com/d26a278c698e88f777c1692a2b6946d1d60ffbec/687474703a2f2f646d697472796672616e6b2e636f6d2f5f6d656469612f61727469636c65732f6364675f7265636f726465642e676966)
+
+That's why I want to use fzf in, well, everything, including ranger.  By now,
+one should see that the killer feature of ranger is not within itself, but from
+how well it utilizes other tools within the terminal, and provides seamless
+integration between different worlds. Plus I personally dig how it makes me
+feel like flying through directories with my custom commands. I am honestly
+surprised that it has managed to replace my graphical file managers as well,
+and in some cases offered me more features (e.g. fzf).
 
 ## Final caveats
 
