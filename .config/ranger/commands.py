@@ -154,7 +154,7 @@ class fzf_select(Command):
 class fzf_nav_history(Command):
     def execute(self):
         import subprocess
-        mypath=os.path.expanduser("/tmp/pythontest.txt")
+        mypath="/tmp/pythontest.txt"
         tmp = open(mypath,'w')
         for i in self.fm.thistab.history.history: 
             tmp.write(str(i)+'\n')
@@ -198,15 +198,6 @@ class fzf_locate(Command):
 
 
 class fzf_fasd_history(Command):
-    """
-    :fzf_locate
-
-    Find a file using fzf.
-
-    With a prefix argument select only directories.
-
-    See: https://github.com/junegunn/fzf
-    """
     def execute(self):
         import subprocess
         if self.quantifier:

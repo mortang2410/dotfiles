@@ -302,6 +302,7 @@ if &cp | set nocp | endif
 
 map \b :Buffers<CR>
 map \t :Files<CR>
+map \h :History<CR>
 "formatting current paragraph
 map \f gwap
 
