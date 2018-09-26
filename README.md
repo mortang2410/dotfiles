@@ -416,16 +416,22 @@ computer).  Things to install after cloning:
 
 - ranger itself. We also need `w3m` (for previewing images) and highlight (for
   syntax highlighting). For previewing pdf and djvu, we need `djvulibre-bin`
-  and `poppler-utils`. There's also `fasd` Install them by apt. For ranger,
-  however, we probably want the [ git
-  version](https://github.com/ranger/ranger), which contains many new updates
-  at this time of writing. Check their page for the optional dependencies as
-  well. Make sure you install the dependencies. On Ubuntu you should have most
-  things already installed, so it will probably look like this 
+  and `poppler-utils`. Install them by apt. For ranger, however, we probably
+  want the [ git version](https://github.com/ranger/ranger), which contains
+  many new updates at this time of writing. Check their page for the optional
+  dependencies as well, and make sure you install them. I also use
+  [fasd](https://github.com/Vifon/fasd) for autocompleting frequent dirs/files.
+  It appears that the [ original repo](https://github.com/clvv/fasd) for fasd
+  is dead (thanks to Vifon for the warning), so use Vifon's repo instead. On
+  Ubuntu you should have most things already installed, so it will probably
+  look like this 
 
   ```shell
   sudo apt-get build-dep ranger
-  sudo apt install w3m highlight atool poppler-utils djvulibre-bin fasd checkinstall python python-urwid
+  sudo apt install w3m highlight atool poppler-utils djvulibre-bin checkinstall python python-urwid
+  git clone https://github.com/Vifon/fasd ~/fasd
+  cd ~/fasd
+  sudo checkinstall
   git clone https://github.com/ranger/ranger ~/ranger
   cd ~/ranger
   sudo checkinstall
