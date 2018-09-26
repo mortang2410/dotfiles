@@ -154,7 +154,7 @@ class fzf_select(Command):
 class fzf_nav_history(Command):
     def execute(self):
         import subprocess
-        mypath=os.path.expanduser("~/pythontest.txt")
+        mypath=os.path.expanduser("/tmp/pythontest.txt")
         tmp = open(mypath,'w')
         for i in self.fm.thistab.history.history: 
             tmp.write(str(i)+'\n')
