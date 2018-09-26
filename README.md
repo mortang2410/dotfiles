@@ -166,7 +166,7 @@ also write custom python commands for it to run, and redefine every option /
 file association / launchers etc. Press `/` to quick filter, `F` to flatten
 directories, <code>`H</code>  to search through frequently used dirs.
 
-![ranger](https://camo.githubusercontent.com/4db9a6ef7a3ab049f1c5bbdd4aad09a9f092d05e/68747470733a2f2f692e696d6775722e636f6d2f5a7472334155562e6a7067)
+![ranger](https://camo.githubusercontent.com/8a58777090e5ac46500819d4f7f2c6f312c07d64/68747470733a2f2f692e696d6775722e636f6d2f475139774f32722e6a7067)
 
 
 
