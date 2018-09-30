@@ -95,6 +95,7 @@ Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 
 Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+Plug 'ncm2/ncm2-ultisnips'
 Plug 'filipekiss/ncm2-look.vim'
 
 " "---------------------
@@ -319,7 +320,6 @@ map <F7> mwgg=G`w<CR>
 
 " set line numbers
 set number
-set relativenumber
 
 " if has('nvim')
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
@@ -593,14 +593,19 @@ endfunction
 
 " SetupUltisnips 
 
+" integrate with ncm2
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-f>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-b>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-
+let g:UltiSnipsSnippetDir=["~/.vim/UltiSnips"]
 
 " Cursor moves by screen lines
 call NoremapNormalCmd("<Up>", 1, "gk")
@@ -615,8 +620,5 @@ call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
 "Help window vertical split to the left
 autocmd FileType help wincmd L
 
-" auto change directory to opened file
-set autochdir 
-autocmd BufEnter * silent! lcd %:p:h
 
 " vim: set ft=vim :
