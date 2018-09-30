@@ -39,7 +39,14 @@ Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
 Plug 'lambdalisue/suda.vim'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
 " Plug 'godlygeek/tabular'
 " Plug 'gabrielelana/vim-markdown' 
 
@@ -383,6 +390,10 @@ let g:CSApprox_hook_post = ['hi Normal  ctermbg=NONE ctermfg=NONE',
 let g:mkdp_refresh_slow = 1
 let g:mkdp_auto_close = 0
 
+"map paste from clipboard
+nnoremap <F3> "+p
+vnoremap <F3> "+y
+
 "setup undotree
 nnoremap <F4> :UndotreeToggle<CR>
 
@@ -409,7 +420,6 @@ set helplang=en
 set hidden
 set cmdheight=1
 syntax enable
-set history=50
 set hlsearch
 set ignorecase 
 " set smartcase
@@ -421,6 +431,7 @@ set t_Co=256
 
 set copyindent
 set autoindent
+set smartindent
 set preserveindent
 set expandtab
 set softtabstop=0
@@ -434,10 +445,13 @@ let perl_fold=1
 set ruler
 set showcmd
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set history=1000
+
 
 "nvim only stuff
 if has('nvim')
 	let g:vimtex_compiler_progname = 'nvr'
+    set shada=!,'1000,s100,h
 	set fcs=eob:\ 
 endif
 
@@ -490,7 +504,7 @@ let g:vimtex_view_method = 'zathura'
 
 " persistent undos between sessions
 " then clean up stale undo files
-set undofile
+" set undofile
 set undodir=~/.vim/undodir
 command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -name '.gitignore' -delete
 
@@ -577,6 +591,17 @@ function! NoremapNormalCmd(key, preserve_omni, ...)
   endif
 endfunction
 
+" SetupUltisnips 
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
 " Cursor moves by screen lines
 call NoremapNormalCmd("<Up>", 1, "gk")
 call NoremapNormalCmd("<Down>", 1, "gj")
@@ -587,5 +612,11 @@ call NoremapNormalCmd("<End>", 0, "g<End>")
 call NoremapNormalCmd("<PageUp>", 0, "<C-U>", "<C-U>")
 call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
 
+"Help window vertical split to the left
+autocmd FileType help wincmd L
+
+" auto change directory to opened file
+set autochdir 
+autocmd BufEnter * silent! lcd %:p:h
 
 " vim: set ft=vim :

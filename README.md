@@ -414,7 +414,7 @@ computer).  Things to install after cloning:
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
   pdf viewer and modify vimtex options.
 
-- ranger itself. We also need `w3m` (for previewing images) and highlight (for
+- ranger itself. We also need `w3m` (for previewing images) and `highlight` (for
   syntax highlighting). For previewing pdf and djvu, we need `djvulibre-bin`
   and `poppler-utils`. Install them by apt. For ranger, however, we probably
   want the [ git version](https://github.com/ranger/ranger), which contains
@@ -458,15 +458,27 @@ Vim tips (messy, for personal use)
 ----
 
 ```text
+
+
+zo: open folding
+Indent json file:
+:%!python -m json.tool
+
+see the relative number lines? try 10<Down> to go down 10 	lines.
+F3 : "+p, paste from clipboard in normal mode
+dap: delete a paragraph
+\h : recent files in vim
+:vim abc ** : grep for abc in current dir
+:Mkdir! : create dir for current file
 :r <filename>  : insert file into current buffer, filename CAN contain spaces
 
 df" : delete until next "
 
-use [[:diffthis]]  on 2 panes to diff
+use :diffthis  on 2 panes to diff
 
 M-l : turn off search hilighting
 
-[[:Voom]] <mode> to see outline in markdown / latex
+:Voom <mode> to see outline in markdown / latex
 
 gO: outline in man and help pages
 
@@ -520,7 +532,7 @@ s: easy motion!! (overwritten vim's default s), with \\ as prefix for other stuf
 
 S: easy motion by 2 characters
 
-Use [[SudoWrite]] from suda.vim
+Use SudoWrite from suda.vim
 
 Use Locate from fuzzy finder
 
@@ -613,6 +625,7 @@ play around
 :Capture syntime report
 
 to see what is slowing down vim
+
 ```
 
 Tmux tips
