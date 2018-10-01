@@ -217,4 +217,4 @@ stty stop undef
 
 
 source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-eval "$(fasd --init auto)"
+if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
