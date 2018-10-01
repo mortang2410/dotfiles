@@ -1,0 +1,49 @@
+diff --git a/installwatch/Makefile b/installwatch/Makefile
+index 4c7eb36..069710a 100644
+--- a/installwatch/Makefile
++++ b/installwatch/Makefile
+@@ -11,7 +11,7 @@ PREFIX=/usr/local
+ VERSION=0.7.0beta7
+ 
+ BINDIR=$(PREFIX)/bin
+-LIBDIR=$(PREFIX)/lib
++LIBDIR=$(PREFIX)/lib64
+ 
+ all: installwatch.so
+ 
+diff --git a/installwatch/installwatch.c b/installwatch/installwatch.c
+index 8e6c616..9183f04 100644
+--- a/installwatch/installwatch.c
++++ b/installwatch/installwatch.c
+@@ -64,6 +64,7 @@
+ 
+ #define error(X) (X < 0 ? strerror(errno) : "success")
+ 
++int __installwatch_init = 0;
+ int __installwatch_refcount = 0;
+ int __installwatch_timecount = 0;
+ 
+@@ -423,6 +424,8 @@ static void initialize(void) {
+ #endif
+ 
+ 	if(instw_init()) exit(-1);
++
++	__installwatch_init = 1;
+ }
+ 
+ void _init(void) {
+@@ -2968,6 +2971,14 @@ ssize_t readlink(const char *path,char *buf,size_t bufsiz) {
+ 	instw_t instw;
+ 	int status;
+ 
++	if ( __installwatch_init == 0 &&
++		 libc_handle == RTLD_NEXT &&
++		 strcmp(path, "/etc/malloc.conf") == 0 ) {
++
++		errno = ENOENT;
++		return -1;
++	}
++
+ 	if (!libc_handle)
+ 		initialize();
+ 
