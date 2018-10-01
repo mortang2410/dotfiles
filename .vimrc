@@ -357,6 +357,7 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 nmap <C-N><C-N> :set invnumber<CR>
 " time to get efficient
 nnoremap ; :
+vnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nnoremap <silent> <leader>y :YRShow<CR> 
