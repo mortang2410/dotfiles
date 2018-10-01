@@ -307,7 +307,6 @@ should look something like this
   zsh whenever you edit `.zshrc` or `env.sh`.
 
 ### Compiling and installing 
----------------
 
 On Ubuntu, we often just install programs from `apt`. For instance, `sudo apt
 install wget` will install `wget`.  To build and install programs from sources
@@ -335,16 +334,20 @@ be omitted):
    just copying files manually into your system, and you should never actually
    do this, as you can't easily uninstall those files, and `apt` (the default
        package manager of Ubuntu) won't know about those files. A safer method
-       on Ubuntu is to run `sudo checkinstall make install`, so `checkinstall`
-       will turn the program into an actual `.deb` package file, and installing
-       that `.deb` file will allow `apt` to track those files, so that you can
-       remove them later as a package via `apt`. `checkinstall` allows you to
-       set some options for the package, such as its name, version etc.
+       on Ubuntu is to add `checkinstall` right after `sudo` and before the
+       install command (with flags).  So often you just run `sudo checkinstall
+       make install`, which will turn the program into an actual `.deb` package
+       file, and installing that `.deb` file will allow `apt` to track those
+       files, so that you can remove them later as a package via `apt`.
+       `checkinstall` allows you to set some options for the package, such as
+       its name, version etc. As an example, let's say `checkinstall`, after
+       running,  creates `myprogram.deb`, then we just need to run `sudo dpkg
+       -i myprogram.deb` to install it.
 
-Each program might use different tools for configuring / compiling, such as
-`meson`, `cmake`, etc. So the actual commands and flags might vary. Again, read
-the instructions for each program.
-
+Each program might use different tools, such as `meson`, `cmake`, `ninja` etc.
+So the actual commands and flags might vary. Again, read the instructions for
+each program. For instance, a program might use `ninja install` instead of
+`make install`, so you'd need to run `sudo checkinstall ninja install` instead. 
 
 ### Downloading the repo
 
