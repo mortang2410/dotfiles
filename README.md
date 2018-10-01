@@ -370,12 +370,9 @@ Then copy things in `~/dotfiles` to `~`. There are some new font files in `~/.fo
 remember to run `fc-cache -vf` to refresh the font cache (or just restart your
 computer).  Things to install after cloning: 
 
-- To change the default shell to zsh, install zsh (duh). I also use
-  [fasd](https://github.com/clvv/fasd) for fast completion in zsh, so install
-  it as well.
-
+- To change the default shell to zsh, install zsh (duh). 
   ```shell
-  sudo apt install zsh fasd 
+  sudo apt install zsh 
   ```
   
   then execute `chsh` in your current shell to change to the Z shell.  You
