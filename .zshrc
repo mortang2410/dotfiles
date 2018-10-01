@@ -27,6 +27,7 @@ alias nvims='NVIM_LISTEN_ADDRESS=/tmp/vimtex nvim'
 alias gvimr='gvim --remote'
 alias vims='vim --servername vim'
 
+
 pastebin () { curl -F "c=@${1:--}" https://ptpb.pw/ }
 alias pdfzip='gs -dEmbedAllFonts=true -dCompatibilityLevel=1.5 -dAutoRotatePages=/None -dQUIET -sDEVICE=pdfwrite -o out.pdf'
 alias zinstall='sudo apt-fast -y install'
@@ -55,8 +56,42 @@ alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
 alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim'
-#ranger exit with cd
- 
+
+# dot file edit function
+function edlink {
+    [[ -z $1 ]] && return
+    f=$(readlink -f $1)
+    cd ${f%/*}
+    ${EDITOR:-vi} $f
+    cd - > /dev/null;
+}
+# dot file aliases
+alias edbash='edlink $HOME/.bashrc; if [ "$(echo $BASH_VERSION)" ]; then source $HOME/.bashrc; fi'
+alias edzsh='edlink $HOME/.zshrc; if [ "$(echo $ZSH_VERSION)" ]; then source $HOME/.zshrc; fi'
+alias edvim='edlink $HOME/.vim/vimrc'
+alias edgvim='edlink $HOME/.gvimrc'
+alias ednvim='edlink $HOME/.config/nvim/init.vim'
+alias edtmux='edlink $HOME/.tmux.conf'
+alias edi3='edlink $HOME/.config/i3/config'
+alias edi3status='edlink $HOME/.i3status.conf'
+alias edi3blocks='edlink $HOME/.i3blocks.conf'
+alias edtermite='edlink $HOME/.config/termite/config'
+alias edxresources='edlink $HOME/.Xresources; xrdb $HOME/.Xresources'
+alias edxinit='edlink $HOME/.xinitrc'
+alias edbspwm='edlink $HOME/.config/bspwm/bspwmrc'
+alias edsxhkd='edlink $HOME/.config/sxhkd/sxhkdrc'
+alias eddunst='edlink $HOME/.config/dunst/dunstrc; killall dunst; (dunst &)'
+alias edzprofile='edlink $HOME/.zprofile'
+alias edprofile='edlink $HOME/.profile'
+alias edbashprofile='edlink $HOME/.bash_profile'
+alias edcompton='edlink $HOME/.config/compton.conf'
+alias edpolybar='edlink $HOME/.config/polybar/config'
+alias edrofi='edlink $HOME/.config/rofi/config'
+alias edalacritty='edlink $HOME/.config/alacritty/alacritty.yml'
+alias edzathura='edlink $HOME/.config/zathura/zathurarc'
+alias edranger='endlink $HOME/.config/ranger/rc.conf'
+
+#ranger exit with cd 
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 ec() {emacsclient -c "$*" &!; }

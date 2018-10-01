@@ -608,9 +608,6 @@ call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
 "\\\\\\\\\\\\\\\\
 " SetupUltisnips 
 
-" integrate with ncm2
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
 " c-j c-k for moving in snippet
 " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<c-f>"
