@@ -464,6 +464,7 @@ from git, which itself requires a modded `checkinstall` for `jemalloc`.
 
 ```shell
 
+rm ~/.local/bin/nvim
 git clone http://checkinstall.izto.org/checkinstall.git ~/checkinstall
 cd ~/checkinstall
 git apply ~/checkinstall_mall.patch
