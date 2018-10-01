@@ -127,19 +127,18 @@ class fzf_select(Command):
 
     Find a file using fzf.
 
-    With a prefix argument select only directories.
+    With a prefixed quantifier, select the depth.
 
     See: https://github.com/junegunn/fzf
     """
     def execute(self):
         import subprocess
         if self.quantifier:
-            # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            # match only quantier levels deep
+            command="find -L . -maxdepth " + str(self.quantifier) +" \(   -fstype 'dev' -o -fstype 'proc' \) -prune -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         else:
-            # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            # match all files and directories recursively
+            command="find -L . \(  -fstype 'dev' -o -fstype 'proc' \) -prune \
             -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
