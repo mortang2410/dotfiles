@@ -454,6 +454,32 @@ vim  should be seamless with C-h,C-j,C-k,C-l.
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
 
+nvim from git (advanced) 
+----- 
+
+Running nvim from the AppImage currently has the
+disadvantage that `ps` does not see nvim, only AppRun. This prevents
+`vim-tmux-navigator` from working properly. A workaround is to compile nvim
+from git, which itself requires a modded `checkinstall` for `jemalloc`.
+
+```shell
+
+git clone http://checkinstall.izto.org/checkinstall.git ~/checkinstall
+cd ~/checkinstall
+git apply ~/checkinstall_mall.patch
+make
+sudo make install
+sudo checkinstall
+git clone https://github.com/neovim/neovim ~/neovim
+cd ~/neovim
+make CMAKE_BUILD_TYPE=Release -j8
+sudo checkinstall
+
+
+```
+
+
+
 Vim tips (messy, for personal use) 
 ----
 
