@@ -210,7 +210,7 @@ endfunction
 " let g:deoplete#enable_at_startup = 1
 
 "set up LanguageClient
-let g:LanguageClient_serverCommands = {'python': ['pyls'], 'cpp':['ccls']}
+let g:LanguageClient_serverCommands = {'python': ['pyls'], 'cpp':['ccls'], 'sh': ['bash-language-server', 'start']}
 set omnifunc=LanguageClient#complete
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -567,6 +567,8 @@ function! ZenFunc()
 	endif
 endfunction
 
+
+"\\\\\\\\\\\\\
 "move by display lines instead of wrapped lines
 noremap   <silent> k gk
 noremap   <silent> j gj
@@ -591,6 +593,18 @@ function! NoremapNormalCmd(key, preserve_omni, ...)
   endif
 endfunction
 
+" Cursor moves by screen lines
+call NoremapNormalCmd("<Up>", 1, "gk")
+call NoremapNormalCmd("<Down>", 1, "gj")
+call NoremapNormalCmd("<Home>", 0, "g<Home>")
+call NoremapNormalCmd("<End>", 0, "g<End>")
+
+" PageUp/PageDown preserve relative cursor position
+call NoremapNormalCmd("<PageUp>", 0, "<C-U>", "<C-U>")
+call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
+"//////////////////////// 
+
+"\\\\\\\\\\\\\\\\
 " SetupUltisnips 
 
 " integrate with ncm2
@@ -606,19 +620,17 @@ let g:UltiSnipsExpandTrigger="<tab>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDir=["~/.vim/UltiSnips"]
-
-" Cursor moves by screen lines
-call NoremapNormalCmd("<Up>", 1, "gk")
-call NoremapNormalCmd("<Down>", 1, "gj")
-call NoremapNormalCmd("<Home>", 0, "g<Home>")
-call NoremapNormalCmd("<End>", 0, "g<End>")
-
-" PageUp/PageDown preserve relative cursor position
-call NoremapNormalCmd("<PageUp>", 0, "<C-U>", "<C-U>")
-call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
+"//////////////
 
 "Help window vertical split to the left
 autocmd FileType help wincmd L
+
+"vim and tmux
+let g:tmux_navigator_no_mappings = 1
+noremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
 
 " vim: set ft=vim :
