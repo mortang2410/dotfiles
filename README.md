@@ -115,7 +115,7 @@ Notepad for writing a text novel, or a powerhouse development
 environment for programming languages. Even this readme is being
 written with nvim in the
 [Markdown](https://guides.github.com/features/mastering-markdown/)
-langage.
+language.
 
 
 ## Why use zsh or the command line
@@ -535,6 +535,8 @@ git apply ~/checkinstall_mall.patch
 make
 sudo make install
 sudo checkinstall
+sudo apt build-dep neovim
+sudo apt install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
 git clone https://github.com/neovim/neovim ~/neovim
 cd ~/neovim
 make CMAKE_BUILD_TYPE=Release -j8
