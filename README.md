@@ -145,6 +145,28 @@ Finally, we can run shell commands within nvim itself, to either edit
 or insert into the current file. The flexibility of text-based programs
 allow them to be combined in creative ways.
 
+### But what about bash?
+
+People coming from `bash` will wonder what `zsh` can do better, and why they
+should bother. Well, it offers better autocompletion, globbing patterns, and
+more. For instance, `file *(.)` will run `file` over all files, excluding
+directories. How to do that in bash, is probably not common knowledge ;). Also,
+take a look at how customizable zsh's completion matcher is. Mine, for
+instance, quite mimics fuzzy completion.
+
+```
+
+zstyle ':completion:*' matcher-list                                      \
+    ''                                                                \
+    '                                   m:{[:lower:]}={[:upper:]}' \
+    '                                   m:{[:lower:]\-}={[:upper:]_}' \
+    'r:[^[:alpha]]||[[:alpha]]=** r:|=* m:{[:lower:]\-}={[:upper:]_}' \
+    'r:|?=**                            m:{[:lower:]\-}={[:upper:]_}'
+
+
+```
+
+
 ## Why use tmux
 
 I heard you liked the terminal so I put terminals inside your terminal.
