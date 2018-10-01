@@ -306,6 +306,46 @@ should look something like this
   the executable file every time we wish to run it.  Finally, restart
   zsh whenever you edit `.zshrc` or `env.sh`.
 
+### Compiling and installing 
+---------------
+
+On Ubuntu, we often just install programs from `apt`. For instance, `sudo apt
+install wget` will install `wget`.  To build and install programs from sources
+(either because you want the bleeding-edge versions or change some build options),
+usually you just need to download the sources, then follow instructions in
+files like `INSTALL` or `readme`. Usually, it involves 3 steps (though some may
+be omitted):
+
+-  Configuration: checking where the libraries / dependencies required are in
+   your system. Usually, but not always, this is done by a `configure` file in
+   the source folder, so just `cd` to the source folder and run `./configure` .
+   This is where we can often set many options for the software. Again, read
+   the instructions for each program. The developer might use something else
+   for configuring, so there might be no `configure` file. If any dependencies
+       are missing, you'll need to install them.
+
+    
+-  Compilation: turning the source code into executable binaries. Usually, this
+   is done by running `make`. We can often add the flag `-j8` after `make` (so
+   `make -j8`) to speed things up. There might be other make flags available,
+   depending on the program.
+
+-  Installation: putting the binaries into your system directories. Usually,
+   you just need to run `sudo make install`. But **BEWARE**, this is usually
+   just copying files manually into your system, and you should never actually
+   do this, as you can't easily uninstall those files, and `apt` (the default
+       package manager of Ubuntu) won't know about those files. A safer method
+       on Ubuntu is to run `sudo checkinstall make install`, so `checkinstall`
+       will turn the program into an actual `.deb` package file, and installing
+       that `.deb` file will allow `apt` to track those files, so that you can
+       remove them later as a package via `apt`. `checkinstall` allows you to
+       set some options for the package, such as its name, version etc.
+
+Each program might use different tools for configuring / compiling, such as
+`meson`, `cmake`, etc. So the actual commands and flags might vary. Again, read
+the instructions for each program.
+
+
 ### Downloading the repo
 
 Among the programs, nvim, tmux and zsh are the most important as they
@@ -457,10 +497,12 @@ vim  should be seamless with C-h,C-j,C-k,C-l.
 nvim from git (advanced) 
 ----- 
 
-Running nvim from the AppImage currently has the
-disadvantage that `ps` does not see nvim, only AppRun. This prevents
-`vim-tmux-navigator` from working properly. A workaround is to compile nvim
-from git, which itself requires a modded `checkinstall` for `jemalloc`.
+Running nvim from the AppImage currently has the disadvantage that `ps` does
+  not see nvim, only AppRun. This prevents `vim-tmux-navigator` from working
+  properly. A workaround is to compile nvim from git, which itself requires a [
+  modded
+  checkinstall](https://github.com/neovim/neovim/issues/2364#issuecomment-113966180)
+  for `jemalloc`. I also added a modification to `$LIBDIR` in the patch.
 
 ```shell
 
