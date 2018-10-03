@@ -96,7 +96,7 @@ alias checkinstall='checkinstall -D --install'
 alias sudo='sudo '
 
 #ranger exit with cd 
-zranger() {
+zr() {
     ranger --choosedir=$HOME/.rangerdir "$@";
     LASTDIR=`cat $HOME/.rangerdir`;
     cd "$LASTDIR";
