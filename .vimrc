@@ -210,7 +210,7 @@ endfunction
 " let g:deoplete#enable_at_startup = 1
 
 "set up LanguageClient
-let g:LanguageClient_serverCommands = {'python': ['pyls'], 'cpp':['ccls'], 'sh': ['bash-language-server', 'start']}
+let g:LanguageClient_serverCommands = {'python': ['pyls'], 'c':['ccls'] , 'cpp':['ccls'], 'sh': ['bash-language-server', 'start']}
 set omnifunc=LanguageClient#complete
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
