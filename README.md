@@ -342,7 +342,7 @@ be omitted):
    This is where we can often set many options for the software. Again, read
    the instructions for each program. The developer might use something else
    for configuring, so there might be no `configure` file. If any dependencies
-       are missing, you'll need to install them.
+   are missing, you'll need to install them.
 
     
 -  Compilation: turning the source code into executable binaries. Usually, this
@@ -354,21 +354,23 @@ be omitted):
    you just need to run `sudo make install`. But **BEWARE**, this is usually
    just copying files manually into your system, and you should never actually
    do this, as you can't easily uninstall those files, and `apt` (the default
-       package manager of Ubuntu) won't know about those files. A safer method
-       on Ubuntu is to add `checkinstall` right after `sudo` and before the
-       install command (with flags).  So often you just run `sudo checkinstall
-       make install`, which will turn the program into an actual `.deb` package
-       file, and installing that `.deb` file will allow `apt` to track those
-       files, so that you can remove them later as a package via `apt`.
-       `checkinstall` allows you to set some options for the package, such as
-       its name, version etc. As an example, let's say `checkinstall`, after
-       running,  creates `myprogram.deb`, then we just need to run `sudo dpkg
-       -i myprogram.deb` to install it.
+   package manager of Ubuntu) won't know about those files. A safer method
+   on Ubuntu is to add `checkinstall` right after `sudo` and before the
+   install command (with flags).  So often you just run `sudo checkinstall
+   make install`, which will turn the program into an actual `.deb` package
+   file, and installing that `.deb` file will allow `apt` to track those
+   files, so that you can remove them later as a package via `apt`.
+   `checkinstall` allows you to set some options for the package, such as
+   its name, version etc. As an example, let's say `checkinstall`, after
+   running,  creates `myprogram.deb`, then we just need to run `sudo dpkg
+   -i myprogram.deb` to install it.
 
 Each program might use different tools, such as `meson`, `cmake`, `ninja` etc.
 So the actual commands and flags might vary. Again, read the instructions for
 each program. For instance, a program might use `ninja install` instead of
-`make install`, so you'd need to run `sudo checkinstall ninja install` instead. 
+`make install`, so you'd need to run `sudo checkinstall ninja install` instead.
+By default, if you just run `sudo checkinstall`, it is the same as running
+`sudo checkinstall make install` (which might not be what you want for certain programs).
 
 ### Downloading the repo
 
@@ -415,10 +417,9 @@ are already copied to `~`.** This is important, since my configuration covers a 
   some plugins like  LanguageClient must decide to run in nvim mode
   or vim mode (otherwise just reinstall them).
 
-- The programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv, ranger. If
-  the guide does not mention how to install something, you can just use `apt`
-  to install it. Some require more attention, and this guide will talk about
-  them.
+- The programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv, ranger.
+  Usually we just need to use `apt` for installation.  Some require more
+  attention, and this guide will talk about them.
 
 -  In particular, vim needs to be up-to-date, and obviously compiled
   with support for python3, ruby and all that jazz (sadly in Ubuntu
@@ -427,12 +428,13 @@ are already copied to `~`.** This is important, since my configuration covers a 
   most features of vim turned on by default. The transition to nvim
   was so painless  I now prefer it to Vim. People on Ubuntu can
   install nvim as follows: 
+
   ```shell 
-      sudo apt install python3-pip curl 
-      curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
-      chmod u+x nvim.appimage
-      pip3 install --user --upgrade neovim 
-      pip3 install --user neovim-remote
+  sudo apt install python3-pip curl 
+  curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
+  chmod u+x nvim.appimage
+  pip3 install --user --upgrade neovim 
+  pip3 install --user neovim-remote
   ```
 
   then just run nvim.appimage directly. I symlink `nvim.appimage` to
@@ -447,10 +449,12 @@ are already copied to `~`.** This is important, since my configuration covers a 
   might display some errors).
 
 
-- Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
+- Install `tmux` via `apt` as usual. Upon starting tmux, press `C-b I`  (`C-b` stands
+  for `Ctrl+b`) to install tmux plugins.
 
-- urxvt. The default Ubuntu package rxvt-unicode-256color is good enough. But I use 
-  my own version, which has support for wide glyphs and emoji (non-colored).
+- urxvt. The default Ubuntu package rxvt-unicode-256color is good enough. But I
+  use my own version, which has support for wide glyphs and emoji
+  (non-colored).
   
   ```shell
   git clone https://github.com/mortang2410/rxvt-custom ~/urxvt
@@ -484,15 +488,23 @@ are already copied to `~`.** This is important, since my configuration covers a 
   make -j8
   sudo checkinstall
   ```
-  Then install the extensions. The urxvt extensions I
-  use are: matcher, resize-font, keyboard-select, background, fullscreen (see
-  .Xresources).  If your distro does not already bundle those extensions along
-  with urxvt, google, download and install them into `.urxvt/ext`. My repo already 
-  contains some extensions, if you haven't already noticed. 
+
+  Then install the extensions. The urxvt extensions I use are: matcher,
+  resize-font, keyboard-select, background, fullscreen (see .Xresources).  If
+  your distro does not already bundle those extensions along with urxvt,
+  google, download and install them into `.urxvt/ext`. My repo already contains
+  some extensions, if you haven't already noticed. 
   
 
 - [vimpager](https://github.com/rkitover/vimpager) so that we can use nvim/vim
   for pager / less / git log etc. 
+
+  ```shell
+  git clone git://github.com/rkitover/vimpager ~/vimpager
+  cd ~/vimpager
+  sudo make install-deb
+  ```  
+
 
 - Language servers for
   [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim).
@@ -521,8 +533,14 @@ are already copied to `~`.** This is important, since my configuration covers a 
   putting a symlink in `~/.local/bin` (assuming `~/.local/bin` is in
   your PATH variable). 
 
-- [zathura](https://pwmt.org/projects/zathura/) for vimtex. Or use your favorite
-  pdf viewer and modify vimtex options.
+- [zathura](https://pwmt.org/projects/zathura/) for vimtex. 
+  
+  ```shell
+  sudo apt install zathura zathura-djvu
+  ```
+
+  Or use your favorite pdf viewer and modify vimtex options. I just like the
+  shortcuts and minimalism of `zathura`.
 
 - ranger itself. We also need `w3m` (for previewing images) and `highlight` (for
   syntax highlighting). For previewing pdf and djvu, we need `djvulibre-bin`
@@ -567,6 +585,8 @@ vim  should be seamless with C-h,C-j,C-k,C-l.
 - Man pages can be viewed with nvim (try `man git`).
 
 - We can do fuzzy completion in the shell. Try running `ls ~ | fzf` in zsh.
+
+- Try `\re` in `nvim` to quickly open `ranger` to pick a file for editing.
 
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
