@@ -41,6 +41,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'rafaqz/ranger.vim'
 
 " Track the engine.
 Plug 'SirVer/ultisnips'
@@ -630,5 +631,17 @@ nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
+"vim and ranger
+map <leader>re :RangerEdit<cr>
+map <leader>rv :RangerVSplit<cr>
+map <leader>rs :RangerSplit<cr>
+map <leader>rt :RangerTab<cr>
+"  insert and append filenames
+map <leader>ri :RangerInsert<cr>
+map <leader>ra :RangerAppend<cr>
+map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
+let g:NERDTreeHijackNetrw = 0
+
+" let g:vimpager.ansiesc = 0
 
 " vim: set ft=vim :
