@@ -90,9 +90,17 @@ alias edrofi='edlink $HOME/.config/rofi/config'
 alias edalacritty='edlink $HOME/.config/alacritty/alacritty.yml'
 alias edzathura='edlink $HOME/.config/zathura/zathurarc'
 alias edranger='endlink $HOME/.config/ranger/rc.conf'
+alias checkinstall='checkinstall -D --install'
+# make aliases work with sudo
+alias sudo='sudo '
 
 #ranger exit with cd 
-alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+zranger() {
+    ranger --choosedir=$HOME/.rangerdir "$@";
+    LASTDIR=`cat $HOME/.rangerdir`;
+    cd "$LASTDIR";
+}
+
 
 ec() {emacsclient -c "$*" &!; }
 run() {xdg-open "$*" &!;}
@@ -101,7 +109,6 @@ run() {xdg-open "$*" &!;}
 ##fuzzy completion, case insensitive
 # zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' matcher-list                                      \
-    ''                                                                \
     '                                   m:{[:lower:]}={[:upper:]}' \
     '                                   m:{[:lower:]\-}={[:upper:]_}' \
     'r:[^[:alpha]]||[[:alpha]]=** r:|=* m:{[:lower:]\-}={[:upper:]_}' \
