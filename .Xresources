@@ -74,42 +74,87 @@ URxvt.cursorUnderline: false
  
 !!Source http://github.com/altercation/solarized
 
+!
+! Generated with :
+! XRDB2Xreources.py
+!
+*.foreground:  #bbbbbb
+*.background:  #121212
+*.cursorColor: #bbbbbb
+!
+! Black
+*.color0:      #353535
+*.color8:      #7b7b7b
+!
+! Red
+*.color1:      #fa2573
+*.color9:      #f6669d
+!
+! Green
+*.color2:      #98e123
+*.color10:     #b1e05f
+!
+! Yellow
+*.color3:      #dfd460
+*.color11:     #fff26d
+!
+! Blue
+*.color4:      #1080d0
+*.color12:     #00afff
+!
+! Magenta
+*.color5:      #8700ff
+*.color13:     #af87ff
+!
+! Cyan
+*.color6:      #43a8d0
+*.color14:     #51ceff
+!
+! White
+*.color7:      #bbbbbb
+*.color15:     #ffffff
+!
+! Bold, Italic, Underline
+*.colorBD:     #ffffff
+!*.colorIT:
+!*.colorUL:
 
-! special
-*.foreground:   #a3b1b2
-*.background:  #2A2A2A
 
-! black
-*.color0:       #66686b
-*.color8:       #92969a
-
-! red
-*.color1:       #a54242
-*.color9:       #cc6666
-
-! green
-*.color2:       #719440
-*.color10:      #6cbd68
-
-! yellow
-*.color3:       #de935f
-*.color11:      #f0c674
-
-! blue
-*.color4:       #5f819d
-*.color12:      #81a2be
-
-! magenta
-*.color5:       #85678f
-*.color13:      #b294bb
-
-! cyan
-*.color6:       #5e8d87
-*.color14:      #8abeb7
-
-! white
-*.color7:       #707880
-*.color15:      #c5c8c6
+! ! special
+! *.foreground:   #a3b1b2
+! *.background:  #2A2A2A
+!
+! ! black
+! *.color0:       #66686b
+! *.color8:       #92969a
+!
+! ! red
+! *.color1:       #a54242
+! *.color9:       #cc6666
+!
+! ! green
+! *.color2:       #719440
+! *.color10:      #6cbd68
+!
+! ! yellow
+! *.color3:       #de935f
+! *.color11:      #f0c674
+!
+! ! blue
+! *.color4:       #5f819d
+! *.color12:      #81a2be
+!
+! ! magenta
+! *.color5:       #85678f
+! *.color13:      #b294bb
+!
+! ! cyan
+! *.color6:       #5e8d87
+! *.color14:      #8abeb7
+!
+! ! white
+! *.color7:       #707880
+! *.color15:      #c5c8c6
 
 !
 ! *foreground: #949fa0
