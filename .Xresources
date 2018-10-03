@@ -54,15 +54,29 @@ URxvt.loginShell: true
 URxvt.saveLines: 2000
 URxvt.internalBorder: 3
 URxvt.lineSpace: 0
- 
+
 ! URxvt.transparent: true
-! Fonts
-/* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
-! URxvt.font:  -*-terminus-medium-r-*-*-18-*-*-*-*-*-*-*
-! URxvt.font: xft:Terminess Powerline
-URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=16,xft:Symbola
-! Fix font space
-URxvt*letterSpace: -1
+
+!!! pasta fonts
+
+#define font1         InconsolataLGC Nerd Font
+#define font2         Inconsolata Nerd Font
+#define font3         DejaVuSansMono Nerd Font
+#define font4         Noto Sans Mono CJK JP
+
+! URxvt*font:           xft:font1:pixelsize=16, xft:font2:pixelsize=14:minspace=false, xft:font3:pixelsize=14,xft:font4:pixelsize=14
+! URxvt*boldFont:       xft:font1:bold:pixelsize=16, xft:font2:pixelsize=14:minspace=False,xft:font3:pixelsize=14,xft:font4:pixelsize=14
+! URxvt*italicFont:     xft:font1:italic:pixelsize=16, xft:font2:pixelsize=14:minspace=False,xft:font3:pixelsize=14,xft:font4:pixelsize=14
+! URxvt*boldItalicFont: xft:font1:bold:italic:pixelsize=16, xft:font2:pixelsize=14:minspace=False, xft:font3:pixelsize=14, xft:font4:pixelsize=14
+
+
+! ! My Fonts
+! /* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
+! ! URxvt.font:  -*-terminus-medium-r-*-*-18-*-*-*-*-*-*-*
+! ! URxvt.font: xft:Terminess Powerline
+URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=16,xft:Unifont,xft:NotoEmoji Nerd Font
+! ! Fix font space
+ URxvt*letterSpace: -1
 
 ! Cursor
 URxvt.cursorBlink: true
