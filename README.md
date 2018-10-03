@@ -449,11 +449,47 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
 
-- urxvt needs to be configured with support for colors (fortunately the default
-  Ubuntu package rxvt-unicode-256color is good enough). The urxvt extensions I
+- urxvt. The default Ubuntu package rxvt-unicode-256color is good enough. But I use 
+  my own version, which has support for wide glyphs and emoji (non-colored).
+  
+  ```shell
+  git clone https://github.com/mortang2410/rxvt-custom ~/urxvt
+  cd ~/urxvt/rxvt-unicode
+  ./configure \
+    --prefix=/usr \
+    --enable-256-color \
+    --enable-combining \
+    --enable-fading \
+    --enable-font-styles \
+    --enable-iso14755 \
+    --enable-keepscrolling \
+    --enable-lastlog \
+    --enable-mousewheel \
+    --enable-next-scroll \
+    --enable-perl \
+    --enable-pointer-blank \
+    --enable-rxvt-scroll \
+    --enable-selectionscrolling \
+    --enable-slipwheeling \
+    --enable-smart-resize \
+    --enable-startup-notification \
+    --enable-transparency \
+    --enable-unicode3 \
+    --enable-utmp \
+    --enable-wide-glyphs \
+    --enable-wtmp \
+    --enable-xft \
+    --enable-xim \
+    --enable-xterm-scroll
+  make -j8
+  sudo checkinstall
+  ```
+  Then install the extensions. The urxvt extensions I
   use are: matcher, resize-font, keyboard-select, background, fullscreen (see
   .Xresources).  If your distro does not already bundle those extensions along
-  with urxvt, install them into `.urxvt/ext`. 
+  with urxvt, google, download and install them into `.urxvt/ext`. My repo already 
+  contains some extensions, if you haven't already noticed. 
+  
 
 - [vimpager](https://github.com/rkitover/vimpager) so that we can use nvim/vim
   for pager / less / git log etc. 
