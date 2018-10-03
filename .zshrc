@@ -55,6 +55,7 @@ alias urlz='urlscan -c -r "firefox {}"'
 alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
+alias xclipz='xclip -sel clip'
 alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim'
 
 # dot file edit function
