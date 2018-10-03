@@ -157,7 +157,6 @@ instance, quite mimics fuzzy completion.
 ```
 
 zstyle ':completion:*' matcher-list                                      \
-    ''                                                                \
     '                                   m:{[:lower:]}={[:upper:]}' \
     '                                   m:{[:lower:]\-}={[:upper:]_}' \
     'r:[^[:alpha]]||[[:alpha]]=** r:|=* m:{[:lower:]\-}={[:upper:]_}' \
@@ -388,17 +387,24 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
 ```
 
-Then copy things in `~/dotfiles` to `~`. There are some new font files in `~/.fonts`, so
-remember to run `fc-cache -vf` to refresh the font cache (or just restart your
-computer).  Things to install after cloning: 
+Then copy things in `~/dotfiles` to `~`. There are some new font files in
+`~/.fonts`, so remember to run `fc-cache -vf` to refresh the font cache (or
+just restart your computer). **From this point forward, we assume all the files
+are already copied to `~`.** This is important, since my configuration covers a lot of settings. Things to install after cloning: 
 
-- To change the default shell to zsh, install zsh (duh). 
+- To change the default shell to zsh, install zsh (duh). Open up your terminal and run
+
   ```shell
   sudo apt install zsh 
   ```
   
   then execute `chsh` in your current shell to change to the Z shell.  You
-  might need to log out and return for the change to take effect.
+  might need to log out and return for the change to take effect. **From this
+  point forward, we assume we're using zsh to run any commands.** For instance,
+  I have a `checkinstall` alias for zsh to make `checkinstall` automatically
+  pick Debian/Ubuntu packages. If you're not on Ubuntu/Debian, as  I said at
+  the beginning, modify the packages / package managers accordingly.
+
 
 - **Important**: if you don't like nvim and want to use vim (though I
   don't recommend so), then look in `.zshrc` for the line `export
@@ -407,10 +413,14 @@ computer).  Things to install after cloning:
   init.vim, but I tell it to just lazily source .vimrc). This
   **must** be done before installing the plugins for nvim/vim, as
   some plugins like  LanguageClient must decide to run in nvim mode
-  or vim mode (otherwise reinstall them).
+  or vim mode (otherwise just reinstall them).
 
-- the programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv.
-  In particular, vim needs to be up-to-date, and obviously compiled
+- The programs themselves: vim/nvim, tmux, zsh, urxvt, weechat, mpv, ranger. If
+  the guide does not mention how to install something, you can just use `apt`
+  to install it. Some require more attention, and this guide will talk about
+  them.
+
+-  In particular, vim needs to be up-to-date, and obviously compiled
   with support for python3, ruby and all that jazz (sadly in Ubuntu
   18.04 the default package sucks so you need to compile it
   yourself!). One way around this is by using nvim instead, which has
@@ -426,13 +436,15 @@ computer).  Things to install after cloning:
   ```
 
   then just run nvim.appimage directly. I symlink `nvim.appimage` to
-  `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs,
-  there might be errors since plugins are missing. Just do a
-  `:PlugInstall` so that the plugins are automatically downloaded and
-  installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what
-  have changed. Then use `:checkhealth` to make sure `nvim` sees all
-  the ruby, python, lua libraries (if not, then install them and
-  configure `PATH` properly).
+  `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs, there
+  might be errors since plugins are missing. Just do a `:PlugInstall` so that
+  the plugins are automatically downloaded and installed.  Vim oldtimers can
+  use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to
+  make sure `nvim` sees all the ruby, python, lua libraries (if not, then
+  install them and configure `PATH` properly). I recommend reading about how
+  [vim-plug](https://github.com/junegunn/vim-plug) works. Do a `:PlugInstall`
+  and `:PlugUpdate` to make sure everything is updated (before that vim / nvim
+  might display some errors).
 
 
 - Upon starting tmux, press `C-b I`  (`C-b` stands for `Ctrl+b`) to install tmux plugins.
@@ -499,8 +511,15 @@ computer).  Things to install after cloning:
   sudo checkinstall
   ```
 
-I recommend reading about how [vim-plug](https://github.com/junegunn/vim-plug)
-works. Do a `:PlugInstall` and `:PlugUpdate` to make sure everything is updated (before that vim / nvim might display some errors).
+  Once you are ready to live with ranger as the default file manager, run 
+
+  ```shell
+  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
+  ```
+
+  Obviously we assume `ranger.desktop` is already in the right place, such as `~/.local/share/applications`. This should already be the case when we copied everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches `ranger` within a `urxvt` terminal.
+  Now enjoy `ranger`.
+
 
 You're done. Now just find some quickstart guides to see how those
 programs work.
