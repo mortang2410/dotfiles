@@ -641,7 +641,19 @@ Vim tips (messy, for personal use)
 
 ```text
 
+Let's say you grep
+grep -nH pattern -ir .
+but then want to open those files with vim, run
+vi -q <(!!)
+where -q starts quickfix from the file which is the output of the previous command 
 
+Run
+:Capture let g:lmap
+To see the dictionary. Then copy the output and then paste
+:Capture PP  <the_output>
+to view the dictionary in pretty form
+
+:Messages'' to view old messages
 The <Leader> key is now the Spacebar.
 
 F5 : languageclient menu
@@ -696,8 +708,8 @@ s/abc/123/gc : replace with confirmation
 s/\n/&\r/g : replace end-of-line with empty new line
 gd: go to definition
 gq : reformat text to pretty up
-C-p l to open CTRLP in lines mode, then C-f to switch between modes (lines,files, buffers, MRU...). 
-C-p f to open CTRLP in files mode. I use Notes for vim:CtrlP for current dir by setting max depth to 1, and fzf for deep dirs.
+<Space>p l to use fzf on lines, 
+<Space>p f to open CTRLP in files mode. Then C-f to switch between modes (lines,files, buffers, MRU...).  I use CtrlP for current dir by setting max depth to 1, and fzf for deep dirs.
 
 
 C-x C-f in insert mode to insert a filename with fzf.
@@ -769,6 +781,7 @@ Spell and Unspell for... spelling with vim-lexical.
 play around
 :Capture syntime report
 to see what is slowing down vim
+
 
 ```
 
