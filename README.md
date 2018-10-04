@@ -458,6 +458,8 @@ are already copied to `~`.** This is important, since my configuration covers a 
   
   ```shell
   git clone https://github.com/mortang2410/rxvt-custom ~/urxvt
+  sudo apt-get build-dep rxvt-unicode
+  sudo apt install libxft-dev libgdk-pixbuf2.0-dev
   cd ~/urxvt/rxvt-unicode
   ./configure \
     --prefix=/usr \
