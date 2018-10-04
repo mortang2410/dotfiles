@@ -541,7 +541,8 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
   Or use your favorite pdf viewer and modify vimtex options. I just like the
   shortcuts and minimalism of `zathura`. Anyhow, if you want to use `zathura`
-  with tabs, try using `tabbed` from suckless. I use my own version
+  with tabs, try using `tabbed` from [suckless](https://suckless.org/). You can
+  use my own version here
 
   ```shell
   git clone https://github.com/mortang2410/tabbed ~/tabbed
