@@ -421,7 +421,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   Usually we just need to use `apt` for installation.  Some require more
   attention, and this guide will talk about them.
 
--  In particular, vim needs to be up-to-date, and obviously compiled
+- In particular, vim needs to be up-to-date, and obviously compiled
   with support for python3, ruby and all that jazz (sadly in Ubuntu
   18.04 the default package sucks so you need to compile it
   yourself!). One way around this is by using nvim instead, which has
@@ -436,7 +436,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   pip3 install --user --upgrade neovim 
   pip3 install --user neovim-remote
   ```
-
+  
   then just run nvim.appimage directly. I symlink `nvim.appimage` to
   `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs, there
   might be errors since plugins are missing. Just do a `:PlugInstall` so that
@@ -583,16 +583,17 @@ are already copied to `~`.** This is important, since my configuration covers a 
   xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
   ```
 
-  Obviously we assume `ranger.desktop` is already in the right place, such as `~/.local/share/applications`. This should already be the case when we copied everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches `ranger` within a `urxvt` terminal.
-  Now enjoy `ranger`.
+  Obviously we assume `ranger.desktop` is already in the right place, such as
+  `~/.local/share/applications`. This should already be the case when we copied
+  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
+  `ranger` within a `urxvt` terminal.  Now enjoy `ranger`.
 
 
 You're done. Now just find some quickstart guides to see how those
 programs work.
 
 If you have set up everything correctly:
-- Navigating between tmux and
-vim  should be seamless with C-h,C-j,C-k,C-l.
+- Navigating between tmux and vim  should be seamless with C-h,C-j,C-k,C-l.
 
 - Man pages can be viewed with nvim (try `man git`).
 
