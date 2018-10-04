@@ -599,6 +599,7 @@ If you have set up everything correctly:
 - Man pages can be viewed with nvim (try `man git`).
 
 - We can do fuzzy completion in the shell. Try running `ls ~ | fzf` in zsh.
+  Also `<C-t>` should ivoke fzf within zsh.
 
 - Try `<Space>re` in `nvim` to quickly open `ranger` to pick a file for editing.
 

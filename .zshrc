@@ -9,7 +9,6 @@ source ~/env.sh
 zstyle ':completion:*' menu select
 zstyle ':completion:*' completer _expand _complete _match
 zstyle -e ':completion:*' list-colors 'thingy=${PREFIX##*/} reply=( "=(#b)($thingy)(?)*=00=$color[green]=$color[bg-green]" )'
-bindkey '^I' complete-word
 setopt extendedglob
 unsetopt caseglob
 setopt GLOB_DOTS
@@ -228,3 +227,7 @@ stty stop undef
 
 source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
+
+export FZF_COMPLETION_TRIGGER=''
+bindkey '^T' fzf-completion    
+bindkey '^I' complete-word
