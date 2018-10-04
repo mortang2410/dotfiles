@@ -1,0 +1,8 @@
+#!/bin/bash
+
+temp="/tmp/zathura.xid"
+if [[ ! -n `pidof tabbed` ||  ! -n $(  ps -f -p `pidof tabbed` | grep zathura ) ]]; then
+    tabbed -n zathura -cd > $temp;
+fi
+zathura "$@" -e $(<$temp);
+
