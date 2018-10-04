@@ -26,7 +26,9 @@ alias vimdiff='$EDITOR -d'
 alias nvims='NVIM_LISTEN_ADDRESS=/tmp/vimtex nvim'
 alias gvimr='gvim --remote'
 alias vims='vim --servername vim'
+alias sudo='sudo '
 
+## tabbed zathura function
 
 pastebin () { curl -F "c=@${1:--}" https://ptpb.pw/ }
 alias pdfzip='gs -dEmbedAllFonts=true -dCompatibilityLevel=1.5 -dAutoRotatePages=/None -dQUIET -sDEVICE=pdfwrite -o out.pdf'
@@ -56,7 +58,7 @@ alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
 alias xclipz='xclip -sel clip'
-alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim'
+alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim ~/.scripts'
 
 # dot file edit function
 function edlink {
@@ -90,10 +92,10 @@ alias edpolybar='edlink $HOME/.config/polybar/config'
 alias edrofi='edlink $HOME/.config/rofi/config'
 alias edalacritty='edlink $HOME/.config/alacritty/alacritty.yml'
 alias edzathura='edlink $HOME/.config/zathura/zathurarc'
-alias edranger='endlink $HOME/.config/ranger/rc.conf'
+alias edranger='edlink $HOME/.config/ranger/rc.conf'
 alias checkinstall='checkinstall -D --install'
 # make aliases work with sudo
-alias sudo='sudo '
+
 
 #ranger exit with cd 
 zr() {
