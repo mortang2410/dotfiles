@@ -1,4 +1,6 @@
-" Specify a directory for plugins
+let mapleader = "\<Space>"
+let maplocalleader = ","
+"symotion-prefix) Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
@@ -48,6 +50,10 @@ Plug 'SirVer/ultisnips'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
+
+Plug 'hecal3/vim-leader-guide'
+" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
 " Plug 'godlygeek/tabular'
 " Plug 'gabrielelana/vim-markdown' 
 
@@ -282,7 +288,7 @@ function! MyNerdToggle()
         :NERDTreeFind
     endif
 endfunction
-noremap \T :call MyNerdToggle()<CR>
+noremap <Leader>T :call MyNerdToggle()<CR>
 "line hilighting
 let g:conoline_auto_enable = 1
 
@@ -309,11 +315,6 @@ set hidden
 
 if &cp | set nocp | endif
 
-map \b :Buffers<CR>
-map \t :Files<CR>
-map \h :History<CR>
-"formatting current paragraph
-map \f gwap
 
 inoremap <C-/> <C-X><C-U>
 
@@ -491,8 +492,6 @@ hi! Normal ctermbg=NONE
 autocmd BufNewFile,BufRead *.vpy set filetype=python
 
 
-"" timeout insert
-set timeoutlen=1000 ttimeoutlen=0
 
 " set up vimpager. I use vim-manpager for man pages  and vimpager for pager.
 let g:vimpager = {}
@@ -642,6 +641,110 @@ map <leader>ra :RangerAppend<cr>
 map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
 let g:NERDTreeHijackNetrw = 0
 
+
+map <Leader>b :Buffers<CR>
+map <Leader>t :Files<CR>
+map <Leader>h :History<CR>
+vnoremap <Leader>c :TComment<CR>
+nnoremap <Leader>c :TComment<CR>
+"formatting current paragraph
+map <Leader>F gwap
+""" use this if vimpager chokes on large files
 " let g:vimpager.ansiesc = 0
+
+" \\\\\\\\\\\\\\\
+" """ setup vim-leader-guide
+call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
+" Define prefix dictionary
+let g:lmap =  {}
+" Second level dictionaries:
+let g:lmap.e = { 'name' : 'Edit' }
+let g:lmap.s = { 'name' : 'Source conf' }
+let g:lmap.r = { 'name' : 'Ranger' }
+let g:lmap.l = { 'name' : 'Latex' }
+let g:lmap.o = { 'name' : 'Open Stuff' }
+let g:lmap.o.o = ['copen', 'Open quickfix']
+let g:lmap.o.l = ['lopen', 'Open locationlist']
+let g:lmap.g = {
+            \'name' : 'Git Menu',
+            \'s' : ['Gstatus', 'Git Status'],
+            \'p' : ['Gpull',   'Git Pull'],
+            \'u' : ['Gpush',   'Git Push'],
+            \'c' : ['Gcommit', 'Git Commit'],
+            \'w' : ['Gwrite',  'Git Write'],
+            \}
+let g:lmap.p = {
+            \'name' : 'Plugins',
+            \'i' : ['PlugInstall',  'Install'],
+            \'u' : ['PlugUpdate',  'Update'],
+            \'c' : ['PlugClean',  'Clean'],
+            \}
+let g:lmap.w = {
+            \'name' : 'Window',
+            \'s' : ['sp',  'Horizontal Split'],
+            \'v' : ['vs',  'Vertical Split'],
+            \'o' : ['only',  'Only'],
+            \'c' : ['clo',  'Close'],
+            \}
+" press <C-C> as LeaderGuide pops up to access these submode mappings
+let g:leaderGuide_submode_mappings =  { '<C-C>': 'win_close', '<C-F>': 'page_down', '<C-B>': 'page_up'}
+" ///////////////////////////
+
+"" timeout insert
+set timeoutlen=0 ttimeoutlen=0
+
+" \\\\\\\\\\
+" whichkey, sucks that it doesn't work
+" let g:which_key_map =  {}
+" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+" let g:which_key_map.w = {
+"       \ 'name' : 'windows' ,
+"       \ 'w' : ['<C-W>w'     , 'other-window']          ,
+"       \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+"       \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+"       \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+"       \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+"       \ 'h' : ['<C-W>h'     , 'window-left']           ,
+"       \ 'j' : ['<C-W>j'     , 'window-below']          ,
+"       \ 'l' : ['<C-W>l'     , 'window-right']          ,
+"       \ 'k' : ['<C-W>k'     , 'window-up']             ,
+"       \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+"       \ 'J' : ['resize +5'  , 'expand-window-below']   ,
+"       \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+"       \ 'K' : ['resize -5'  , 'expand-window-up']      ,
+"       \ '=' : ['<C-W>='     , 'balance-window']        ,
+"       \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+"       \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+"       \ '?' : ['Windows'    , 'fzf-window']            ,
+"       \ }
+"
+" let g:which_key_map.f = { '+name' : '+file' }
+"
+" let g:which_key_map.f.s = ['update', 'save-file']
+"
+" nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
+" let g:which_key_map.f.d = 'open-vimrc'
+"
+"
+" let g:which_key_map.w = { 'name' : 'Windows' }
+" let g:which_key_map.w.v = ['<C-W>v'     , 'split-window-below']
+"
+" let g:which_key_map.e = { 'name' : '+Edit' }
+" let g:which_key_map.s = { 'name' : '+Source conf' }
+" let g:which_key_map.r = { 'name' : '+Ranger' }
+" let g:which_key_map.l = { 'name' : '+Latex' }
+" " nnoremap <silent> <leader>oq  :copen<CR>
+" " nnoremap <silent> <leader>ol  :lopen<CR>
+" let g:which_key_map['o'] = {
+"       \ 'name' : '+open',
+"       \ 'q' : 'open-quickfix'    ,
+"       \ 'l' : 'open-locationlist',
+"       \ }
+"
+" " /////////////////////////
 
 " vim: set ft=vim :
