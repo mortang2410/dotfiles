@@ -687,7 +687,10 @@ let g:lmap.g = {
             \'w' : ['Gwrite',  'Git Write'],
             \}
 
-
+let g:lmap.u = {
+            \'name' : '',
+            \'t' : [':UndotreeToggle',  'Undo tree'],
+            \}
 let g:lmap.P = {
             \'name' : 'Plugins',
             \'i' : ['PlugInstall',  'Install'],
