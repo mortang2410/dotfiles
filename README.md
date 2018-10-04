@@ -600,7 +600,7 @@ If you have set up everything correctly:
 
 - We can do fuzzy completion in the shell. Try running `ls ~ | fzf` in zsh.
 
-- Try `\re` in `nvim` to quickly open `ranger` to pick a file for editing.
+- Try `<Space>re` in `nvim` to quickly open `ranger` to pick a file for editing.
 
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
