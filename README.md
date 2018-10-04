@@ -545,6 +545,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   use my own version here
 
   ```shell
+  sudo apt install libx11-dev libfreetype6-dev
   git clone https://github.com/mortang2410/tabbed ~/tabbed
   cd ~/tabbed
   sudo checkinstall make clean install
