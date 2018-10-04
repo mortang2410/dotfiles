@@ -641,6 +641,23 @@ Vim tips (messy, for personal use)
 ```text
 
 
+The <Leader> key is now the Spacebar.
+
+F5 : languageclient menu
+
+Vim now works with ranger by default:
+map <leader>re :RangerEdit<cr>
+map <leader>rv :RangerVSplit<cr>
+map <leader>rs :RangerSplit<cr>
+
+\CPATTERN to search for "PATTERN", case sensitive. \c does the opposite.
+/function \([a-zA-Z0-9]\+\)/ 
+and
+/\vfunction ([a-zA-Z0-9]+)/
+both match "function foo42oo" . 
+Use of "\v" means "very magic": in the pattern after it all ASCII characters except '0'-'9', 'a'-'z', 'A'-'Z' and '_' have a special meaning.  
+See :h magic
+
 <tab> on us snippets  (UltiSnips) to expand them, C-b, C-f to go back and forward between spots
 :UltiSnipsEdit  to edit snippets in ~/.vim/UltiSnips
 
@@ -649,9 +666,9 @@ Indent json file:
 :%!python -m json.tool
 
 see the relative number lines? try 10<Down> to go down 10 	lines.
-F3 : "+p, paste from clipboard in normal mode
+F3 : "+p, paste from clipboard in normal mode and copy in visual mode ("+y)
 dap: delete a paragraph
-\h : recent files in vim
+<Space>h : recent files in vim
 :vim abc ** : grep for abc in current dir
 :Mkdir! : create dir for current file
 :r <filename>  : insert file into current buffer, filename CAN contain spaces
@@ -663,7 +680,7 @@ M-l : turn off search hilighting
 gO: outline in man and help pages
 gq : format by 'formatexpr'
 gw : format without 'formatexpr'
-\f: format current paragraph
+<Space>f: format current paragraph
 :lopen to open loclist (local to window)
 :copen to open quickfix (global)
 ,v: toggle less mode for vimpager
@@ -685,14 +702,14 @@ C-p f to open CTRLP in files mode. I use Notes for vim:CtrlP for current dir by 
 C-x C-f in insert mode to insert a filename with fzf.
 M-x : like emacs command with fzf. 
 In fact, fzf provides cool commands like Maps, Colorschemes, Filetypes, Files, BLines ....
-s: easy motion!! (overwritten vim's default s), with \\ as prefix for other stuff
+s: easy motion!! (overwritten vim's default s), with <Space><Space> as prefix for other stuff
 S: easy motion by 2 characters
 Use SudoWrite from suda.vim
 Use Locate from fuzzy finder
-Press cd while in Nerdtree to change vim's working directory (for the sake of fzf \t)
-\T : Nerdtree toggle
-\t : quick find files by fzf
-\b :quick find buffer by fzf
+Press cd while in Nerdtree to change vim's working directory (for the sake of fzf <Space>t)
+<Space>T : Nerdtree toggle
+<Space>t : quick find files by fzf
+<Space>b :quick find buffer by fzf
 :help key-notation 
 
 Browse old files:
@@ -729,8 +746,8 @@ To see what linters ALE is using:
 Install vimpager
 
 vim-tex: 
-\ll compile
-\lv view with synctex. Ctrl-click on zathura to do reverse.
+<Space>ll compile
+<Space>lv view with synctex. Ctrl-click on zathura to do reverse.
 
 F4 for undotree toggle. Double click to jump to the one you want. Persistent undos between sessions.
 
@@ -744,6 +761,7 @@ C-x C-t  in Insert mode in Markdown: thesaurus via vim-lexical
 C-x C-k as above: dictionary via vim-lexical
 Zen : modified distraction free mode
 Spell and Unspell for... spelling with vim-lexical.
+
 
 
 :syntime on
