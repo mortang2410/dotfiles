@@ -648,7 +648,9 @@ Let's say you grep
 grep -nH pattern -ir .
 but then want to open those files with vim, run
 vi -q <(!!)
-where -q starts quickfix from the file which is the output of the previous command 
+where -q starts quickfix from the file which is the output of the previous
+command. We note here that grep -nH is required for vim's quickfix to work
+(with line numbers and filename).
 
 Run
 :Capture let g:lmap
