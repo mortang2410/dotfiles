@@ -1,0 +1,20 @@
+set selection-clipboard clipboard
+set window-height 1024
+set window-width 768
+map = zoom in
+set window-title-basename true
+set window-title-home-tilde true
+
+# colors
+set recolor-darkcolor  "#FFFFFF"
+set recolor-lightcolor "#333333"
+set statusbar-fg "#000000"
+set statusbar-bg "#C2BFA5"
+set inputbar-fg "#FFFFFF"
+set inputbar-bg "#333333"
+set completion-highlight-fg "#F0E68C"
+set completion-highlight-bg "#6B8E23"
+# set highlight-color "#CD853F"
+# set highlight-active-color "#F0E68C"
+set notification-fg "#FFFFFF"
+set notification-bg "#333333"
