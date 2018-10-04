@@ -653,7 +653,7 @@ To see the dictionary. Then copy the output and then paste
 :Capture PP  <the_output>
 to view the dictionary in pretty form
 
-:Messages'' to view old messages
+:Messages to view old messages
 The <Leader> key is now the Spacebar.
 
 F5 : languageclient menu
