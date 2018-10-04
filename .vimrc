@@ -1,5 +1,6 @@
 let mapleader = "\<Space>"
-let maplocalleader = ","
+let maplocalleader =  "\<Space>"
+
 "symotion-prefix) Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -14,8 +15,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'benknoble/clam.vim'
@@ -44,6 +45,8 @@ Plug 'lambdalisue/suda.vim'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'rafaqz/ranger.vim'
+Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-fugitive'
 
 " Track the engine.
 Plug 'SirVer/ultisnips'
@@ -272,23 +275,26 @@ nmap S <Plug>(easymotion-s2)
 " nmap <silent> <Down> gj
 " nmap <silent> <Up> gk
 
-"Set CTRL-P UP
-map <C-p>l :CtrlPLine<CR>
-map <C-p>f :CtrlPCurFile<CR>
+""" Setup CTRL-P 
+""" Don't map these since it's in g:lmap
+" map <Leader>pl :CtrlPLine<CR>
+" map <Leader>pf :CtrlPCurFile<CR>
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_depth = 1
 let g:ctrlp_extensions = ['line','buffertag','tag','dir']
 let g:ctrlp_show_hidden = 1
 
-"setup nerdtree 
-function! MyNerdToggle()
-    if &filetype == 'nerdtree'
-        :NERDTreeToggle
-    else
-        :NERDTreeFind
-    endif
-endfunction
-noremap <Leader>T :call MyNerdToggle()<CR>
+" "setup nerdtree 
+" function! MyNerdToggle()
+"     if &filetype == 'nerdtree'
+"         :NERDTreeToggle
+"     else
+"         :NERDTreeFind
+"     endif
+" endfunction
+" noremap <Leader>T :call MyNerdToggle()<CR>
+
+
 "line hilighting
 let g:conoline_auto_enable = 1
 
@@ -360,8 +366,6 @@ nmap <C-N><C-N> :set invnumber<CR>
 " time to get efficient
 nnoremap ; :
 vnoremap ; :
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nnoremap <silent> <leader>y :YRShow<CR> 
 colorscheme molokai
 "for molokai 
@@ -568,6 +572,10 @@ function! ZenFunc()
 	endif
 endfunction
 
+" setup voom by filetype
+
+let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
+
 
 "\\\\\\\\\\\\\
 "move by display lines instead of wrapped lines
@@ -639,7 +647,7 @@ map <leader>rt :RangerTab<cr>
 map <leader>ri :RangerInsert<cr>
 map <leader>ra :RangerAppend<cr>
 map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
-let g:NERDTreeHijackNetrw = 0
+" let g:NERDTreeHijackNetrw = 0
 
 
 map <Leader>b :Buffers<CR>
@@ -664,8 +672,11 @@ let g:lmap.e = { 'name' : 'Edit' }
 let g:lmap.s = { 'name' : 'Source conf' }
 let g:lmap.r = { 'name' : 'Ranger' }
 let g:lmap.l = { 'name' : 'Latex' }
+let g:lmap._ = { 'name' : 'TComment' }
+
+let g:lmap.q = [ 'qa!' , 'Quit vim forcefully' ]
 let g:lmap.o = { 'name' : 'Open Stuff' }
-let g:lmap.o.o = ['copen', 'Open quickfix']
+let g:lmap.o.q = ['copen', 'Open quickfix']
 let g:lmap.o.l = ['lopen', 'Open locationlist']
 let g:lmap.g = {
             \'name' : 'Git Menu',
@@ -675,11 +686,39 @@ let g:lmap.g = {
             \'c' : ['Gcommit', 'Git Commit'],
             \'w' : ['Gwrite',  'Git Write'],
             \}
-let g:lmap.p = {
+
+
+let g:lmap.P = {
             \'name' : 'Plugins',
             \'i' : ['PlugInstall',  'Install'],
             \'u' : ['PlugUpdate',  'Update'],
             \'c' : ['PlugClean',  'Clean'],
+            \}
+let g:lmap.H = ['Helptags', 'Help' ]
+let g:lmap['?'] = {
+            \'name' : 'Info',
+            \'m' : ['Messages',  'Messages'],
+            \}
+let g:lmap.f = {
+            \'name' : 'Files',
+            \'w' : ['w',  'Write'],
+            \'s' : ['wq!',  'Save and quit forcefully'],
+            \'W' : ['w!',  'Write forcefully'],
+            \'q' : ['q',  'Quit window'],
+            \'r' : ['e!',  'Reload file'],
+            \'Q' : ['qa!',  'Quit all windows forcefully'],
+            \}
+let g:lmap.p = {
+            \'name' : 'CtrlP & fzf',
+            \'f' : ['CtrlPCurFile',  'C-p Files in .'],
+            \'l' : ['BLines',  'Fzf Lines'],
+            \}
+
+let g:lmap.v = {
+            \'name' : 'vimrc & voom',
+            \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
+            \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
+            \'v' : ['Voom',  'Voom'],
             \}
 let g:lmap.w = {
             \'name' : 'Window',
