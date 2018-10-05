@@ -97,7 +97,7 @@ URxvt.cursorUnderline: false
 *.cursorColor: #bbbbbb
 !
 ! Black
-*.color0:      #353535
+*.color0:      #464646
 *.color8:      #7b7b7b
 !
 ! Red
