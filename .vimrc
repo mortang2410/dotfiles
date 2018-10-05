@@ -47,7 +47,10 @@ Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'rafaqz/ranger.vim'
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-fugitive'
-
+Plug 'vimwiki/vimwiki'
+Plug 'majutsushi/tagbar'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 
@@ -574,7 +577,10 @@ endfunction
 
 " setup voom by filetype
 
-let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
+let g:voom_ft_modes = {'markdown': 'markdown', 
+            \ 'tex': 'latex',
+            \ 'html': 'html',
+            \}
 
 
 "\\\\\\\\\\\\\
@@ -710,29 +716,43 @@ let g:lmap.f = {
             \'q' : ['q',  'Quit window'],
             \'r' : ['e!',  'Reload file'],
             \'Q' : ['qa!',  'Quit all windows forcefully'],
+            \'cd' :['lcd %:p:h', 'Cd to current file'],
             \}
 let g:lmap.p = {
             \'name' : 'CtrlP & fzf',
             \'f' : ['CtrlPCurFile',  'C-p Files in .'],
             \'l' : ['BLines',  'Fzf Lines'],
             \}
-
+nmap <Leader>vo gO
 let g:lmap.v = {
-            \'name' : 'vimrc & voom',
+            \'name' : 'vimrc & voom/outline',
             \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
             \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
             \'v' : ['Voom',  'Voom'],
+            \'t' : ['TagbarToggle',  'Tagbar'],
             \}
-let g:lmap.w = {
-            \'name' : 'Window',
-            \'s' : ['sp',  'Horizontal Split'],
-            \'v' : ['vs',  'Vertical Split'],
-            \'o' : ['only',  'Only'],
-            \'c' : ['clo',  'Close'],
+let g:lmap.w = { 'name' : 'Wiki',
+            \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
             \}
+" let g:lmap.w = {
+"             \'name' : 'Wiki',
+"             \'s' : ['sp',  'Horizontal Split'],
+"             \'v' : ['vs',  'Vertical Split'],
+"             \'o' : ['only',  'Only'],
+"             \'c' : ['clo',  'Close'],
+"             \}
 " press <C-C> as LeaderGuide pops up to access these submode mappings
 let g:leaderGuide_submode_mappings =  { '<C-C>': 'win_close', '<C-F>': 'page_down', '<C-B>': 'page_up'}
+
+
+
+
 " ///////////////////////////
+
+"" easytags
+let g:easytags_async = 1
+
+
 
 "" timeout insert
 set timeoutlen=0 ttimeoutlen=0
@@ -788,5 +808,16 @@ set timeoutlen=0 ttimeoutlen=0
 "       \ }
 "
 " " /////////////////////////
+
+
+""" vim wiki
+
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+            \ 'template_path': '~/vimwiki/templates/',
+            \ 'template_default': 'default',
+            \ 'template_ext': '.html'}]
+
+""" annoying tex symbols
+let g:tex_conceal = ""
 
 " vim: set ft=vim :
