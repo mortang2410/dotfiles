@@ -25,7 +25,12 @@ alias vimdiff='$EDITOR -d'
 alias nvims='NVIM_LISTEN_ADDRESS=/tmp/vimtex nvim'
 alias gvimr='gvim --remote'
 alias vims='vim --servername vim'
+
+# make aliases work with sudo
 alias sudo='sudo '
+
+# sync with unison
+alias zsync_wiki='unison -ui text vimwiki ssh://linode/vimwiki'
 
 ## tabbed zathura function
 
@@ -93,7 +98,6 @@ alias edalacritty='edlink $HOME/.config/alacritty/alacritty.yml'
 alias edzathura='edlink $HOME/.config/zathura/zathurarc'
 alias edranger='edlink $HOME/.config/ranger/rc.conf'
 alias checkinstall='checkinstall -D --install'
-# make aliases work with sudo
 
 
 #ranger exit with cd 
@@ -231,3 +235,8 @@ if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
 export FZF_COMPLETION_TRIGGER=''
 bindkey '^T' fzf-completion    
 bindkey '^I' complete-word
+
+# WSL stuff
+
+alias zwiki_view='firefox $(wslpath -w ~/vimwiki_html/index.html)'
+
