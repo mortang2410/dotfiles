@@ -708,6 +708,25 @@ However, there are still some drawbacks:
 WSL tips 
 ---------------
 
+Use the `wsltty` terminal. Install by `chocolate` as instructed.
+
+To copy a file under WSL to your Windows clipboard: `cat report.txt |
+clip.exe`
+
+To view the contents of your Windows clipboard, download from this and
+put into system32 so that WSL can see it. Then Vim can operate with the
+Windows clipboard ( `<Leader>v` by default).
+<http://jasonfaulkner.com/ClipOut.aspx>
+
+Don't forget about unison for syncing (see `zsync_wiki` in `.zshrc`).
+
+Use `wslpath` to convert between Windows and WSL paths. Use it to
+symlink firefox.exe to `~/.local/bin/firefox` for example.
+
+`checkinstall` requires `fakeroot`, which doesn't work, so fix it by
+running
+
+`sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp`
 
 
 
