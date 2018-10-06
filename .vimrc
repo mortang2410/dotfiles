@@ -1,3 +1,5 @@
+runtime! defaults.vim
+
 let mapleader = "\<Space>"
 let maplocalleader =  "\<Space>"
 
@@ -8,6 +10,8 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
@@ -33,7 +37,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'lambdalisue/vim-pager'
 Plug 'mbbill/undotree'
 
-Plug 'vim-scripts/VOoM'
+Plug 'vim-voom/VOoM'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 
@@ -57,8 +61,8 @@ Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
-Plug 'hecal3/vim-leader-guide'
-" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+" Plug 'hecal3/vim-leader-guide'
+Plug 'liuchengxu/vim-which-key'
 
 " Plug 'godlygeek/tabular'
 " Plug 'gabrielelana/vim-markdown' 
@@ -369,7 +373,6 @@ nmap <C-N><C-N> :set invnumber<CR>
 " time to get efficient
 nnoremap ; :
 vnoremap ; :
-nnoremap <silent> <leader>y :YRShow<CR> 
 colorscheme molokai
 "for molokai 
 let g:rehash256 = 1
@@ -400,9 +403,6 @@ let g:CSApprox_hook_post = ['hi Normal  ctermbg=NONE ctermfg=NONE',
 let g:mkdp_refresh_slow = 1
 let g:mkdp_auto_close = 0
 
-"map paste from clipboard
-nnoremap <F3> "+p
-vnoremap <F3> "+y
 
 "setup undotree
 nnoremap <F4> :UndotreeToggle<CR>
@@ -659,32 +659,131 @@ map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
 map <Leader>b :Buffers<CR>
 map <Leader>t :Files<CR>
 map <Leader>h :History<CR>
-vnoremap <Leader>c :TComment<CR>
-nnoremap <Leader>c :TComment<CR>
+vnoremap <Leader>cc :TComment<CR>
+nnoremap <Leader>cc :TComment<CR>
 "formatting current paragraph
 map <Leader>F gwap
 """ use this if vimpager chokes on large files
 " let g:vimpager.ansiesc = 0
+"
+" " \\\\\\\\\\\\\\\
+" " """ setup vim-leader-guide
+" call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+" nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
+" vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
+" " Define prefix dictionary
+" let g:lmap =  {}
+" " Second level dictionaries:
+" let g:lmap.e = { 'name' : 'Edit' }
+" let g:lmap.s = { 'name' : 'Source conf' }
+" let g:lmap.r = { 'name' : 'Ranger' }
+" let g:lmap.l = { 'name' : 'Latex' }
+" let g:lmap._ = { 'name' : 'TComment' }
+"
+" let g:lmap.q = [ 'qa!' , 'Quit vim forcefully' ]
+" let g:lmap.o = { 'name' : 'Open Stuff' }
+" let g:lmap.o.q = ['copen', 'Open quickfix']
+" let g:lmap.o.l = ['lopen', 'Open locationlist']
+" let g:lmap.g = {
+"             \'name' : 'Git Menu',
+"             \'s' : ['Gstatus', 'Git Status'],
+"             \'p' : ['Gpull',   'Git Pull'],
+"             \'u' : ['Gpush',   'Git Push'],
+"             \'c' : ['Gcommit', 'Git Commit'],
+"             \'w' : ['Gwrite',  'Git Write'],
+"             \}
+"
+" let g:lmap.u = {
+"             \'name' : '',
+"             \'t' : [':UndotreeToggle',  'Undo tree'],
+"             \}
+" let g:lmap.P = {
+"             \'name' : 'Plugins',
+"             \'i' : ['PlugInstall',  'Install'],
+"             \'u' : ['PlugUpdate',  'Update'],
+"             \'c' : ['PlugClean',  'Clean'],
+"             \}
+" let g:lmap.H = ['Helptags', 'Help' ]
+" let g:lmap['?'] = {
+"             \'name' : 'Info',
+"             \'m' : ['Messages',  'Messages'],
+"             \}
+" let g:lmap.f = {
+"             \'name' : 'Files',
+"             \'w' : ['w',  'Write'],
+"             \'s' : ['wq!',  'Save and quit forcefully'],
+"             \'W' : ['w!',  'Write forcefully'],
+"             \'q' : ['q',  'Quit window'],
+"             \'r' : ['e!',  'Reload file'],
+"             \'Q' : ['qa!',  'Quit all windows forcefully'],
+"             \'cd' :['lcd %:p:h', 'Cd to current file'],
+"             \}
+" let g:lmap.p = {
+"             \'name' : 'CtrlP & fzf',
+"             \'f' : ['CtrlPCurFile',  'C-p Files in .'],
+"             \'l' : ['BLines',  'Fzf Lines'],
+"             \}
+" nmap <Leader>vo gO
+" let g:lmap.v = {
+"             \'name' : 'vimrc & voom/outline',
+"             \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
+"             \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
+"             \'v' : ['Voom',  'Voom'],
+"             \'t' : ['TagbarToggle',  'Tagbar'],
+"             \}
+" let g:lmap.w = { 'name' : 'Wiki',
+"             \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
+"             \}
+" " let g:lmap.w = {
+" "             \'name' : 'Wiki',
+" "             \'s' : ['sp',  'Horizontal Split'],
+" "             \'v' : ['vs',  'Vertical Split'],
+" "             \'o' : ['only',  'Only'],
+" "             \'c' : ['clo',  'Close'],
+" "             \}
+" " press <C-C> as LeaderGuide pops up to access these submode mappings
+" let g:leaderGuide_submode_mappings =  { '<C-C>': 'win_close', '<C-F>': 'page_down', '<C-B>': 'page_up'}
+"
+"
+"
+"
+" " ///////////////////////////
 
-" \\\\\\\\\\\\\\\
-" """ setup vim-leader-guide
-call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
-" Define prefix dictionary
-let g:lmap =  {}
-" Second level dictionaries:
-let g:lmap.e = { 'name' : 'Edit' }
-let g:lmap.s = { 'name' : 'Source conf' }
-let g:lmap.r = { 'name' : 'Ranger' }
-let g:lmap.l = { 'name' : 'Latex' }
-let g:lmap._ = { 'name' : 'TComment' }
+"" easytags
+let g:easytags_async = 1
 
-let g:lmap.q = [ 'qa!' , 'Quit vim forcefully' ]
-let g:lmap.o = { 'name' : 'Open Stuff' }
-let g:lmap.o.q = ['copen', 'Open quickfix']
-let g:lmap.o.l = ['lopen', 'Open locationlist']
-let g:lmap.g = {
+
+
+"" timeout insert
+set timeoutlen=500 ttimeoutlen=0
+
+" \\\\\\\\\\
+let g:which_key_map =  {}
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+"
+let g:which_key_map.f = { 'name' : '+file' }
+let g:which_key_map.f.s = ['update', 'save-file']
+
+"" can provide docs for already existing maps
+"nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
+"let g:which_key_map.f.d = 'open-vimrc'
+
+" can map either commands, or key combos
+" let g:which_key_map.w.v = ['<C-W>v', 'split-window-below']
+
+let g:which_key_map.e = { 'name' : 'Edit' }
+let g:which_key_map.s = { 'name' : 'Source conf' }
+let g:which_key_map.r = { 'name' : 'Ranger' }
+let g:which_key_map.l = { 'name' : 'Latex' }
+let g:which_key_map._ = { 'name' : 'TComment' }
+
+let g:which_key_map.q = [ 'qa!' , 'Quit vim forcefully' ]
+let g:which_key_map.o = { 'name' : 'Open Stuff' }
+let g:which_key_map.o.q = ['copen', 'Open quickfix']
+let g:which_key_map.o.l = ['lopen', 'Open locationlist']
+let g:which_key_map.g = {
             \'name' : 'Git Menu',
             \'s' : ['Gstatus', 'Git Status'],
             \'p' : ['Gpull',   'Git Pull'],
@@ -693,22 +792,23 @@ let g:lmap.g = {
             \'w' : ['Gwrite',  'Git Write'],
             \}
 
-let g:lmap.u = {
+let g:which_key_map[':'] = { 'name' : 'Command mode'}
+let g:which_key_map.u = {
             \'name' : '',
             \'t' : [':UndotreeToggle',  'Undo tree'],
             \}
-let g:lmap.P = {
+let g:which_key_map.P = {
             \'name' : 'Plugins',
             \'i' : ['PlugInstall',  'Install'],
             \'u' : ['PlugUpdate',  'Update'],
             \'c' : ['PlugClean',  'Clean'],
             \}
-let g:lmap.H = ['Helptags', 'Help' ]
-let g:lmap['?'] = {
+let g:which_key_map.H = ['Helptags', 'Help' ]
+let g:which_key_map['?'] = {
             \'name' : 'Info',
             \'m' : ['Messages',  'Messages'],
             \}
-let g:lmap.f = {
+let g:which_key_map.f = {
             \'name' : 'Files',
             \'w' : ['w',  'Write'],
             \'s' : ['wq!',  'Save and quit forcefully'],
@@ -718,95 +818,32 @@ let g:lmap.f = {
             \'Q' : ['qa!',  'Quit all windows forcefully'],
             \'cd' :['lcd %:p:h', 'Cd to current file'],
             \}
-let g:lmap.p = {
+let g:which_key_map.p = {
             \'name' : 'CtrlP & fzf',
             \'f' : ['CtrlPCurFile',  'C-p Files in .'],
             \'l' : ['BLines',  'Fzf Lines'],
             \}
-nmap <Leader>vo gO
-let g:lmap.v = {
+
+let g:which_key_map.v = {
             \'name' : 'vimrc & voom/outline',
             \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
             \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
             \'v' : ['Voom',  'Voom'],
             \'t' : ['TagbarToggle',  'Tagbar'],
             \}
-let g:lmap.w = { 'name' : 'Wiki',
+let g:which_key_map.w = { 'name' : 'Wiki',
             \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
             \}
-" let g:lmap.w = {
+let g:which_key_map.y = 'Win Clipboard'
+" let g:which_key_map.w = {
 "             \'name' : 'Wiki',
 "             \'s' : ['sp',  'Horizontal Split'],
 "             \'v' : ['vs',  'Vertical Split'],
 "             \'o' : ['only',  'Only'],
 "             \'c' : ['clo',  'Close'],
 "             \}
-" press <C-C> as LeaderGuide pops up to access these submode mappings
-let g:leaderGuide_submode_mappings =  { '<C-C>': 'win_close', '<C-F>': 'page_down', '<C-B>': 'page_up'}
 
 
-
-
-" ///////////////////////////
-
-"" easytags
-let g:easytags_async = 1
-
-
-
-"" timeout insert
-set timeoutlen=0 ttimeoutlen=0
-
-" \\\\\\\\\\
-" whichkey, sucks that it doesn't work
-" let g:which_key_map =  {}
-" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-" let g:which_key_map.w = {
-"       \ 'name' : 'windows' ,
-"       \ 'w' : ['<C-W>w'     , 'other-window']          ,
-"       \ 'd' : ['<C-W>c'     , 'delete-window']         ,
-"       \ '-' : ['<C-W>s'     , 'split-window-below']    ,
-"       \ '|' : ['<C-W>v'     , 'split-window-right']    ,
-"       \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
-"       \ 'h' : ['<C-W>h'     , 'window-left']           ,
-"       \ 'j' : ['<C-W>j'     , 'window-below']          ,
-"       \ 'l' : ['<C-W>l'     , 'window-right']          ,
-"       \ 'k' : ['<C-W>k'     , 'window-up']             ,
-"       \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
-"       \ 'J' : ['resize +5'  , 'expand-window-below']   ,
-"       \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
-"       \ 'K' : ['resize -5'  , 'expand-window-up']      ,
-"       \ '=' : ['<C-W>='     , 'balance-window']        ,
-"       \ 's' : ['<C-W>s'     , 'split-window-below']    ,
-"       \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
-"       \ '?' : ['Windows'    , 'fzf-window']            ,
-"       \ }
-"
-" let g:which_key_map.f = { '+name' : '+file' }
-"
-" let g:which_key_map.f.s = ['update', 'save-file']
-"
-" nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
-" let g:which_key_map.f.d = 'open-vimrc'
-"
-"
-" let g:which_key_map.w = { 'name' : 'Windows' }
-" let g:which_key_map.w.v = ['<C-W>v'     , 'split-window-below']
-"
-" let g:which_key_map.e = { 'name' : '+Edit' }
-" let g:which_key_map.s = { 'name' : '+Source conf' }
-" let g:which_key_map.r = { 'name' : '+Ranger' }
-" let g:which_key_map.l = { 'name' : '+Latex' }
-" " nnoremap <silent> <leader>oq  :copen<CR>
-" " nnoremap <silent> <leader>ol  :lopen<CR>
-" let g:which_key_map['o'] = {
-"       \ 'name' : '+open',
-"       \ 'q' : 'open-quickfix'    ,
-"       \ 'l' : 'open-locationlist',
-"       \ }
-"
 " " /////////////////////////
 
 
@@ -819,5 +856,51 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
 
 """ annoying tex symbols
 let g:tex_conceal = ""
+
+
+""" clipboard by F3 for WSL/Linux
+if has('unix')
+   let uname = system('uname -a') 
+   """ test WSL is running
+   if uname=~"Microsoft"
+       vnoremap <silent> <Leader>y "xy:silent call MyYankToFile()<CR> \| :silent !cat ~/.clipboard \| clip.exe <CR>
+       nnoremap <silent> <Leader>y :silent call MyWinClipToFile()<CR>"=system('cat ~/.clipboard')<CR>p
+   else
+       nnoremap <F3> "+p
+       vnoremap <F3> "+y
+   endif
+endif
+
+
+
+"map paste from clipboard
+
+function! MyYankToFile()
+    let save_more = &more
+    set nomore
+    redir! > ~/.clipboard
+    echon @x
+    redir END
+    echo ""
+    let &more = save_more
+    unlet save_more 
+endfunction
+
+" requires ClipOut
+function! MyWinClipToFile()
+    let save_more = &more
+    set nomore
+    silent !ClipOut.exe  > ~/.clipboard
+    let &more = save_more
+    unlet save_more 
+endfunction
+command! MyCom :call MyFunc<CR>
+
+""" text-object for slashes
+onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
+onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+xnoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
+xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+
 
 " vim: set ft=vim :

@@ -383,7 +383,7 @@ application, so there is no need to install it on servers.
 To download/clone this repository, call
 
 ```shell
-sudo apt install git 
+sudo apt install git wamerican 
 git clone  https://github.com/mortang2410/dotfiles ~/dotfiles
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
@@ -608,6 +608,20 @@ If you have set up everything correctly:
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
 
+Misc software
+-----
+
+`pandoc` is important for many things. Run 
+
+```shell
+curl -sSL https://get.haskellstack.org/ | sh
+git clone https://github.com/jgm/pandoc ~/pandoc
+cd ~/pandoc
+stack setup
+stack install
+```
+
+
 nvim from git (advanced) 
 ----- 
 
@@ -636,6 +650,68 @@ sudo checkinstall
 
 
 ```
+
+Windows Subsystem for Linux
+-----
+
+So I got stuck with my Windows Surface laptop, and came to the realization that
+there was no Windows replacement for the Linux software stack that I've come to
+rely on. And having to install Git, Python etc. for Windows has become
+a serious pain. Also, I need to use vim on the go.
+Apparently the best choice today is to get Linux running on Windows
+via WSL (Windows Subsystem for Linux). Basically some cool people went to work
+at Microsoft, saw that their command line tools sucked, didn't fancy the
+cumbersome approach of using a virtual machine, so they decided to make the
+Windows kernel support Linux system calls. Kinda like the opposite direction of
+WINE. Only that Microsoft has more money, Linux system calls are easily
+studied, and their NT kernel already had some support for POSIX.
+
+I have tried Cygwin, Gnu on Windows, Babun, virtual machines etc. in the past
+and they were all flawed in their own terrible ways.  So I didn't have high
+hopes. But the process was [ surprisingly
+painless](https://docs.microsoft.com/en-us/windows/wsl/install-win10), and I
+already have this guide for setting up everything quickly with all the
+important reminders. :)
+
+Now, after using WSL for a while, I see that:
+
+- Mostly everything works fine, including everything in this guide except
+  `urxvt`, which is the only GUI application used for running the command line
+  tools. I suspect I can get the Linux graphical stack set up, but I have no
+  need for 2 desktops.
+
+- No crashes or egregious stability problems that I've encountered yet. Though
+  to be fair, I only use command line applications. I imagine that GUI
+  applications, or the `X server` of WSL, will present more graphical problems.
+
+- The whole Linux installation is surprisingly small, even with all my tools installed (around 1.6 GB). Very nice as this laptop doesn't have so much storage. It is not *as* fast as true Linux, but it doesn't hamper my workflow.
+
+However, there are still some drawbacks:
+
+- Windows isn't yet efficient at writing a lot of small files the way Linux is
+  (and I doubt it will ever be). And seriously, tell Windows defender to stop
+  checking everything. [ Follow this guide
+  ](https://medium.com/@leandrw/speeding-up-wsl-i-o-up-than-5x-fast-saving-a-lot-of-battery-life-cpu-usage-c3537dd03c74),
+  except the part about turning off real-time protection, of course. Not even I am that radical about speed. 
+
+- Linux kernel modules like `fuse` are not yet supported. (though Microsoft has
+  stated it is a priority in the future) This also means tricks like `sshfs`
+  mounting, or anything closely related to the Linux kernel might not be
+  supported. Though this is quickly changing. Already the Insider Preview Build
+  of Windows contains more enhancements than the version I have (I won't update
+  soon though because Microsoft has a terrible history of [ messing up
+  updates](https://www.theverge.com/2018/10/5/17940902/microsoft-windows-10-october-2018-update-deleting-documents-issues).
+
+- Some tinkering is required to translate the clipboard and file paths between
+  Windows and WSL (mainly `clip.exe`, `ClipOut.exe` and `wslpath`). 
+
+WSL tips 
+---------------
+
+
+
+
+
 
 
 
