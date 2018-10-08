@@ -1,7 +1,7 @@
 runtime! defaults.vim
 
 let mapleader = "\<Space>"
-let maplocalleader =  "\<Space>"
+let maplocalleader =  ","
 
 "symotion-prefix) Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -9,7 +9,8 @@ let maplocalleader =  "\<Space>"
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
-
+Plug 'chrisbra/Recover.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -22,11 +23,12 @@ Plug 'tpope/vim-eunuch'
 " Plug 'scrooloose/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
+Plug 'mattn/webapi-vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'benknoble/clam.vim'
 Plug 'AmaiSaeta/capture.vim'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'miyakogi/conoline.vim'
@@ -37,18 +39,23 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'lambdalisue/vim-pager'
 Plug 'mbbill/undotree'
 
+
+
 Plug 'vim-voom/VOoM'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
+" Plug 'iamcco/mathjax-support-for-mkdp'
+" Plug 'iamcco/markdown-preview.vim'
 
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
 Plug 'lambdalisue/suda.vim'
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'rafaqz/ranger.vim'
+""" Strange bug
+"Plug 'rafaqz/ranger.vim'
+
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
@@ -57,6 +64,10 @@ Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 " Track the engine.
 Plug 'SirVer/ultisnips'
+Plug 'mortang2410/vim-markdown-preview'
+
+
+
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
@@ -256,22 +267,88 @@ set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 " set omnifunc=syntaxcomplete#Complete
 " set omnifunc=LanguageClient#complete
 
-
+""\\\\\\\\\\\\
+""" setup fzf-vim
 " Insert mode completion
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 "Set fzf to mimic emacs command
 map <M-x> :Commands<CR>
+"" examples of fzf usage : 
+"" External commands
+"" call fzf#run({ 'source' : 'cat /usr/share/dict/words' })
+"" Vim commands
+"" call fzf#run({ 'source' : split(execute('version'),"\n") , 'options' : '--reverse' })
+"" see <f-args> to pass arguments from commands to functions
+function! MyFilterFunc(vim_command)
+    call fzf#run({ 'source' : split(execute(a:vim_command),"\n") , 'options' : '--reverse' })
+endfunction
 
+command! -nargs=+ MyFilter call MyFilterFunc(<q-args>)
 
+function! s:fzf_neighbouring_files()
+  let current_file =expand("%")
+  let cwd = fnamemodify(current_file, ':p:h')
+  let command = 'find ' .  cwd . ' -maxdepth 1 -type f'
+  call fzf#run({
+        \ 'source': command,
+        \ 'sink':   'e',
+        \ 'options': '-m -x +s',
+        \ 'window':  'enew' })
+endfunction
+command! FZFNeigh call s:fzf_neighbouring_files()
+
+" credit to deathbeam
+" let g:fuzzyfunc = &omnifunc
+"
+" function! FuzzyCompleteFunc(findstart, base)
+"   let Func = function(get(g:, 'fuzzyfunc', &omnifunc))
+"   let results = Func(a:findstart, a:base)
+"
+"   if a:findstart
+"     return results
+"   endif
+"
+"   if type(results) == type({}) && has_key(results, 'words')
+"     let mylocalwords = []
+"     for result in results.words
+"       call add(words, result.word . ' ' . result.menu)
+"     endfor
+"   elseif len(results)
+"     let mylocalwords = results
+"   endif
+"
+"   if len(mylocalwords)
+"     let result = fzf#run({ 'source': mylocalwords, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
+"
+"     if empty(result)
+"       return [ a:base ]
+"     endif
+"
+"     return [ split(result[0])[0] ]
+"   else
+"     return [ a:base ]
+"   endif
+" endfunction
+" function! FuzzyFuncTrigger()
+"   setlocal completefunc=FuzzyCompleteFunc
+"   setlocal completeopt=menu
+"   call feedkeys("\<c-x>\<c-u>", 'n')
+" endfunction
+"
+" imap <c-x><c-j> <c-o>:call FuzzyFuncTrigger()<cr>
+"
+
+" ////////////////
+"
+"
 " "set up python-mode
 " let g:pymode_python = 'python3'
 " let g:pymode = 1
 " let g:pymode_options = 1
-
 "Set up easymotion
+
 let g:EasyMotion_smartcase = 1
 map s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
@@ -282,14 +359,14 @@ nmap S <Plug>(easymotion-s2)
 " nmap <silent> <Down> gj
 " nmap <silent> <Up> gk
 
-""" Setup CTRL-P 
-""" Don't map these since it's in g:lmap
+""" Setup CTRL-P. I use fzf now :)
+""" Don't map these since it's in g:lmap. 
 " map <Leader>pl :CtrlPLine<CR>
 " map <Leader>pf :CtrlPCurFile<CR>
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_max_depth = 1
-let g:ctrlp_extensions = ['line','buffertag','tag','dir']
-let g:ctrlp_show_hidden = 1
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_max_depth = 1
+" let g:ctrlp_extensions = ['line','buffertag','tag','dir']
+" let g:ctrlp_show_hidden = 1
 
 " "setup nerdtree 
 " function! MyNerdToggle()
@@ -300,6 +377,19 @@ let g:ctrlp_show_hidden = 1
 "     endif
 " endfunction
 " noremap <Leader>T :call MyNerdToggle()<CR>
+
+
+" Diff with saved file
+function! DiffWithSavedFunc()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call DiffWithSavedFunc()
+
+
 
 
 "line hilighting
@@ -398,16 +488,22 @@ let g:CSApprox_hook_post = ['hi Normal  ctermbg=NONE ctermfg=NONE',
 "   exec "! if [[  -f %< ]] then {cowsay 'successful' && ./%<} ; else cowsay 'Compile unsuccessful';fi "
 " endfunc
 
-"setup markdown-preview
-" let g:mkdp_auto_open = 1
-let g:mkdp_refresh_slow = 1
-let g:mkdp_auto_close = 0
-
-
+" "setup markdown-preview
+" let g:mkdp_auto_open = 0
+" "
+" " Q: the firefox preview window didn't close when leave the markdown file in vim
+" "
+" " A: if you want the plugin auto close the preview window on firefox, you have to do some config:
+" "
+" " 1. open firefox
+" " 2. type `about:config` in the address bar and press Enter key
+" " 3. search `dom.allow_scripts_to_close_windows` item and set the value to `true`
+" let g:mkdp_refresh_slow = 1
+" let g:mkdp_auto_close = 1
+"
 "setup undotree
 nnoremap <F4> :UndotreeToggle<CR>
 
-nnoremap <silent> <M-l>  :noh<CR>
 
 
 "vim-latex
@@ -458,6 +554,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.i
 set history=1000
 
 
+"" end of file char = nothing
 "nvim only stuff
 if has('nvim')
 	let g:vimtex_compiler_progname = 'nvr'
@@ -513,12 +610,15 @@ let g:vimtex_view_method = 'zathura'
 " persistent undos between sessions
 " then clean up stale undo files
 " set undofile
-set undodir=~/.vim/undodir
+
+if has("persistent_undo")
+    set undodir="~/.undodir/"
+    set undofile
+endif
+
 command! -nargs=0 CleanUpUndoFiles !find ~/.vim/undodir -type f -mtime +300 \! -name '.gitignore' -delete
 
-"" settings for text  & markdown file
-
-
+""""" settings for text  & markdown file
 ""auto formatting. Slow with syntax checking
 " set fo+=a
 
@@ -528,10 +628,12 @@ let g:lexical#spelllang = ['en_us','en_ca','en_gb']
 let g:lexical#thesaurus = ['~/.vim/thesaurus/words.txt']
 augroup lexical
   autocmd!
-  autocmd FileType markdown,mkd call lexical#init({ 'spell': 0 })
+  autocmd FileType pandoc,markdown,mkd call lexical#init({ 'spell': 0 })
   autocmd FileType textile call lexical#init()
   autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
+
+
 
 command! Spell :call lexical#init({ 'spell': 1 })
 command! UnSpell :call lexical#init({ 'spell': 0 })
@@ -619,21 +721,6 @@ call NoremapNormalCmd("<PageUp>", 0, "<C-U>", "<C-U>")
 call NoremapNormalCmd("<PageDown>", 0, "<C-D>", "<C-D>")
 "//////////////////////// 
 
-"\\\\\\\\\\\\\\\\
-" SetupUltisnips 
-
-" c-j c-k for moving in snippet
-" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-f>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-b>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDir=["~/.vim/UltiSnips"]
-"//////////////
-
 "Help window vertical split to the left
 autocmd FileType help wincmd L
 
@@ -644,16 +731,23 @@ nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
-"vim and ranger
-map <leader>re :RangerEdit<cr>
-map <leader>rv :RangerVSplit<cr>
-map <leader>rs :RangerSplit<cr>
-map <leader>rt :RangerTab<cr>
-"  insert and append filenames
-map <leader>ri :RangerInsert<cr>
-map <leader>ra :RangerAppend<cr>
-map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
-" let g:NERDTreeHijackNetrw = 0
+
+" "vim and ranger, mysterious bug
+" map <leader>re :RangerEdit<cr>
+" map <leader>rv :RangerVSplit<cr>
+" map <leader>rs :RangerSplit<cr>
+" map <leader>rt :RangerTab<cr>
+" "  insert and append filenames
+" map <leader>ri :RangerInsert<cr>
+" map <leader>ra :RangerAppend<cr>
+" map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
+" " let g:NERDTreeHijackNetrw = 0
+
+
+"""" the other ranger plugin.
+let g:ranger_map_keys = 0
+"" remove map from bclose
+map <Leader>r :Ranger<CR>
 
 
 map <Leader>b :Buffers<CR>
@@ -667,7 +761,7 @@ map <Leader>F gwap
 " let g:vimpager.ansiesc = 0
 "
 " " \\\\\\\\\\\\\\\
-" " """ setup vim-leader-guide
+" " """ setup vim-leader-guide. I use vim-which-key now :)
 " call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
 " nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 " vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
@@ -754,35 +848,40 @@ let g:easytags_async = 1
 
 
 
+
 "" timeout insert
 set timeoutlen=500 ttimeoutlen=0
 
 " \\\\\\\\\\
+
 let g:which_key_map =  {}
 call which_key#register('<Space>', "g:which_key_map")
+let g:which_key_localmap =  {}
+call which_key#register(',', "g:which_key_localmap")
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <localleader>    :<c-u>WhichKey ','<CR>
+vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
 "
-let g:which_key_map.f = { 'name' : '+file' }
-let g:which_key_map.f.s = ['update', 'save-file']
 
 "" can provide docs for already existing maps
 "nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
 "let g:which_key_map.f.d = 'open-vimrc'
 
 " can map either commands, or key combos
-" let g:which_key_map.w.v = ['<C-W>v', 'split-window-below']
+" let g:which_key_map.w.v = ['<C-W>v', 'spibelow']
 
+let g:which_key_map.F = 'Format paragraph'
 let g:which_key_map.e = { 'name' : 'Edit' }
 let g:which_key_map.s = { 'name' : 'Source conf' }
 let g:which_key_map.r = { 'name' : 'Ranger' }
-let g:which_key_map.l = { 'name' : 'Latex' }
+let g:which_key_localmap.l = { 'name' : 'Latex' }
 let g:which_key_map._ = { 'name' : 'TComment' }
 
 let g:which_key_map.q = [ 'qa!' , 'Quit vim forcefully' ]
 let g:which_key_map.o = { 'name' : 'Open Stuff' }
-let g:which_key_map.o.q = ['copen', 'Open quickfix']
-let g:which_key_map.o.l = ['lopen', 'Open locationlist']
+let g:which_key_map.o.q = ['copen', 'quickfix']
+let g:which_key_map.o.l = ['lopen', 'locationlist']
 let g:which_key_map.g = {
             \'name' : 'Git Menu',
             \'s' : ['Gstatus', 'Git Status'],
@@ -791,11 +890,26 @@ let g:which_key_map.g = {
             \'c' : ['Gcommit', 'Git Commit'],
             \'w' : ['Gwrite',  'Git Write'],
             \}
+let g:which_key_map.c = { 'name' : '+TComment' }
+""" use explicit nnoremap, as which_key can't deal with recursive 'no'. only use 
+""" which_key for documentation
+let g:which_key_map.n = { 
+            \'name' : '+noh',
+            \'o' : 'Remove highlighting'
+            \}
+nnoremap <leader>no :noh<CR>
 
 let g:which_key_map[':'] = { 'name' : 'Command mode'}
 let g:which_key_map.u = {
             \'name' : '',
             \'t' : [':UndotreeToggle',  'Undo tree'],
+            \}
+
+let g:which_key_map.D = {
+            \'name' : 'Diff+',
+            \'g' : ['diffget',  'Use the other buffer'],
+            \'p' : ['diffput',  'Use this buffer'],
+            \'q' : ['diffoff',  'Done diffing'],
             \}
 let g:which_key_map.P = {
             \'name' : 'Plugins',
@@ -811,19 +925,29 @@ let g:which_key_map['?'] = {
 let g:which_key_map.f = {
             \'name' : 'Files',
             \'w' : ['w',  'Write'],
-            \'s' : ['wq!',  'Save and quit forcefully'],
+            \'D' : ['DiffSaved',  'Diff with saved'],
             \'W' : ['w!',  'Write forcefully'],
+            \'t' : ['Filetypes',  'Filetypes'],
             \'q' : ['q',  'Quit window'],
             \'r' : ['e!',  'Reload file'],
+            \'R' : ['FinishRecovery',  'Finish Recovery'],
             \'Q' : ['qa!',  'Quit all windows forcefully'],
-            \'cd' :['lcd %:p:h', 'Cd to current file'],
+            \'c' :['lcd %:p:h', 'Cd to current file'],
             \}
 let g:which_key_map.p = {
-            \'name' : 'CtrlP & fzf',
-            \'f' : ['CtrlPCurFile',  'C-p Files in .'],
+            \'name' : 'Fzf',
+            \'f' : ['FZFNeigh',  'Fzf Files in .'],
             \'l' : ['BLines',  'Fzf Lines'],
             \}
-
+let g:which_key_map.U={
+            \'name' : 'Ultisnips',
+            \'e' : [ 'UltiSnipsEdit' , 'Edit snippets'],
+            \'a' : [ 'UltiSnipsAddFiletypes' , 'Add snippets from other filetypes' ],
+            \}
+let g:which_key_map.m = { 
+            \'name' : '+marks',
+            \'m' : ['Marks',  'Marks'],
+            \}
 let g:which_key_map.v = {
             \'name' : 'vimrc & voom/outline',
             \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
@@ -833,6 +957,11 @@ let g:which_key_map.v = {
             \}
 let g:which_key_map.w = { 'name' : 'Wiki',
             \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
+            \'b' : ['VimwikiGoBackLink',  'Back'],
+            \'n' : ['VimwikiNextLink',  'Jump to next link'],
+            \'p' : ['VimwikiPrevLink',  'Jump to prev link'],
+            \'r' : ['VimwikiRenameLink',  'Rename current file'],
+            \'S' : 'Search Wiki',
             \}
 let g:which_key_map.y = 'Win Clipboard'
 " let g:which_key_map.w = {
@@ -842,17 +971,30 @@ let g:which_key_map.y = 'Win Clipboard'
 "             \'o' : ['only',  'Only'],
 "             \'c' : ['clo',  'Close'],
 "             \}
-
-
+"""emmet 
+let g:which_key_emmet=  {}
+call which_key#register('<C-y>', "g:which_key_emmet")
+"""can't map '<C-Y>' in nnoremap so I hack it with a call function
+function! WhichEmmet(vis)
+    call which_key#start(a:vis,0,'<C-y>')
+endfunction
+nnoremap <C-y>  :call WhichEmmet(0)<CR>
+vnoremap <C-y>  :call WhichEmmet(1)<CR>
 " " /////////////////////////
 
 
 """ vim wiki
-
+" disable vimwiki filetype outside of wiki folder.
+let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [{'path': '~/vimwiki/',
             \ 'template_path': '~/vimwiki/templates/',
             \ 'template_default': 'default',
-            \ 'template_ext': '.html'}]
+            \ 'template_ext': '.html',
+            \ 'syntax' : 'markdown',
+            \ 'ext' : '.md'
+            \}]
+nnoremap <leader>wS :VimwikiIndex<CR>:Rg<Space>
+autocmd FileType vimwiki set ft=pandoc
 
 """ annoying tex symbols
 let g:tex_conceal = ""
@@ -896,11 +1038,85 @@ function! MyWinClipToFile()
 endfunction
 command! MyCom :call MyFunc<CR>
 
-""" text-object for slashes
-onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
-onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
-xnoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
-xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+
+
+""" setup vim-pandoc
+
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+" let g:pandoc#filetypes#pandoc_markdown = 1
+
+""" verbose logging in vim
+function! ToggleVerboseFunc()
+    if !&verbose
+        set verbosefile=~/.vim.verbose.log
+        set verbose=15
+    else
+        set verbose=0
+        set verbosefile=""
+    endif
+endfunction
+
+command! ToggleVerbose :call ToggleVerboseFunc()
+""" Debug vim:  ToggleVerbose and/or
+" vim -V20 2>&1 | tee logfile 
+
+
+""" setup polyglot with vimtex
+let g:polyglot_disabled = ['latex']
+
+""" text-object for / and :
+onoremap <silent> i/ :<C-U>normal! T/vt/<CR>
+onoremap <silent> a/ :<C-U>normal! F/vf/<CR>
+xnoremap <silent> i/ :<C-U>normal! T/vt/<CR>
+xnoremap <silent> a/ :<C-U>normal! F/vf/<CR>
+
+
+onoremap <silent> a: :<C-U>normal! F:vf:<CR>
+xnoremap <silent> a: :<C-U>normal! F:vf:<CR>
+onoremap <silent> i: :<C-U>normal! T:vt:<CR>
+xnoremap <silent> i: :<C-U>normal! T:vt:<CR>
+
+""" emmet mode
+let g:user_emmet_mode='a'  
+"\\\\\\\\\\\\\\\\
+" SetupUltisnips 
+" the tab key is fought over, so use C-j instead.
+" in vimwiki, <CR> and <Tab> don't work as expected.
+" c-h c-l for moving in snippet
+" stupid bug <C-> if we don't set trigger
+let g:UltiSnipsExpandTrigger		= "<tab>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-h>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-l>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:ulti_expand_or_jump_res = 0 "default value, just set once
+function! Ulti_ExpandOrJump_and_getRes()
+    call UltiSnips#ExpandSnippetOrJump()
+    return g:ulti_expand_or_jump_res
+endfunction
+inoremap <NL> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":""<CR>
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+"//////////////
+
+""" view current highlighting group under cursor
+function! SynGroup()                                                            
+    let l:s = synID(line('.'), col('.'), 1)                                       
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
+
+
+""" setup JamshedVesuna/vim-markdown-preview
+let g:vim_markdown_preview_toggle=3
+let g:vim_markdown_preview_pandoc=1
+let g:vim_markdown_preview_hotkey='<C-p>'
+autocmd FileType markdown,pandoc nnoremap <buffer> <C-p> :call Vim_Markdown_Preview()<CR>
+
+let vim_markdown_preview_use_xdg_open=0
+
 
 
 " vim: set ft=vim :

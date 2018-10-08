@@ -1,3 +1,4 @@
+
 Dotfiles
 ==============
 
@@ -5,20 +6,21 @@ Legal disclaimer: This config is not responsible for blowing your PC up. Many
 hacks/workarounds are due to the great people of the internet.  Typos abound. 
 
 These are my dotfiles. Useful for setting up quickly on new machines.
-Right now it contains my configuration for 
+Right now it contains my configuration for:
 
 - vim (THE text editor) and nvim/neovim (a newer version of vim, with fewer hassles and very active development). They can mostly use the same plugins.
 
 - tmux: a program that lets TUI applications (text-based user interface) run
   in the  background, as well as rearranging them on the terminal screen.
 
+
 - zsh: an awesome shell, which is the interactive program that allows
-  you to launch stuff / execute commands in terminals.
-  `zsh` is much better than the default `bash` shell on Linux /
-  MacOS, with cool tabcompletion etc. The default shell on Windows,
-  `cmd`, that probably a lot of people including me learned in IT
-  classes, is **horrible**, and  for many years why I hated the
-  command line. Microsoft is switching to PowerShell, inspired by Bash / Zsh, but I've tried it and found it wanting for many reasons.
+  you to launch stuff / execute commands in terminals.  `zsh` is much better
+  than the default `bash` shell on Linux / MacOS, with cool tabcompletion etc.
+  The default shell on Windows, `cmd`, that probably a lot of people including
+  me learned in IT classes, is **horrible**, and  for many years why I hated
+  the command line. Microsoft is switching to PowerShell, inspired by Bash /
+  Zsh, but I've tried it and found it wanting for many reasons.
 
 - urxvt: a great and lean terminal with various extensions
 
@@ -66,11 +68,15 @@ just impossible for me to use other programs that don't learn from
 nvim/vim.
 
 
-- "How to
-delete everything from the cursor to the end of the current line?"
-`D`. 
+- "How to delete everything from the cursor to the end of the current line?"
+  `D`. "To delete the current line?" `5dd`. "To delete 5 lines?" `5dd`.
 
-- "How to delete 5 lines starting from the current one?" `5dd`. 
+- "How to indent a paragraph?" `=ap`. "To delete a paragraph"? `dap` (notice
+  the mnemonic). "To delete a tag in HTML?" `dat`. "To delete everything
+  in-between square brackets?" `di[`. "How about in-between curly brackets?"
+  `di{`. Note how logical these commands are. I use these operations every day
+  for editing things quickly.  Bonus tip: `gwap` to format the current
+  paragraph.
 
 - "But I just want to enter text normally like in Notepad?" Press `i`
   to enter a special mode call Insert, where you enter text just like
@@ -181,13 +187,17 @@ running programs on remote servers, which often don't have a GUI
 ## Why use ranger 
 
 It can do anything, from previewing files (in the terminal!), to integrating
-with vim, zsh etc. And it does everything via vim shortcuts. Even just
-jumping to bookmarks in 2 key presses is enough for me to like it.  You can
-also write custom python commands for it to run, and redefine every option /
-file association / launchers etc. In my configuration, press `/` to quick filter, `F` to flatten
-directories, `` `H ``  to search through frequently used dirs with `fzf`
-(an awesome search tool which I also use for zsh and vim), `S` to start a zsh
-shell in the current dir, and `<Right>` on a text file to edit with vim.
+with vim, zsh etc. And it does everything via vim shortcuts. Even just jumping
+to bookmarks in 2 key presses is enough for me to like it.  You can also write
+custom python commands for it to run, and redefine every option / file
+association / launchers etc. In my configuration, press `/` to quick filter,
+`F` to flatten directories, `` `H ``  to search through frequently used dirs
+with `fzf` (an awesome search tool which I also use for zsh and vim), `S` to
+start a zsh shell in the current dir, and `<Right>` on a text file to edit with
+vim. Also, it can select files from different folders for copying (press `ya`), show
+all files that lie in subdirectories 3 levels deep from current dir, and search
+through them with `fzf`. Those are insanely useful features, and only the tip
+of the iceberg.
 
 
 
@@ -212,7 +222,7 @@ how well it utilizes other tools within the terminal, and provides seamless
 integration between different worlds. Plus I personally dig how it makes me
 feel like flying through directories with my custom commands. I am honestly
 surprised that it has managed to replace my graphical file managers as well,
-and in some cases offered me more features (e.g. fzf).
+and in some cases offered me more features (e.g. fzf). 
 
 ## Final caveats
 
@@ -298,34 +308,34 @@ Look within the `env.sh` file to edit the `PATH` variable. `PATH`
 tells zsh where to look for executable files to use as commands. It 
 should look something like this
 
-  ```
-    export PATH=$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/bin:$PATH
-  ```
+```shell
+export PATH=$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/bin:$PATH
+```
 
-  Notice another `PATH` within the definition of `PATH`. It means the
-  system already has a built-in `PATH` variable, and we are simply
-  adding more to it.   I used to put `PATH` in the `.zshrc` file, but
-  then found it useful to separate such variables away from `.zshrc`,
-  so I created `env.sh` and tell `.zshrc` to load `env.sh` instead.
-  The reason for using 2 files is so that I might switch to another
-  shell in the future and tell that shell to load the same `env.sh`.
-  `PATH` is an example of an *environment variable*. Normally, when
-  things don't run and programs don't see each other, it's usually
-  because they have their environment variables set up wrong.
+Notice another `PATH` within the definition of `PATH`. It means the
+system already has a built-in `PATH` variable, and we are simply
+adding more to it.   I used to put `PATH` in the `.zshrc` file, but
+then found it useful to separate such variables away from `.zshrc`,
+so I created `env.sh` and tell `.zshrc` to load `env.sh` instead.
+The reason for using 2 files is so that I might switch to another
+shell in the future and tell that shell to load the same `env.sh`.
+`PATH` is an example of an *environment variable*. Normally, when
+things don't run and programs don't see each other, it's usually
+because they have their environment variables set up wrong.
 
-  Try running
+Try running
 
-  ```
-    which ls
-    echo $PATH
-  ```  
+```
+which ls
+echo $PATH
+```  
 
-  You will see that the command `ls`, often  used to list files in a
-  folder, is really just the executable file `/bin/ls`, and `/bin` is
-  indeed contained in `PATH`. That's how zsh sees it, and uses `ls`
-  as a command. Otherwise, we would have to type the full location of
-  the executable file every time we wish to run it.  Finally, restart
-  zsh whenever you edit `.zshrc` or `env.sh`.
+You will see that the command `ls`, often  used to list files in a
+folder, is really just the executable file `/bin/ls`, and `/bin` is
+indeed contained in `PATH`. That's how zsh sees it, and uses `ls`
+as a command. Otherwise, we would have to type the full location of
+the executable file every time we wish to run it.  Finally, restart
+zsh whenever you edit `.zshrc` or `env.sh`.
 
 ### Compiling and installing 
 
@@ -608,19 +618,19 @@ If you have set up everything correctly:
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
 
-Misc software
+Misc 
 -----
 
-`pandoc` is important for many things. Run 
+- `pandoc` is important for many things. Run 
 
 ```shell
-curl -sSL https://get.haskellstack.org/ | sh
-git clone https://github.com/jgm/pandoc ~/pandoc
-cd ~/pandoc
-stack setup
-stack install
+    curl -sSL https://get.haskellstack.org/ | sh
+    git clone https://github.com/jgm/pandoc ~/pandoc
+    cd ~/pandoc
+    stack setup
+    stack install
 ```
-
+- `rg` (ripgrep) is better than `grep`, and `fd` is better than `find`. Download their `deb` file and install them. Then run `:Rg pattern` in `nvim`. 
 
 nvim from git (advanced) 
 ----- 
@@ -727,10 +737,6 @@ symlink firefox.exe to `~/.local/bin/firefox` for example.
 running
 
 `sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp`
-
-
-
-
 
 
 
