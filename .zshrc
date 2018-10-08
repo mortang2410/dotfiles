@@ -9,12 +9,20 @@ source ~/env.sh
 zstyle ':completion:*' menu select
 zstyle ':completion:*' completer _expand _complete _match
 zstyle -e ':completion:*' list-colors 'thingy=${PREFIX##*/} reply=( "=(#b)($thingy)(?)*=00=$color[green]=$color[bg-green]" )'
-setopt extendedglob
-unsetopt caseglob
-setopt GLOB_DOTS
 
 # 10ms for key sequences 
 KEYTIMEOUT=1 
+
+ # setup auto-fu.zsh, which autocompletes on the fly
+# autofu_file="~/auto-fu.zsh"
+# if [[ -f ~/auto-fu.zsh ]]; then
+#     if [[ ! -f ~/.zsh/auto-fu || ! -f ~/.zsh/auto-fu.zwc ]]; then
+#         echo love
+#         source ~/auto-fu.zsh 
+#         auto-fu-zcompile ~/auto-fu.zsh  ~/.zsh
+#     fi
+# fi
+
 
 ## setting editor
 export EDITOR='nvim'
@@ -64,6 +72,10 @@ alias zs='sublime_text'
 alias xclipz='xclip -sel clip'
 alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim ~/.scripts'
 
+# set title of tmux
+ztmux-set-title() {
+    printf "\033k$1\033\\"
+}
 # dot file edit function
 function edlink {
     [[ -z $1 ]] && return
@@ -75,7 +87,7 @@ function edlink {
 # dot file aliases
 alias edbash='edlink $HOME/.bashrc; if [ "$(echo $BASH_VERSION)" ]; then source $HOME/.bashrc; fi'
 alias edzsh='edlink $HOME/.zshrc; if [ "$(echo $ZSH_VERSION)" ]; then source $HOME/.zshrc; fi'
-alias edvim='edlink $HOME/.vim/vimrc'
+alias edvim='edlink $HOME/.vimrc'
 alias edgvim='edlink $HOME/.gvimrc'
 alias ednvim='edlink $HOME/.config/nvim/init.vim'
 alias edtmux='edlink $HOME/.tmux.conf'
@@ -99,6 +111,8 @@ alias edzathura='edlink $HOME/.config/zathura/zathurarc'
 alias edranger='edlink $HOME/.config/ranger/rc.conf'
 alias checkinstall='checkinstall -D --install'
 
+alias zpandoc_latex='pandoc --template ~/.pandoc/templates/eisvogel.tex'
+alias zgollum_commit='cd ~/vimwiki; git add .; git commit -am "Changes"'
 
 #ranger exit with cd 
 zr() {
@@ -214,29 +228,122 @@ fi
 #add git submodule to dotfilesgit
 dotf-addmodule(){
 for x in "$@"
-if [ -d "${x}/.git" ] ; then
+do
+    if [ -d "${x}/.git" ] ; then
     cd "${x}"
     origin="$(git config --get remote.origin.url)"
     cd - 1>/dev/null
 	dotfilesgit
 	git rm --cached "${x}"
 	git submodule add "${origin}" "${x}"
-fi
+    fi
+done
 }
+
 zmodload zsh/zpty
 stty stop undef
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
+if [[ ! -f  $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
+fi
 source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
-
+    
 export FZF_COMPLETION_TRIGGER=''
 bindkey '^T' fzf-completion    
 bindkey '^I' complete-word
 
+if [[ -n $(whence fd)  ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --color=never --no-ignore -H'
+    export FZF_ALT_C_COMMAND='fd --type d . --color=never --no-ignore -H'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    alias zfd='fd --no-ignore -H'
+fi
+if [[ -n $(whence rg)  ]]; then
+    alias zrg='rg --no-ignore --hidden'
+fi
+
 # WSL stuff
 
 alias zwiki_view='firefox $(wslpath -w ~/vimwiki_html/index.html)'
+
+# world clocks
+ztime() {
+for x in "Asia/Ho_Chi_Minh"  "Australia/Perth" "America/Los_Angeles" 
+do
+    print $x " \: " $(TZ=$x date)
+done
+}
+#motd for ubuntu
+zmotd_ubuntu() {
+for i in /etc/update-motd.d/*; 
+do 
+    if [ "$i" != "/etc/update-motd.d/98-fsck-at-reboot" ]; then $i; fi; 
+done
+}
+
+
+### Added by Zplugin's installer
+source '/home/wilder/.zplugin/bin/zplugin.zsh'
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
+
+
+# # ### setup auto-fu 
+# # ### auto-fu-install and auto-fu-zcompile are deprecated 
+zplugin load PythonNut/auto-fu.zsh
+# zle-line-init () {auto-fu-init;}
+# zle -N zle-line-init
+# zstyle ':completion:*' completer _oldlist _complete
+# zle -N zle-keymap-select auto-fu-zle-keymap-select
+
+## vim for line editing: C-x C-e
+
+setopt extendedglob
+unsetopt caseglob
+setopt GLOBDOTS
+
+# compinit registers some too-emacs-ish-to-me keybindings in ~/.zcompdump
+bindkey -e
+autoload -Uz compinit; compinit
+
+# Normal mode keybindings, please put some more.
+bindkey -v
+bindkey '^P' up-history
+bindkey -v "^?" backward-delete-char
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+# auto-fu.zsh expects that `bindkey -e`, so change it before sourcing. (ugh!)
+bindkey -e
+bindkey $'\e' vi-cmd-mode
+
+zle-line-init () {auto-fu-init; zle -K vicmd;} 
+zle -N zle-line-init
+
+# Normal-mode-ish setup.
+VIM_PROMPT="[% NORMAL]%"
+RPS1="$VIM_PROMPT"
+
+my-reset-prompt-maybe () {
+  # XXX: While auto-stuff is in effect,
+  # when hitting <Return>, $KEYMAP becomes to `main`:
+  # <Return> → `reset-prompt`(*) → `accept-line` → `zle-line-init`
+  # → `zle-keymap-select` → `reset-promt` (again!)
+  # Skip unwanted `reset-prompt`(*).
+  ((auto_fu_init_p==1)) && [[ ${KEYMAP-} == main ]] && return
+
+  # XXX: Please notice that `afu` is treated as Insert-mode-ish.
+  RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins|afu)/}"
+  zle reset-prompt
+}
+
+zle-keymap-select () {
+  auto-fu-zle-keymap-select "$@"
+  my-reset-prompt-maybe
+}
+zle -N zle-keymap-select
 
