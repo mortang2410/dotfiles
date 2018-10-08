@@ -136,7 +136,7 @@ convenient than having to keep pressing `<Tab>`. I could also press `Ctrl+r` to 
 ![zsh](https://camo.githubusercontent.com/a43cfdcf299d31be8274a372d6cbe65d62e2c7be/68747470733a2f2f692e696d6775722e636f6d2f683041586e79622e706e67)
 
 For a more complicated example, let's say my chat log text files have grown far too big, and I want to cut them in half (saving only the recent half), I can script up my own command (don't worry if you have no idea about scripting yet, just know how it is possible)
-```shell
+~~~shell
 trim50() {
     for x in "$@"
     do
@@ -144,7 +144,7 @@ trim50() {
         sed -i -e 1,$[z]d $x ;
     done
 }
-```
+~~~
 and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
 
 Finally, we can run shell commands within nvim itself, to either edit
@@ -160,7 +160,7 @@ directories. How to do that in bash, is probably not common knowledge ;). Also,
 take a look at how customizable zsh's completion matcher is. Mine, for
 instance, quite mimics fuzzy completion.
 
-```
+~~~
 
 zstyle ':completion:*' matcher-list                                      \
     '                                   m:{[:lower:]}={[:upper:]}' \
@@ -169,7 +169,7 @@ zstyle ':completion:*' matcher-list                                      \
     'r:|?=**                            m:{[:lower:]\-}={[:upper:]_}'
 
 
-```
+~~~
 
 
 ## Why use tmux
@@ -308,9 +308,9 @@ Look within the `env.sh` file to edit the `PATH` variable. `PATH`
 tells zsh where to look for executable files to use as commands. It 
 should look something like this
 
-```shell
+~~~shell
 export PATH=$HOME/.gem/ruby/2.5.0/bin:$HOME/localpath:$HOME/.local/bin:$PATH
-```
+~~~
 
 Notice another `PATH` within the definition of `PATH`. It means the
 system already has a built-in `PATH` variable, and we are simply
@@ -325,10 +325,10 @@ because they have their environment variables set up wrong.
 
 Try running
 
-```
+~~~
 which ls
 echo $PATH
-```  
+~~~  
 
 You will see that the command `ls`, often  used to list files in a
 folder, is really just the executable file `/bin/ls`, and `/bin` is
@@ -392,12 +392,12 @@ application, so there is no need to install it on servers.
 
 To download/clone this repository, call
 
-```shell
+~~~shell
 sudo apt install git wamerican 
 git clone  https://github.com/mortang2410/dotfiles ~/dotfiles
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
-```
+~~~
 
 Then copy things in `~/dotfiles` to `~`. There are some new font files in
 `~/.fonts`, so remember to run `fc-cache -vf` to refresh the font cache (or
@@ -406,9 +406,9 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
 - To change the default shell to zsh, install zsh (duh). Open up your terminal and run
 
-  ```shell
+  ~~~shell
   sudo apt install zsh 
-  ```
+  ~~~
   
   then execute `chsh` in your current shell to change to the Z shell.  You
   might need to log out and return for the change to take effect. **From this
@@ -439,13 +439,13 @@ are already copied to `~`.** This is important, since my configuration covers a 
   was so painless  I now prefer it to Vim. People on Ubuntu can
   install nvim as follows: 
 
-  ```shell 
+  ~~~shell 
   sudo apt install python3-pip curl 
   curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
   chmod u+x nvim.appimage
   pip3 install --user --upgrade neovim 
   pip3 install --user neovim-remote
-  ```
+  ~~~
   
   then just run nvim.appimage directly. I symlink `nvim.appimage` to
   `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs, there
@@ -466,7 +466,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   use my own version, which has support for wide glyphs and emoji
   (non-colored).
   
-  ```shell
+  ~~~shell
   git clone https://github.com/mortang2410/rxvt-custom ~/urxvt
   sudo apt-get build-dep rxvt-unicode
   sudo apt install libxft-dev libgdk-pixbuf2.0-dev
@@ -499,7 +499,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
     --enable-xterm-scroll
   make -j8
   sudo checkinstall
-  ```
+  ~~~
 
   Then install the extensions. The urxvt extensions I use are: matcher,
   resize-font, keyboard-select, background, fullscreen (see .Xresources).  If
@@ -511,11 +511,11 @@ are already copied to `~`.** This is important, since my configuration covers a 
 - [vimpager](https://github.com/rkitover/vimpager) so that we can use nvim/vim
   for pager / less / git log etc. 
 
-  ```shell
+  ~~~shell
   git clone git://github.com/rkitover/vimpager ~/vimpager
   cd ~/vimpager
   sudo make install-deb
-  ```  
+  ~~~  
 
 
 - Language servers for
@@ -529,9 +529,9 @@ are already copied to `~`.** This is important, since my configuration covers a 
   python and [ccls](https://github.com/MaskRay/ccls) for C++. To
   install pyls on Ubuntu 18.04:
 
-  ```shell
+  ~~~shell
   pip3 install --user 'python-language-server[all]' 
-  ```
+  ~~~
   
   Then pyls will be installed into `.local/bin`  (again, make sure
   that directory is in `$PATH`). Then LanguageClient-neovim should
@@ -547,21 +547,21 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
 - [zathura](https://pwmt.org/projects/zathura/) for vimtex. 
   
-  ```shell
+  ~~~shell
   sudo apt install zathura zathura-djvu
-  ```
+  ~~~
 
   Or use your favorite pdf viewer and modify vimtex options. I just like the
   shortcuts and minimalism of `zathura`. Anyhow, if you want to use `zathura`
   with tabs, try using `tabbed` from [suckless](https://suckless.org/). You can
   use my own version here
 
-  ```shell
+  ~~~shell
   sudo apt install libx11-dev libfreetype6-dev
   git clone https://github.com/mortang2410/tabbed ~/tabbed
   cd ~/tabbed
   sudo checkinstall make clean install
-  ```
+  ~~~
 
   After that, you can use `tza` (my own command) to launch tabbed zathura. Use
   `C-<tab>` to switch between tabs just like firefox.  `ranger` should also use
@@ -579,7 +579,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   Ubuntu you should have most things already installed, so it will probably
   look like this 
 
-  ```shell
+  ~~~shell
   sudo apt-get build-dep ranger
   sudo apt install w3m highlight atool poppler-utils djvulibre-bin checkinstall python python-urwid
   git clone https://github.com/Vifon/fasd ~/fasd
@@ -588,13 +588,13 @@ are already copied to `~`.** This is important, since my configuration covers a 
   git clone https://github.com/ranger/ranger ~/ranger
   cd ~/ranger
   sudo checkinstall
-  ```
+  ~~~
 
   Once you are ready to live with ranger as the default file manager, run 
 
-  ```shell
+  ~~~shell
   xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
-  ```
+  ~~~
 
   Obviously we assume `ranger.desktop` is already in the right place, such as
   `~/.local/share/applications`. This should already be the case when we copied
@@ -621,16 +621,14 @@ If you have set up everything correctly:
 Misc 
 -----
 
-- `pandoc` is important for many things. Run 
+- `pandoc` is important for converting between markdown, latex and html. Install the latest version by
 
-```shell
-    curl -sSL https://get.haskellstack.org/ | sh
-    git clone https://github.com/jgm/pandoc ~/pandoc
-    cd ~/pandoc
-    stack setup
-    stack install
-```
-- `rg` (ripgrep) is better than `grep`, and `fd` is better than `find`. Download their `deb` file and install them. Then run `:Rg pattern` in `nvim`. 
+~~~shell curl -sSL https://get.haskellstack.org/ | sh git clone
+https://github.com/jgm/pandoc ~/pandoc cd ~/pandoc stack setup stack install
+~~~
+- `rg` (ripgrep) is better than `grep`, and `fd` is better than `find`. They
+  have some crazy optimizations going on, and are written in Rust, which is very interesting.
+  Download their `deb` file and install them. Then run `:Rg pattern` in `nvim`. 
 
 nvim from git (advanced) 
 ----- 
@@ -642,7 +640,7 @@ Running nvim from the AppImage currently has the disadvantage that `ps` does
   checkinstall](https://github.com/neovim/neovim/issues/2364#issuecomment-113966180)
   for `jemalloc`. I also added a modification to `$LIBDIR` in the patch.
 
-```shell
+~~~shell
 
 rm ~/.local/bin/nvim
 git clone http://checkinstall.izto.org/checkinstall.git ~/checkinstall
@@ -659,7 +657,7 @@ make CMAKE_BUILD_TYPE=Release -j8
 sudo checkinstall
 
 
-```
+~~~
 
 Windows Subsystem for Linux
 -----
@@ -743,158 +741,221 @@ running
 Vim tips (messy, for personal use) 
 ----
 
-```text
 
-Let's say you grep
-grep -nH pattern -ir .
-but then want to open those files with vim, run
-vi -q <(!!)
-where -q starts quickfix from the file which is the output of the previous
-command. We note here that grep -nH is required for vim's quickfix to work
-(with line numbers and filename).
+Use `:Rg` to search within files. REALLY FAST. Just be careful that `rg` ignores some files by default (e.g. `.git` and the contents of `.gitignore`)
 
-Run
-:Capture let g:lmap
-To see the dictionary. Then copy the output and then paste
-:Capture PP  <the_output>
-to view the dictionary in pretty form
+`Recover.vim` is awesome. Press `c` to compare with swap file, and `<leade>fR`
+to finish recovery.
 
-:Messages to view old messages
-The <Leader> key is now the Spacebar.
+I now use `polyglot` for language packs. This might interfere with other
+language packages, such as LatexBox vs vimtex.   
+
+To Fzf the output of a vim command : `MyFilter <command>`
+
+Vim debugging: 
+- `ToggleVerbose`
+- `vim -V20 2>&1 | tee logfile`
+
+Use text objects: `dat`, `dit` (HTML tags), `di\[`, `di/` (where / is a text
+object defined in my .vimrc) See `:h it`.
+
+On WSL (windows), use `<Leader>y` to work with the Windows Clipboard.
+
+Let\'s say you grep  
+ `grep -nH pattern -ir .`  
+ but then want
+to open those files with vim, run  
+ `vi -q <(!!)`  
+ where -q
+starts quickfix from the file which is the output of the previous
+command.  
+
+
+Run  
+ `:Capture let g:lmap`  
+ To see the dictionary. Then copy
+the output and then paste   
+ `:Capture PP  <the_output>`  
+ to
+view the dictionary in pretty form  
+
+
+`:Messages` to view old messages  
+ The `<Leader>` key is now the
+Spacebar.  
+
 
 F5 : languageclient menu
 
-Vim now works with ranger by default:
-map <leader>re :RangerEdit<cr>
-map <leader>rv :RangerVSplit<cr>
-map <leader>rs :RangerSplit<cr>
+Vim now works with ranger by default:  
 
-\CPATTERN to search for "PATTERN", case sensitive. \c does the opposite.
-/function \([a-zA-Z0-9]\+\)/ 
-and
-/\vfunction ([a-zA-Z0-9]+)/
-both match "function foo42oo" . 
-Use of "\v" means "very magic": in the pattern after it all ASCII characters except '0'-'9', 'a'-'z', 'A'-'Z' and '_' have a special meaning.  
-See :h magic
+`map <leader>re :RangerEdit<cr>`  
 
-<tab> on us snippets  (UltiSnips) to expand them, C-b, C-f to go back and forward between spots
-:UltiSnipsEdit  to edit snippets in ~/.vim/UltiSnips
+`map <leader>rv :RangerVSplit<cr>`  
 
-zo: open folding
-Indent json file:
-:%!python -m json.tool
-
-see the relative number lines? try 10<Down> to go down 10 	lines.
-F3 : "+p, paste from clipboard in normal mode and copy in visual mode ("+y)
-dap: delete a paragraph
-<Space>h : recent files in vim
-:vim abc ** : grep for abc in current dir
-:Mkdir! : create dir for current file
-:r <filename>  : insert file into current buffer, filename CAN contain spaces
-
-df" : delete until next " 
-use :diffthis  on 2 panes to diff
-M-l : turn off search hilighting
-:Voom <mode> to see outline in markdown / latex
-gO: outline in man and help pages
-gq : format by 'formatexpr'
-gw : format without 'formatexpr'
-<Space>f: format current paragraph
-:lopen to open loclist (local to window)
-:copen to open quickfix (global)
-,v: toggle less mode for vimpager
-mx           Toggle mark 'x' and display it in the leftmost column
-`x : jump to mark x. 
-`0 :	jump to position in last file edited (when exited vim)
-m<Space>     Delete all marks from the current buffer
-:bd :buffer unload
-"+p : paste from clipboard
-"+y: yank into clipboard
-s/abc/123/gc : replace with confirmation
-s/\n/&\r/g : replace end-of-line with empty new line
-gd: go to definition
-gq : reformat text to pretty up
-<Space>p l to use fzf on lines, 
-<Space>p f to open CTRLP in files mode. Then C-f to switch between modes (lines,files, buffers, MRU...).  I use CtrlP for current dir by setting max depth to 1, and fzf for deep dirs.
+`map <leader>rs :RangerSplit<cr>`  
 
 
-C-x C-f in insert mode to insert a filename with fzf.
-M-x : like emacs command with fzf. 
-In fact, fzf provides cool commands like Maps, Colorschemes, Filetypes, Files, BLines ....
-s: easy motion!! (overwritten vim's default s), with <Space><Space> as prefix for other stuff
-S: easy motion by 2 characters
-Use SudoWrite from suda.vim
-Use Locate from fuzzy finder
-Press cd while in Nerdtree to change vim's working directory (for the sake of fzf <Space>t)
-<Space>T : Nerdtree toggle
-<Space>t : quick find files by fzf
-<Space>b :quick find buffer by fzf
-:help key-notation 
+\\CPATTERN to search for \"PATTERN\", case sensitive. \\c does the
+opposite.  
+ `/function \([a-zA-Z0-9]\+\)/ `  
+ and  
 
-Browse old files:
-:bro ol 
-then we might need to hit q to make prompt appear if list is too long
-Or :Capture ol  , then use gf to jump to file
+`/\vfunction ([a-zA-Z0-9]+)/`  
+ both match \"function foo42oo\" .
+  
 
 
-vim and tmux navigation between panes: use C-h,C-j,C-k,C-l
-zshrc makes   vim --servername to play well with vimtex
+Use of \"\\v\" means \"very magic\": in the pattern after it all ASCII
+characters except \'0\'-\'9\', \'a\'-\'z\', \'A\'-\'Z\' and \'\_\' have
+a [special](special) meaning. See `:h magic`
 
-:helpgrep something, then :copen to see results
+`<tab>` on us snippets (UltiSnips) to expand them, C-b, C-f to go back
+and forward between spots  
+ `:UltiSnipsEdit` to edit snippets in
+\~/.vim/UltiSnips  
+
+
+`zo:` open folding  
+ Indent json file:   `:%!python -m json.tool`  or  `:%! pretty-js`
+
+see the relative number lines? try `10<Down>` to go down 10 lines.  
+
+`F3` : \"+p, paste from clipboard in normal mode and copy in visual mode
+(\"+y)  
+ `dap:` delete a paragraph  
+ `<Space>h` : recent files
+in vim  
+
+`:Mkdir!` : create dir for current file  
+ `:r <filename> ` : insert
+file into current buffer, filename CAN contain spaces  
+
+
+`df"` : delete until next \"   
+ use `:diffthis` on 2 panes to
+diff  
+ `M-l` : turn off search hilighting  
+ `:Voom <mode>` to see outline in markdown / latex. Use `<tab>` to switch windows, `q` to close the voom window.\
+ `gO` : outline in man and help
+pages  
+ `gq` : format by \'formatexpr\'  
+ `gw` : format without
+\'formatexpr\'  
+ `<Space>f` : format current paragraph  
+
+`:lopen` to open loclist (local to window)  
+ `:copen` to open
+quickfix (global)  
+ `,v` : toggle less mode for vimpager  
+ `mx`
+: Toggle mark \'x\' and display it in the leftmost column  
+ \`x :
+jump to mark x.   
+ \`0 : jump to position in last file edited (when
+exited vim)  
+ `m<Space>` Delete all marks from the current
+buffer  
+ `:bd` :buffer unload  
+ `"+p` : paste from
+clipboard  
+ `"+y:` yank into clipboard  
+ `s/abc/123/gc` :
+replace with confirmation  
+ `s/\n/&\r/g` : replace end-of-line with
+empty new line  
+ `gd:` go to definition  
+ `gq` : reformat text
+to pretty up  
+ `<Space>p l` to use fzf on lines,   
+ `<Space>p f`
+to open CTRLP in files mode. Then `C-f` to switch between modes
+(lines,files, buffers, MRU\...). I use CtrlP for current dir by setting
+max depth to 1, and fzf for deep dirs.  
+   
+   
+ `C-x C-f `in
+insert mode to insert a filename with fzf.  
+ `M-x` : like emacs
+command with fzf.   
+ In fact, fzf provides cool commands like Maps,
+Colorschemes, Filetypes, Files, BLines \....  
+ `s` : easy motion!!
+(overwritten vim\'s default s), with \<Space\>\<Space\> as prefix for
+other stuff  
+ `S` : easy motion by 2 characters  
+ Use SudoWrite
+from suda.vim  
+ Use Locate from fuzzy finder  
+ Press cd while in
+ `<Space>t` : quick find files by fzf  
+ `<Space>b` :quick find buffer by fzf  
+
+`:help` key-notation   
+
+
+Browse old files: `:bro ol` then we might need to hit q to make prompt
+appear if list is too long Or `:Capture ol` , then use `gf` to jump to
+file
+
+vim and tmux navigation between panes: use C-h,C-j,C-k,C-l zshrc makes
+vim \--servername to play well with vimtex
+
+`:helpgrep` something, then `:copen` to see results
 
 To comment out blocks in vim:
-	press Esc (to leave editing or other mode)
-	hit ctrl+v (visual block mode)
-	use the up/down arrow keys to select lines you want (it won't 	highlight everything - it's OK!)
-	Shift+i (capital I)
-	insert the text you want, i.e. %
-	press EscEsc
 
+        press Esc (to leave editing or other mode)
+        hit ctrl+v (visual block mode)
+        use the up/down arrow keys to select lines you want (it won't   highlight everything - it's OK!)
+        Shift+i (capital I)
+        insert the text you want, i.e. %
+        press EscEsc
 
-For file name omni completion in insert mode, you can use:
-Ctrl-X Ctrl-F
+For file name omni completion in insert mode, you can use: Ctrl-X Ctrl-F
 
 Edit in command bar: C-f
 
-See ex-commands' output in new buffer:
-:Capture <command>
+See ex-commands\' output in new buffer: `:Capture <command>`
 
-To see what linters ALE is using:
-:ALEInfo
+To see what linters ALE is using: `:ALEInfo`
 
 Install vimpager
 
-vim-tex: 
-<Space>ll compile
-<Space>lv view with synctex. Ctrl-click on zathura to do reverse.
-
-F4 for undotree toggle. Double click to jump to the one you want. Persistent undos between sessions.
-
-To select and surround: use v to enter visual mode and select abc, then S[ to surround -> [abc]
-
-:Ncm2Sources
-My own hackish function to look at enabled sources in ncm2.
+vim-tex:   
+ `<Space>ll` compile  
+ `<Space>lv` view with synctex.
+Ctrl-click on zathura to do reverse.  
 
 
-C-x C-t  in Insert mode in Markdown: thesaurus via vim-lexical
-C-x C-k as above: dictionary via vim-lexical
-Zen : modified distraction free mode
-Spell and Unspell for... spelling with vim-lexical.
+`F4` for undotree toggle. Double click to jump to the one you want.
+Persistent undos between sessions.
+
+To select and surround: use v to enter visual mode and select abc, then
+S\[ to surround -\> \[abc\]
+
+`:Ncm2Sources` My own hackish function to look at enabled sources in
+ncm2.
+
+`C-x C-t` in Insert mode in Markdown: thesaurus via vim-lexical  
+
+`C-x C-k` as above: dictionary via vim-lexical  
+ `Zen` : modified
+distraction free mode  
+ `Spell` and Unspell for ... spelling with vim-lexical.  `zg` to mark as a good word, and `]s` to move to next misspelling.
 
 
+`:syntime on`  
+ play around  
+ `:Capture syntime report`  
+ to
+see what is slowing down vim  
 
-:syntime on
-play around
-:Capture syntime report
-to see what is slowing down vim
-
-
-```
 
 Tmux tips
 ------------
 
-```text
+~~~text
 dump pane: C-b P
 
 reload config: C-b C-r
@@ -904,14 +965,14 @@ clear pane: C-b k
 vi mode: C-b [, select with Space, then y to yank into system clipboard
 
 with mouse mode on, use shift with mouse to select stuff / copy
-```
+~~~
 
 
 
 Ranger tips
 ---------
 
-```text
+~~~text
 
 `h : fzf through navigation history (this session)
 `H : fzf through fasd's history globally
@@ -941,4 +1002,4 @@ W : open log window
 V to enter select mode
 uv to deselect all
 H, L : jump back and forth in history 
-```
+~~~
