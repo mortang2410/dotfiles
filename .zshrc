@@ -153,21 +153,22 @@ trim50() {
         sed -i -e 1,$[z]d $x ;
     done
 }
+#disabled prompt to try out other prompts
 zdelicious() {
 
-p_shlvlhist="%fzsh%(2L./$SHLVL.) %B%h%b "
-p_rc="%(?..[%?%1v] )"
-p_vcs="%(2v.%U%2v%u.)"
-local prompt_pwd_size=$(( COLUMNS - 50 ))
-PROMPT=$'
-
-%{\e[1;38m%}'${MACHTYPE}/${OSTYPE}/$(uname -r)$'   %{\e[0;33m%}'%D{"%a %b %d,%I:%M"}%b$'%{\e[0m%}
-
-%{\e[0;34m%}%B┌─[%b%{\e[0m%}%{\e[1;38m%}%n%{\e[1;38m%}@%{\e[0m%}%{\e[0;36m%}%m%{\e[0;34m%}%B]%b%{\e[0;34m%}%B─[%{\e[1;35m%}'$p_shlvlhist$p_rc$p_vcs$'%{\e[0;34m%}%B]%b%{\e[0;34m%}%B─%{\e[0;34m%}%B[%b%{\e[0;34m%}%'$prompt_pwd_size$'<...<%~%<<%{\e[0;34m%}%B]
-└─%{\e[0;34m%}%B[%{\e[1;35m%}%#%{\e[0;34m%}%B]>%{\e[0m%}%b '
-
-PS2=$' \e[0;34m%}%B>%{\e[0m%}%b '
-
+# p_shlvlhist="%fzsh%(2L./$SHLVL.) %B%h%b "
+# p_rc="%(?..[%?%1v] )"
+# p_vcs="%(2v.%U%2v%u.)"
+# local prompt_pwd_size=$(( COLUMNS - 50 ))
+# PROMPT=$'
+#
+# %{\e[1;38m%}'${MACHTYPE}/${OSTYPE}/$(uname -r)$'   %{\e[0;33m%}'%D{"%a %b %d,%I:%M"}%b$'%{\e[0m%}
+#
+# %{\e[0;34m%}%B┌─[%b%{\e[0m%}%{\e[1;38m%}%n%{\e[1;38m%}@%{\e[0m%}%{\e[0;36m%}%m%{\e[0;34m%}%B]%b%{\e[0;34m%}%B─[%{\e[1;35m%}'$p_shlvlhist$p_rc$p_vcs$'%{\e[0;34m%}%B]%b%{\e[0;34m%}%B─%{\e[0;34m%}%B[%b%{\e[0;34m%}%'$prompt_pwd_size$'<...<%~%<<%{\e[0;34m%}%B]
+# └─%{\e[0;34m%}%B[%{\e[1;35m%}%#%{\e[0;34m%}%B]>%{\e[0m%}%b '
+#
+# PS2=$' \e[0;34m%}%B>%{\e[0m%}%b '
+#
 }
 
 
@@ -294,7 +295,11 @@ autoload -Uz _zplugin
 
 # # ### setup auto-fu 
 # # ### auto-fu-install and auto-fu-zcompile are deprecated 
+zplugin load mafredri/zsh-async
+zplugin load marszall87/lambda-pure
+export PURE_NODE_ENABLED=0
 zplugin load PythonNut/auto-fu.zsh
+
 # zle-line-init () {auto-fu-init;}
 # zle -N zle-line-init
 # zstyle ':completion:*' completer _oldlist _complete
@@ -321,7 +326,7 @@ bindkey -M vicmd v edit-command-line
 bindkey -e
 bindkey $'\e' vi-cmd-mode
 
-zle-line-init () {auto-fu-init; zle -K vicmd;} 
+zle-line-init () { zle -K vicmd;  auto-fu-init; } 
 zle -N zle-line-init
 
 # Normal-mode-ish setup.
@@ -330,7 +335,7 @@ RPS1="$VIM_PROMPT"
 
 my-reset-prompt-maybe () {
   # XXX: While auto-stuff is in effect,
-  # when hitting <Return>, $KEYMAP becomes to `main`:
+  # when hitting <Return>, $KEYMAP becomes `main`:
   # <Return> → `reset-prompt`(*) → `accept-line` → `zle-line-init`
   # → `zle-keymap-select` → `reset-promt` (again!)
   # Skip unwanted `reset-prompt`(*).
@@ -345,5 +350,7 @@ zle-keymap-select () {
   auto-fu-zle-keymap-select "$@"
   my-reset-prompt-maybe
 }
+
 zle -N zle-keymap-select
+
 

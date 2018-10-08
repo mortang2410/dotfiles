@@ -38,7 +38,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'lambdalisue/vim-manpager'
 " Plug 'lambdalisue/vim-pager'
 Plug 'mbbill/undotree'
-
+Plug 'gcmt/taboo.vim'
 
 
 Plug 'vim-voom/VOoM'
@@ -65,9 +65,8 @@ Plug 'xolox/vim-misc'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 Plug 'mortang2410/vim-markdown-preview'
-
-
-
+Plug 'chrisbra/NrrwRgn'
+Plug 'andymass/vim-matchup'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
@@ -560,6 +559,7 @@ if has('nvim')
 	let g:vimtex_compiler_progname = 'nvr'
     set shada=!,'1000,s100,h
 	set fcs=eob:\ 
+    set inccommand=nosplit
 endif
 
 
@@ -603,14 +603,73 @@ let g:less     = {}
 let g:vimpager.passthrough = 0
 let g:less.enabled = 0
 
-
+" \\\\\\\\\\\\\\\\\\\
 " setup vimtex
 let g:vimtex_view_method = 'zathura'
+augroup my_cm_setup
+    autocmd!
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    autocmd Filetype tex call ncm2#register_source({
+                \ 'name' : 'vimtex-cmds',
+                \ 'priority': 8, 
+                \ 'complete_length': -1,
+                \ 'scope': ['tex'],
+                \ 'matcher': {'name': 'prefix', 'key': 'word'},
+                \ 'word_pattern': '\w+',
+                \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
+                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+                \ })
+    autocmd Filetype tex call ncm2#register_source({
+                \ 'name' : 'vimtex-labels',
+                \ 'priority': 8, 
+                \ 'complete_length': -1,
+                \ 'scope': ['tex'],
+                \ 'matcher': {'name': 'combine',
+                \             'matchers': [
+                \               {'name': 'substr', 'key': 'word'},
+                \               {'name': 'substr', 'key': 'menu'},
+                \             ]},
+                \ 'word_pattern': '\w+',
+                \ 'complete_pattern': g:vimtex#re#ncm2#labels,
+                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+                \ })
+    autocmd Filetype tex call ncm2#register_source({
+                \ 'name' : 'vimtex-files',
+                \ 'priority': 8, 
+                \ 'complete_length': -1,
+                \ 'scope': ['tex'],
+                \ 'matcher': {'name': 'combine',
+                \             'matchers': [
+                \               {'name': 'abbrfuzzy', 'key': 'word'},
+                \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+                \             ]},
+                \ 'word_pattern': '\w+',
+                \ 'complete_pattern': g:vimtex#re#ncm2#files,
+                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+                \ })
+    autocmd Filetype tex call ncm2#register_source({
+                \ 'name' : 'bibtex',
+                \ 'priority': 8, 
+                \ 'complete_length': -1,
+                \ 'scope': ['tex'],
+                \ 'matcher': {'name': 'combine',
+                \             'matchers': [
+                \               {'name': 'prefix', 'key': 'word'},
+                \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+                \               {'name': 'abbrfuzzy', 'key': 'menu'},
+                \             ]},
+                \ 'word_pattern': '\w+',
+                \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
+                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+                \ })
+augroup END
 
+
+"//////////////////////////
+"
 " persistent undos between sessions
 " then clean up stale undo files
 " set undofile
-
 if has("persistent_undo")
     set undodir="~/.undodir/"
     set undofile
@@ -850,7 +909,7 @@ let g:easytags_async = 1
 
 
 "" timeout insert
-set timeoutlen=500 ttimeoutlen=0
+set timeoutlen=700 ttimeoutlen=0
 
 " \\\\\\\\\\
 
@@ -872,7 +931,10 @@ vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
 " let g:which_key_map.w.v = ['<C-W>v', 'spibelow']
 
 let g:which_key_map.F = 'Format paragraph'
-let g:which_key_map.e = { 'name' : 'Edit' }
+let g:which_key_map.e = { 'name' : 'Edit as' ,
+            \ 't' : [ 'set ft=tex' ,  'Tex' ],
+            \ 'h' : [ 'set ft=html' ,  'Html' ],
+            \}
 let g:which_key_map.s = { 'name' : 'Source conf' }
 let g:which_key_map.r = { 'name' : 'Ranger' }
 let g:which_key_localmap.l = { 'name' : 'Latex' }
@@ -894,10 +956,14 @@ let g:which_key_map.c = { 'name' : '+TComment' }
 """ use explicit nnoremap, as which_key can't deal with recursive 'no'. only use 
 """ which_key for documentation
 let g:which_key_map.n = { 
-            \'name' : '+noh',
-            \'o' : 'Remove highlighting'
+            \'name' : 'noh & narrow region',
+            \'o' : 'Remove highlighting',
+            \'t' : 'Edit narrow tex block',
+            \'r' : 'Edit narrow block',
             \}
 nnoremap <leader>no :noh<CR>
+vnoremap <leader>nt :NR<CR>:set ft=tex<CR>
+nnoremap <esc> :noh<return><esc>
 
 let g:which_key_map[':'] = { 'name' : 'Command mode'}
 let g:which_key_map.u = {
@@ -905,6 +971,11 @@ let g:which_key_map.u = {
             \'t' : [':UndotreeToggle',  'Undo tree'],
             \}
 
+let g:which_key_map.T = {
+            \'name' : 'Tags',
+            \'u' : ['UpdateTags',  'Update tags'],
+            \'h' : ['HighlightTags',  'Highlight tags'],
+            \}
 let g:which_key_map.D = {
             \'name' : 'Diff+',
             \'g' : ['diffget',  'Use the other buffer'],
@@ -944,6 +1015,8 @@ let g:which_key_map.U={
             \'e' : [ 'UltiSnipsEdit' , 'Edit snippets'],
             \'a' : [ 'UltiSnipsAddFiletypes' , 'Add snippets from other filetypes' ],
             \}
+
+let g:which_key_map['6'] = [ 'e #' , 'Previous file' ]
 let g:which_key_map.m = { 
             \'name' : '+marks',
             \'m' : ['Marks',  'Marks'],
@@ -952,9 +1025,11 @@ let g:which_key_map.v = {
             \'name' : 'vimrc & voom/outline',
             \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
             \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
+            \'R' : 'Reload .vimrc and plugins',
             \'v' : ['Voom',  'Voom'],
             \'t' : ['TagbarToggle',  'Tagbar'],
             \}
+nnoremap <leader>vR :so $MYVIMRC<CR>:PlugInstall<CR>
 let g:which_key_map.w = { 'name' : 'Wiki',
             \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
             \'b' : ['VimwikiGoBackLink',  'Back'],
@@ -1082,11 +1157,11 @@ let g:user_emmet_mode='a'
 " SetupUltisnips 
 " the tab key is fought over, so use C-j instead.
 " in vimwiki, <CR> and <Tab> don't work as expected.
-" c-h c-l for moving in snippet
+" c-f c-b for moving in snippet
 " stupid bug <C-> if we don't set trigger
 let g:UltiSnipsExpandTrigger		= "<tab>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-h>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-l>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-f>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-b>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
@@ -1117,6 +1192,8 @@ autocmd FileType markdown,pandoc nnoremap <buffer> <C-p> :call Vim_Markdown_Prev
 
 let vim_markdown_preview_use_xdg_open=0
 
+""" let gx use xdg-open
+let g:netrw_browsex_viewer= "xdg-open"
 
 
 " vim: set ft=vim :
