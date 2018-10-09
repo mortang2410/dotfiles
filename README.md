@@ -404,15 +404,26 @@ Then copy things in `~/dotfiles` to `~`. There are some new font files in
 just restart your computer). **From this point forward, we assume all the files
 are already copied to `~`.** This is important, since my configuration covers a lot of settings. Things to install after cloning: 
 
-- To change the default shell to zsh, install zsh (duh). Open up your terminal and run
+- To change the default shell to zsh, install zsh (duh). **HOWEVER**: I'm using
+  a pretty loaded config (credits to PythonNut) that requires special
+  installation instructions. Open up your terminal in `bash` and run
 
   ~~~shell
   sudo apt install zsh 
+  [ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc.backup
+  chmod +x ~/.zsh.d/zsh_init.zsh
+  ~/.zsh.d/zsh_init.zsh
   ~~~
   
-  then execute `chsh` in your current shell to change to the Z shell.  You
-  might need to log out and return for the change to take effect. **From this
-  point forward, we assume we're using zsh to run any commands.** For instance,
+  Note that I have backed up your `.zshrc`. Then run `zsh`. Plugins should
+  start installing now. It will finish successfully and require you to close
+  the terminal. Then the next time you run `zsh` in the terminal, things should
+  be good. To make sure all keymaps are okay, run `zkbd` and follow the
+  instructions carefully. \ 
+  Then if you want to make `zsh` the default shell,
+  execute `chsh` in your current shell to change to the Z shell.  You might
+  need to log out and return for the change to take effect. **From this point
+  forward, we assume we're using zsh to run any commands.** For instance,
   I have a `checkinstall` alias for zsh to make `checkinstall` automatically
   pick Debian/Ubuntu packages. If you're not on Ubuntu/Debian, as  I said at
   the beginning, modify the packages / package managers accordingly.

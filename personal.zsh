@@ -178,8 +178,10 @@ source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
     
 export FZF_COMPLETION_TRIGGER=''
-bindkey '^T' fzf-completion    
-bindkey '^I' complete-word
+bindkey -M afu '^T' fzf-completion    
+# bindkey -M afu '^I' complete-word
+bindkey -M afu '^R' fzf-history-widget 
+bindkey -M afu '^[c' fzf-cd-widget
 
 if [[ -n $(whence fd)  ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --color=never --no-ignore -H'
@@ -210,3 +212,32 @@ do
 done
 }
 
+setopt extendedglob
+unsetopt caseglob
+setopt GLOBDOTS
+# compinit registers some too-emacs-ish-to-me keybindings in ~/.zcompdump
+bindkey -e
+autoload -Uz compinit; compinit
+
+bindkey -M afu '^Xe' edit-command-line
+bindkey -M afu '^X^E' edit-command-line
+# Normal mode keybindings, please put some more.
+bindkey -v
+bindkey '^P' up-history
+bindkey -v "^?" backward-delete-char
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+
+if [[ -n "$TMUX" ]]; then
+	bindkey -e '"\e[1~":"\e[7~"'
+	bindkey -e '"\e[4~":"\e[8~'
+fi
+
+
+PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f 
+%# '
+RPROMPT='[ %F{yellow}%?%f]'
+unsetopt MULTIBYTE
+source ~/.zsh.d/.zkbd/rxvt-unicode-256color-:0
