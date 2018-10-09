@@ -486,9 +486,9 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
 - urxvt. The default Ubuntu package rxvt-unicode-256color is good enough. But I
   use my own version, which has support for wide glyphs and emoji
-  (non-colored).
+  (non-colored).]
   
-  ~~~shell
+  ~~~ shell
   git clone https://github.com/mortang2410/rxvt-custom ~/urxvt
   sudo apt-get build-dep rxvt-unicode
   sudo apt install libxft-dev libgdk-pixbuf2.0-dev
@@ -645,9 +645,11 @@ Misc
 
 - `pandoc` is important for converting between markdown, latex and html. Install the latest version by
 
-~~~shell curl -sSL https://get.haskellstack.org/ | sh git clone
-https://github.com/jgm/pandoc ~/pandoc cd ~/pandoc stack setup stack install
-~~~
+  ~~~shell
+  curl -sSL https://get.haskellstack.org/ | sh git clone
+  https://github.com/jgm/pandoc ~/pandoc cd ~/pandoc stack setup stack install
+  ~~~
+
 - `rg` (ripgrep) is better than `grep`, and `fd` is better than `find`. They
   have some crazy optimizations going on, and are written in Rust, which is very interesting.
   Download their `deb` file and install them. For example:
@@ -666,14 +668,13 @@ nvim from git (advanced)
 ----- 
 
 Running nvim from the AppImage currently has the disadvantage that `ps` does
-  not see nvim, only AppRun. This prevents `vim-tmux-navigator` from working
-  properly. A workaround is to compile nvim from git, which itself requires a [
-  modded
-  checkinstall](https://github.com/neovim/neovim/issues/2364#issuecomment-113966180)
-  for `jemalloc`. I also added a modification to `$LIBDIR` in the patch.
+not see nvim, only AppRun. This prevents `vim-tmux-navigator` from working
+properly. A workaround is to compile nvim from git, which itself requires a [
+modded
+checkinstall](https://github.com/neovim/neovim/issues/2364#issuecomment-113966180)
+for `jemalloc`. I also added a modification to `$LIBDIR` in the patch.
 
 ~~~shell
-
 rm ~/.local/bin/nvim
 git clone http://checkinstall.izto.org/checkinstall.git ~/checkinstall
 cd ~/checkinstall
@@ -687,9 +688,8 @@ git clone https://github.com/neovim/neovim ~/neovim
 cd ~/neovim
 make CMAKE_BUILD_TYPE=Release -j8
 sudo checkinstall
-
-
 ~~~
+
 
 Windows Subsystem for Linux
 -----
@@ -825,13 +825,12 @@ object defined in my .vimrc) See `:h it`.
 
 On WSL (windows), use `<Leader>y` to work with the Windows Clipboard.
 
-Let\'s say you grep  
+Let's say you grep  
  `grep -nH pattern -ir .`  
  but then want
 to open those files with vim, run  
  `vi -q <(!!)`  
- where -q
-starts quickfix from the file which is the output of the previous
+ where `-q` starts quickfix from the file which is the output of the previous
 command.  
 
 
@@ -852,7 +851,7 @@ Spacebar.
 F5 : languageclient menu
 
 
-\\CPATTERN to search for \"PATTERN\", case sensitive. \\c does the
+`\CPATTERN` to search for `PATTERN`, case sensitive. `\c` does the
 opposite.  
  `/function \([a-zA-Z0-9]\+\)/ `  
  and  
@@ -906,9 +905,9 @@ quickfix (global)
  `,v` : toggle less mode for vimpager  
  `mx`
 : Toggle mark \'x\' and display it in the leftmost column  
- \`x :
+ `` `x `` :
 jump to mark x.   
- \`0 : jump to position in last file edited (when
+ `` `0 `` : jump to position in last file edited (when
 exited vim)  
  `m<Space>` Delete all marks from the current
 buffer  
