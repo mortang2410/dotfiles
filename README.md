@@ -418,7 +418,15 @@ are already copied to `~`.** This is important, since my configuration covers a 
   Note that I have backed up your `.zshrc`. Then run `zsh`. Plugins should
   start installing now. It will finish successfully and require you to close
   the terminal. Then the next time you run `zsh` in the terminal, things should
-  be good. To make sure all keymaps are okay with your terminal, run `zkbd` and
+  be good. For WSL users, `zsh` might complain about insecure directories and
+  file permissions. Just run
+  
+  ~~~
+  compaudit | xargs chmod go-w
+  ~~~
+  
+  to fix it.
+  To make sure all keymaps are okay with your terminal, run `zkbd` and
   follow the instructions carefully. Once it finishes, it will create a file with some names like
   `$HOME/.zsh.d/.zkbd/rxvt-unicode-256color-:0`. Then just put `source <file>` at the 
   end of `~/.zshrc` (replace `<file>` by the name of the file `zkbd` created).
@@ -642,7 +650,17 @@ https://github.com/jgm/pandoc ~/pandoc cd ~/pandoc stack setup stack install
 ~~~
 - `rg` (ripgrep) is better than `grep`, and `fd` is better than `find`. They
   have some crazy optimizations going on, and are written in Rust, which is very interesting.
-  Download their `deb` file and install them. Then run `:Rg pattern` in `nvim`. 
+  Download their `deb` file and install them. For example:
+  
+  ~~~shell
+  sudo apt install wget
+  wget https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb -O ~/rg.deb
+  sudo dpkg -i ~/rg.deb
+  wget https://github.com/sharkdp/fd/releases/download/v7.1.0/fd-musl_7.1.0_amd64.deb -O ~/fd.deb
+  sudo dpkg -i ~/fd.deb
+  ~~~
+
+  Then run `:Rg pattern` in `nvim`. 
 
 nvim from git (advanced) 
 ----- 

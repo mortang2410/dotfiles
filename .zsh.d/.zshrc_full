@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+ zmodload zsh/zprof
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -15,7 +17,27 @@ source $ZDOTDIR/modules/zplug.zsh
 zstyle :compinstall filename '~/.zshrc'
 skip_global_compinit=1
 fpath=($ZDOTDIR/completers $fpath)
-autoload -Uz compinit  && compinit -d $ZDOTDIR/zcompdump
+
+
+# autoload -Uz compinit  && compinit -d $ZDOTDIR/.zcompdump
+
+# # On slow systems, checking the cached .zcompdump file to see if it must be 
+# # regenerated adds a noticable delay to zsh startup.  This little hack restricts 
+# # it to once a day.  It should be pasted into your own completion file.
+# #
+# # The globbing is a little complicated here:
+# # - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
+# # - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
+# # - '.' matches "regular files"
+# # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+autoload -Uz compinit 
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit -C;
+else
+	compinit -C;
+fi;
+
+
 echo -n > $ZDOTDIR/startup.log
 setopt function_argzero
 unsetopt MULTIBYTE
@@ -57,3 +79,4 @@ done
 source ~/env.sh
 source ~/personal.zsh
 
+ zprof
