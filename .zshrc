@@ -84,6 +84,7 @@ function edlink {
     ${EDITOR:-vi} $f
     cd - > /dev/null;
 }
+alias ztmux-close='tmux kill-session'
 # dot file aliases
 alias edbash='edlink $HOME/.bashrc; if [ "$(echo $BASH_VERSION)" ]; then source $HOME/.bashrc; fi'
 alias edzsh='edlink $HOME/.zshrc; if [ "$(echo $ZSH_VERSION)" ]; then source $HOME/.zshrc; fi'
