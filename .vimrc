@@ -831,7 +831,21 @@ endfun
 
 
 """ setup JamshedVesuna/vim-markdown-preview
-let g:vim_markdown_preview_toggle=3
+
+if has('unix')
+    let uname = system('uname -a') 
+    """ test WSL is running
+    if uname=~"Microsoft"
+        let g:vim_markdown_preview_toggle=0
+        let g:vim_markdown_preview_browser='Google Chrome'
+        let g:vim_markdown_preview_browser_cmd='chrome'
+    else
+        let g:vim_markdown_preview_toggle=3
+        let g:vim_markdown_preview_browser='Chromium'
+        let g:vim_markdown_preview_browser_cmd='chromium'
+    endif
+endif
+
 let g:vim_markdown_preview_pandoc=1
 let g:vim_markdown_preview_hotkey='<C-p>'
 autocmd FileType markdown,pandoc nnoremap <buffer> <C-p> :call Vim_Markdown_Preview()<CR>
