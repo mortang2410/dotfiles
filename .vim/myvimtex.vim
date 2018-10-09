@@ -1,6 +1,12 @@
 
 " \\\\\\\\\\\\\\\\\\\
 " setup vimtex
+
+
+if has('nvim')
+	let g:vimtex_compiler_progname = 'nvr'
+endif
+
 let g:vimtex_view_method = 'zathura'
 " add \item support
 call vimtex#imaps#add_map({
