@@ -51,7 +51,7 @@ Plug 'lambdalisue/suda.vim'
 """ Strange bug
 "Plug 'rafaqz/ranger.vim'
 
-Plug 'francoiscabrol/ranger.vim'
+Plug 'mortang2410/ranger.vim'
 Plug 'mortang2410/bclose.vim'
 
 Plug 'tpope/vim-scriptease'

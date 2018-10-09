@@ -58,7 +58,14 @@ alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
 alias xclipz='xclip -sel clip'
-alias dotfilesgit='export GIT_DIR=$HOME/.cfg/; export GIT_WORK_TREE=$HOME; git add ~/.vim ~/.scripts ~/.zsh.d ~/.config/ranger'
+dotfilesgit() {
+    export GIT_DIR=$HOME/.cfg/ 
+    export GIT_WORK_TREE=$HOME 
+    git add ~/.vim ~/.scripts ~/.zsh.d ~/.config/ranger
+    if [[ -n "$TMUX" ]]; then
+        ztmux-set-title DOTFILESGIT
+    fi
+}
 
 # set title of tmux
 ztmux-set-title() {
