@@ -20,7 +20,6 @@ vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
 "" remove map from bclose
 
 let g:bclose_no_plugin_maps=1
-map <Leader>r :Ranger<CR>
 
 
 map <Leader>b :Buffers<CR>
@@ -38,7 +37,14 @@ let g:which_key_map.e = { 'name' : 'Edit as' ,
             \ 'h' : [ 'set ft=html' ,  'Html' ],
             \}
 let g:which_key_map.s = { 'name' : 'Source conf' }
-let g:which_key_map.r = { 'name' : 'Ranger' }
+let g:which_key_map.r = { 'name' : 'Ranger' ,
+            \'e' :[ 'Ranger' , 'Edit file chosen by Ranger' ],
+            \'p' : 'Paste last dir open by ranger',
+            \'c' : 'Cd to last dir open by ranger',
+            \}
+nnoremap <leader>rp "=system('cat ~/.rangerdir')<CR>p
+nnoremap <leader>rc :cd <C-r>=system('cat ~/.rangerdir')<CR><CR>
+
 let g:which_key_localmap.l = { 'name' : 'Latex' ,
             \ 'd' : [ 'VimtexDocPackage' , 'Texdoc' ] ,
             \}
