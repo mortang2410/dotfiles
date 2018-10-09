@@ -53,7 +53,7 @@
 
   # i/o and syntax
   setopt multios                # redirect to globs!
-  setopt multibyte              # Unicode!
+  # setopt multibyte              # Unicode!
   setopt noclobber              # don't overwrite with > use !>
   setopt rc_quotes              # 'Isn''t' ==> Isn't
   setopt equals                 # "=ps" ==> "/usr/bin/ps"
