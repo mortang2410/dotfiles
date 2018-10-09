@@ -701,20 +701,6 @@ set timeoutlen=700 ttimeoutlen=0
 
 source ~/.vim/mywhichkeys.vim
 
-""" vim wiki
-" disable vimwiki filetype outside of wiki folder.
-let g:vimwiki_global_ext = 0
-
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-            \ 'template_path': '~/vimwiki/templates/',
-            \ 'template_default': 'default',
-            \ 'template_ext': '.html',
-            \ 'syntax' : 'markdown',
-            \ 'ext' : '.md'
-            \}]
-nnoremap <leader>wS :VimwikiIndex<CR>:Rg<Space>
-autocmd FileType vimwiki set ft=pandoc
-let g:vimwiki_table_mappings=0
 
 """ annoying tex symbols
 let g:tex_conceal = ""
@@ -760,8 +746,25 @@ command! MyCom :call MyFunc<CR>
 
 
 
-""" setup vim-pandoc
 
+""" vim wiki
+" disable vimwiki filetype outside of wiki folder.
+let g:vimwiki_global_ext = 0
+
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+            \ 'template_path': '~/vimwiki/templates/',
+            \ 'template_default': 'default',
+            \ 'template_ext': '.html',
+            \ 'syntax' : 'markdown',
+            \ 'ext' : '.md'
+            \}]
+nnoremap <leader>wS :VimwikiIndex<CR>:Rg<Space>
+augroup VWKtoPandoc
+    autocmd!
+    autocmd FileType vimwiki set ft=pandoc
+augroup END
+let g:vimwiki_table_mappings=0
+""" setup vim-pandoc
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#after#modules#enabled = ["nrrwrgn", "ultisnips"]
 " let g:pandoc#filetypes#pandoc_markdown = 1
