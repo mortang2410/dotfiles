@@ -1,6 +1,6 @@
 #!/bin/zsh
 
- zmodload zsh/zprof
+#  zmodload zsh/zprof
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -79,4 +79,4 @@ done
 source ~/env.sh
 source ~/personal.zsh
 
- zprof
+#  zprof
