@@ -3,145 +3,7 @@ runtime! defaults.vim
 let mapleader = "\<Space>"
 let maplocalleader =  ","
 
-"symotion-prefix) Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-Plug 'chrisbra/Recover.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax' 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-eunuch'
-" Plug 'scrooloose/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mattn/emmet-vim'
-Plug 'mattn/webapi-vim'
-Plug 'tomtom/tcomment_vim'
-Plug 'benknoble/clam.vim'
-Plug 'AmaiSaeta/capture.vim'
-Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'ctrlpvim/ctrlp.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-repeat'
-Plug 'miyakogi/conoline.vim'
-Plug 'kshenoy/vim-signature'
-Plug 'lervag/vimtex'
-Plug 'christoomey/vim-tmux-navigator'
-" Plug 'lambdalisue/vim-manpager'
-" Plug 'lambdalisue/vim-pager'
-Plug 'mbbill/undotree'
-Plug 'gcmt/taboo.vim'
-
-
-Plug 'vim-voom/VOoM'
-" Plug 'iamcco/mathjax-support-for-mkdp'
-" Plug 'iamcco/markdown-preview.vim'
-
-Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/goyo.vim'
-Plug 'reedes/vim-lexical'
-Plug 'junegunn/limelight.vim'
-Plug 'lambdalisue/suda.vim'
-""" Strange bug
-"Plug 'rafaqz/ranger.vim'
-
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
-
-Plug 'tpope/vim-scriptease'
-Plug 'tpope/vim-fugitive'
-Plug 'vimwiki/vimwiki'
-Plug 'majutsushi/tagbar'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-" Track the engine.
-Plug 'SirVer/ultisnips'
-Plug 'mortang2410/vim-markdown-preview'
-Plug 'chrisbra/NrrwRgn'
-Plug 'andymass/vim-matchup'
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-
-" Plug 'hecal3/vim-leader-guide'
-Plug 'liuchengxu/vim-which-key'
-
-" Plug 'godlygeek/tabular'
-" Plug 'gabrielelana/vim-markdown' 
-
-" Plug 'JuliaEditorSupport/julia-vim'
-
-" Plug 'zchee/deoplete-jedi'
-" Plug 'szymonmaszke/vimpyter'
-" Plug 'sophAi/vim-ipython_py3'
-" Plug 'python-mode/python-mode', { 'branch': 'develop' }
-
-" Plug 'ervandew/supertab'
-" Plug 'maralla/completor.vim'
-
-
-" Plug 'w0rp/ale'
-
-" if !has('nvim')
-	Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-
-Plug 'roxma/nvim-yarp'
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-" "-------------------
-" if has('nvim')
-" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-"   	Plug 'Shougo/deoplete.nvim'
-"   	Plug 'roxma/nvim-yarp'
-"   	Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-" Plug 'Shougo/neco-vim'
-" Plug 'zchee/deoplete-zsh'
-""--------------------
-"" setup ncm
-Plug 'ncm2/ncm2'
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-
-Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'filipekiss/ncm2-look.vim'
-
-" "---------------------
-
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'yami-beta/asyncomplete-omni.vim'
-" Plug 'prabirshrestha/asyncomplete-buffer.vim'
-"
-"
-"" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
-
-" Initialize plugin system
-call plug#end()
-
-" "============
+source ~/.vim/myplugins.vim
 " "setup ncm
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANTE: :help Ncm2PopupOpen for more information
@@ -223,7 +85,7 @@ endfunction
 "     \ 'whitelist': ['*'],
 "     \ 'blacklist': ['go'],
 "     \ 'completor': function('asyncomplete#sources#buffer#completor'),
-"     \ }))
+"key_map     \ }))
 "
 " "=====================
 "
@@ -603,69 +465,8 @@ let g:less     = {}
 let g:vimpager.passthrough = 0
 let g:less.enabled = 0
 
-" \\\\\\\\\\\\\\\\\\\
-" setup vimtex
-let g:vimtex_view_method = 'zathura'
-augroup my_cm_setup
-    autocmd!
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-    autocmd Filetype tex call ncm2#register_source({
-                \ 'name' : 'vimtex-cmds',
-                \ 'priority': 8, 
-                \ 'complete_length': -1,
-                \ 'scope': ['tex'],
-                \ 'matcher': {'name': 'prefix', 'key': 'word'},
-                \ 'word_pattern': '\w+',
-                \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
-                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-                \ })
-    autocmd Filetype tex call ncm2#register_source({
-                \ 'name' : 'vimtex-labels',
-                \ 'priority': 8, 
-                \ 'complete_length': -1,
-                \ 'scope': ['tex'],
-                \ 'matcher': {'name': 'combine',
-                \             'matchers': [
-                \               {'name': 'substr', 'key': 'word'},
-                \               {'name': 'substr', 'key': 'menu'},
-                \             ]},
-                \ 'word_pattern': '\w+',
-                \ 'complete_pattern': g:vimtex#re#ncm2#labels,
-                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-                \ })
-    autocmd Filetype tex call ncm2#register_source({
-                \ 'name' : 'vimtex-files',
-                \ 'priority': 8, 
-                \ 'complete_length': -1,
-                \ 'scope': ['tex'],
-                \ 'matcher': {'name': 'combine',
-                \             'matchers': [
-                \               {'name': 'abbrfuzzy', 'key': 'word'},
-                \               {'name': 'abbrfuzzy', 'key': 'abbr'},
-                \             ]},
-                \ 'word_pattern': '\w+',
-                \ 'complete_pattern': g:vimtex#re#ncm2#files,
-                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-                \ })
-    autocmd Filetype tex call ncm2#register_source({
-                \ 'name' : 'bibtex',
-                \ 'priority': 8, 
-                \ 'complete_length': -1,
-                \ 'scope': ['tex'],
-                \ 'matcher': {'name': 'combine',
-                \             'matchers': [
-                \               {'name': 'prefix', 'key': 'word'},
-                \               {'name': 'abbrfuzzy', 'key': 'abbr'},
-                \               {'name': 'abbrfuzzy', 'key': 'menu'},
-                \             ]},
-                \ 'word_pattern': '\w+',
-                \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
-                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-                \ })
-augroup END
+source ~/.vim/myvimtex.vim 
 
-
-"//////////////////////////
 "
 " persistent undos between sessions
 " then clean up stale undo files
@@ -902,165 +703,19 @@ map <Leader>F gwap
 "
 " " ///////////////////////////
 
-"" easytags
-let g:easytags_async = 1
-
-
-
+" "" easytags
+"  let g:easytags_async = 1
+" set statusline+=%{gutentags#statusline()}
 
 "" timeout insert
 set timeoutlen=700 ttimeoutlen=0
 
-" \\\\\\\\\\
-
-let g:which_key_map =  {}
-call which_key#register('<Space>', "g:which_key_map")
-let g:which_key_localmap =  {}
-call which_key#register(',', "g:which_key_localmap")
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-nnoremap <silent> <localleader>    :<c-u>WhichKey ','<CR>
-vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
-"
-
-"" can provide docs for already existing maps
-"nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
-"let g:which_key_map.f.d = 'open-vimrc'
-
-" can map either commands, or key combos
-" let g:which_key_map.w.v = ['<C-W>v', 'spibelow']
-
-let g:which_key_map.F = 'Format paragraph'
-let g:which_key_map.e = { 'name' : 'Edit as' ,
-            \ 't' : [ 'set ft=tex' ,  'Tex' ],
-            \ 'h' : [ 'set ft=html' ,  'Html' ],
-            \}
-let g:which_key_map.s = { 'name' : 'Source conf' }
-let g:which_key_map.r = { 'name' : 'Ranger' }
-let g:which_key_localmap.l = { 'name' : 'Latex' }
-let g:which_key_map._ = { 'name' : 'TComment' }
-
-let g:which_key_map.q = [ 'qa!' , 'Quit vim forcefully' ]
-let g:which_key_map.o = { 'name' : 'Open Stuff' }
-let g:which_key_map.o.q = ['copen', 'quickfix']
-let g:which_key_map.o.l = ['lopen', 'locationlist']
-let g:which_key_map.g = {
-            \'name' : 'Git Menu',
-            \'s' : ['Gstatus', 'Git Status'],
-            \'p' : ['Gpull',   'Git Pull'],
-            \'u' : ['Gpush',   'Git Push'],
-            \'c' : ['Gcommit', 'Git Commit'],
-            \'w' : ['Gwrite',  'Git Write'],
-            \}
-let g:which_key_map.c = { 'name' : '+TComment' }
-""" use explicit nnoremap, as which_key can't deal with recursive 'no'. only use 
-""" which_key for documentation
-let g:which_key_map.n = { 
-            \'name' : 'noh & narrow region',
-            \'o' : 'Remove highlighting',
-            \'t' : 'Edit narrow tex block',
-            \'r' : 'Edit narrow block',
-            \}
-nnoremap <leader>no :noh<CR>
-vnoremap <leader>nt :NR<CR>:set ft=tex<CR>
-nnoremap <esc> :noh<return><esc>
-
-let g:which_key_map[':'] = { 'name' : 'Command mode'}
-let g:which_key_map.u = {
-            \'name' : '',
-            \'t' : [':UndotreeToggle',  'Undo tree'],
-            \}
-
-let g:which_key_map.T = {
-            \'name' : 'Tags',
-            \'u' : ['UpdateTags',  'Update tags'],
-            \'h' : ['HighlightTags',  'Highlight tags'],
-            \}
-let g:which_key_map.D = {
-            \'name' : 'Diff+',
-            \'g' : ['diffget',  'Use the other buffer'],
-            \'p' : ['diffput',  'Use this buffer'],
-            \'q' : ['diffoff',  'Done diffing'],
-            \}
-let g:which_key_map.P = {
-            \'name' : 'Plugins',
-            \'i' : ['PlugInstall',  'Install'],
-            \'u' : ['PlugUpdate',  'Update'],
-            \'c' : ['PlugClean',  'Clean'],
-            \}
-let g:which_key_map.H = ['Helptags', 'Help' ]
-let g:which_key_map['?'] = {
-            \'name' : 'Info',
-            \'m' : ['Messages',  'Messages'],
-            \}
-let g:which_key_map.f = {
-            \'name' : 'Files',
-            \'w' : ['w',  'Write'],
-            \'D' : ['DiffSaved',  'Diff with saved'],
-            \'W' : ['w!',  'Write forcefully'],
-            \'t' : ['Filetypes',  'Filetypes'],
-            \'q' : ['q',  'Quit window'],
-            \'r' : ['e!',  'Reload file'],
-            \'R' : ['FinishRecovery',  'Finish Recovery'],
-            \'Q' : ['qa!',  'Quit all windows forcefully'],
-            \'c' :['lcd %:p:h', 'Cd to current file'],
-            \}
-let g:which_key_map.p = {
-            \'name' : 'Fzf',
-            \'f' : ['FZFNeigh',  'Fzf Files in .'],
-            \'l' : ['BLines',  'Fzf Lines'],
-            \}
-let g:which_key_map.U={
-            \'name' : 'Ultisnips',
-            \'e' : [ 'UltiSnipsEdit' , 'Edit snippets'],
-            \'a' : [ 'UltiSnipsAddFiletypes' , 'Add snippets from other filetypes' ],
-            \}
-
-let g:which_key_map['6'] = [ 'e #' , 'Previous file' ]
-let g:which_key_map.m = { 
-            \'name' : '+marks',
-            \'m' : ['Marks',  'Marks'],
-            \}
-let g:which_key_map.v = {
-            \'name' : 'vimrc & voom/outline',
-            \'e' : ['e ~/.vimrc',  'Edit .vimrc'],
-            \'r' : ['so $MYVIMRC',  'Reload .vimrc'],
-            \'R' : 'Reload .vimrc and plugins',
-            \'v' : ['Voom',  'Voom'],
-            \'t' : ['TagbarToggle',  'Tagbar'],
-            \}
-nnoremap <leader>vR :so $MYVIMRC<CR>:PlugInstall<CR>
-let g:which_key_map.w = { 'name' : 'Wiki',
-            \'h' : ['Vimwiki2HTMLBrowse',  'View HTML'],
-            \'b' : ['VimwikiGoBackLink',  'Back'],
-            \'n' : ['VimwikiNextLink',  'Jump to next link'],
-            \'p' : ['VimwikiPrevLink',  'Jump to prev link'],
-            \'r' : ['VimwikiRenameLink',  'Rename current file'],
-            \'S' : 'Search Wiki',
-            \}
-let g:which_key_map.y = 'Win Clipboard'
-" let g:which_key_map.w = {
-"             \'name' : 'Wiki',
-"             \'s' : ['sp',  'Horizontal Split'],
-"             \'v' : ['vs',  'Vertical Split'],
-"             \'o' : ['only',  'Only'],
-"             \'c' : ['clo',  'Close'],
-"             \}
-"""emmet 
-let g:which_key_emmet=  {}
-call which_key#register('<C-y>', "g:which_key_emmet")
-"""can't map '<C-Y>' in nnoremap so I hack it with a call function
-function! WhichEmmet(vis)
-    call which_key#start(a:vis,0,'<C-y>')
-endfunction
-nnoremap <C-y>  :call WhichEmmet(0)<CR>
-vnoremap <C-y>  :call WhichEmmet(1)<CR>
-" " /////////////////////////
-
+source ~/.vim/mywhichkeys.vim
 
 """ vim wiki
 " disable vimwiki filetype outside of wiki folder.
 let g:vimwiki_global_ext = 0
+
 let g:vimwiki_list = [{'path': '~/vimwiki/',
             \ 'template_path': '~/vimwiki/templates/',
             \ 'template_default': 'default',
@@ -1070,6 +725,7 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
             \}]
 nnoremap <leader>wS :VimwikiIndex<CR>:Rg<Space>
 autocmd FileType vimwiki set ft=pandoc
+let g:vimwiki_table_mappings=0
 
 """ annoying tex symbols
 let g:tex_conceal = ""
@@ -1118,6 +774,7 @@ command! MyCom :call MyFunc<CR>
 """ setup vim-pandoc
 
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#after#modules#enabled = ["nrrwrgn", "ultisnips"]
 " let g:pandoc#filetypes#pandoc_markdown = 1
 
 """ verbose logging in vim
@@ -1195,5 +852,25 @@ let vim_markdown_preview_use_xdg_open=0
 """ let gx use xdg-open
 let g:netrw_browsex_viewer= "xdg-open"
 
+"""\\\\\\\\\\\\\\\\
+""" setup vim-dasht
+nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
+let g:dasht_filetype_docsets = {} " filetype => list of docset name regexp
+" For example: {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{
+  " When in Elixir, also search Erlang:
+  let g:dasht_filetype_docsets['elixir'] = ['erlang']
+
+  " When in C++, also search C, Boost, and OpenGL:
+  let g:dasht_filetype_docsets['cpp'] = ['^c$', 'boost', 'OpenGL']
+
+  " When in Python, also search NumPy, SciPy, and Pandas:
+  let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
+
+  " When in HTML, also search CSS, JavaScript, Bootstrap, and jQuery:
+  let g:dasht_filetype_docsets['html'] = ['css', 'js', 'bootstrap']
+
+" and so on... }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+"""//////////////////
 
 " vim: set ft=vim :
