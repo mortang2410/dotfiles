@@ -771,8 +771,40 @@ running
 
 
 Vim tips (messy, for personal use) 
-----
+------
 
+
+Ranger-vim: `<leader>re` to let ranger choose file for editing.
+`<leader>rp` to paste last dir open by rangervim, and `<leader>rc` to cd there directly.
+
+To put rg results into quickfix, try\
+`cex system('rg comp --hidden -nH')` 
+
+In pandoc, try `viS` to select everything in the whole section.
+
+In `vimtex`, use `cse` to change surrounding environment. `tse` : toggle star environment. I set `<localleader>ld` to open doc for EVERYTHING, from packages and document classes to internal commands like `\frac`. Use `<localleader>lt` to open outline / TOC, and `<localleader>lT` to close it. See `VimtexImapsList` to get the mapping in insert mode, mostly for math environment. `<m-i>` to add `\item`. Also `:h quicktex` to see how awesome it is over snippets: `<space>` to autotrigger completion and double space to jump to next `<++>`. I have the dictionary in `~/.vim/myvimtex.vim`
+
+To filter a buffer, try `%! rg pattern`, or replace `rg` with `grep` if that's what you prefer.
+
+
+`<leader>K` to open dasht for dash docsets. Has internal latex commands like `\frac`, but nothing about packages, and not as good as vimtexdoc. But dash has more docsets about other things like `bash` and `zsh`.
+
+
+`<leader>fc` to cd to current file.\
+`<leader>Tu` to update tags for the current file. Doesn't work sometimes so manual `:!ctags %` is okay. Also `<leader>Ta` to update tags for everything in pwd. DON'T try this on `~`.\
+`<leader>Tf` to search through tags with fzf, which is useful when tags require exact name matching, eg. `recover` won't match `s:recover`.
+
+`<C-PgDown>` to scroll in completion popup menu.\
+Global marks are uppercase. Local ones are lowercase.
+
+`vim-matchup` now provides enhancements for `%` (begin and end of matching pairs like function / endfunction), and text objects like `di%`. However, `timeoutlen` requires inputting fast for text objets. Also better motions like `g%`, `]%` etc.
+
+Use narrow regions to edit blocks of text (useful for latex blocks in pandoc for instance). Press `<leader>nr` to open narrow region, and `<leader>et` to edit as tex. All the latex plugins work now. I also map the whole thing to `<leader>nt` for short. Update:  `pandoc-after`  automatically sets ft=tex  after `:NR`, for big Tex blocks like `begin{equation}`, but `$$` blocks still don't work yet.\
+If you want to do  it more fully with preview, use a good tex file as a template and paste the code there. 
+
+`:NR!` opens a whole new buffer. Either save it to accept changes, or just unload it to go back to original buffer. Don't quit the window though if it's your last window
+
+Use `gx` to open link with special file handlers like `xdg-open`, and `gf` to open in vim directly. Use `Ctrl-6`, `<space>6` or `:e #` to jump to previous file.
 
 Use `:Rg` to search within files. REALLY FAST. Just be careful that `rg` ignores some files by default (e.g. `.git` and the contents of `.gitignore`)
 
@@ -818,14 +850,6 @@ Spacebar.
 
 
 F5 : languageclient menu
-
-Vim now works with ranger by default:  
-
-`map <leader>re :RangerEdit<cr>`  
-
-`map <leader>rv :RangerVSplit<cr>`  
-
-`map <leader>rs :RangerSplit<cr>`  
 
 
 \\CPATTERN to search for \"PATTERN\", case sensitive. \\c does the
@@ -987,51 +1011,60 @@ see what is slowing down vim
 Tmux tips
 ------------
 
-~~~text
-dump pane: C-b P
+dump pane: `C-b P`
 
-reload config: C-b C-r
+reload config: `C-b C-r`
 
-clear pane: C-b k
+clear pane: `C-b k`
 
-vi mode: C-b [, select with Space, then y to yank into system clipboard
+vi mode: `C-b [`, select with Space, then `y` to yank into system clipboard
 
 with mouse mode on, use shift with mouse to select stuff / copy
-~~~
 
 
 
-Ranger tips
----------
+# Ranger tips
 
-~~~text
 
-`h : fzf through navigation history (this session)
-`H : fzf through fasd's history globally
-/ : filter current dir
-S: start shell in current dir
-yy to yank then [[:extracthere]] to extract archive with atool (WARNING: no dir created, all files are just extracted)
 
-yp : yank file path
-yd : yank dir path
+ 
+To use ranger as default file manager:\
+`xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search`\
+Don't forget to put ranger.desktop in the right folder.\
 
-or use X for shell extract (a script from .scripts) into same-named dir
+I used the function "zranger" in zsh to start ranger instead (to remember quitting position)\
+`2<C-f> `: fzf on current dir, 2 levels deep\
+`?` to see help\
+In comands, self.quantifier or prefix stands for stuff that goes before the command, like 6 in 6X\
+`sD` : sudo delete selected files via   `:shell sudo rm %p`\
+`` `h `` : fzf through navigation history (this session)\
+`` `H `` : fzf through fasd's history globally\
+`/` : filter current dir\
+`S`: start shell in current dir\
+`yy` to yank then [[:extracthere]] to extract archive with atool (WARNING: no dir created, all files are just extracted)\
 
-I added .scripts to $PATH
+`yp` : yank file path\
+`yd` : yank dir path\
 
-mkd: makedir and cd
-om: sort by mtime
-F: toggle flat
-[[:flat]] 1 (flat 1 level)
-m<key> : bookmark, and `<key> to get there
-c-n : new tab, and <Tab> to switch
-c-w : close tab
+or use `X` for shell extract (a script from .scripts) into same-named dir
 
-zV .  -> shell vim . -> enter
-+x : add x to file
-w : open task window
-W : open log window
-V to enter select mode
-uv to deselect all
-H, L : jump back and forth in history 
-~~~
+I added .scripts to `$PATH`
+
+`mkd`: makedir and cd\
+`om`: sort by mtime\
+`F`: toggle flat\
+`:flat 1` (flat 1 level)\
+`m<key>` : bookmark, and `` `<key> `` to get there\
+`c-n` : new tab, and `<Tab>` to switch\
+`c-w` : close tab\
+
+`zV` .  -> shell vim . -> enter\
+`+x` : add x to file\
+`w` : open task window\
+`W` : open log window\
+`V` to enter select mode\
+`uv` to deselect all\
+`H`, `L` : jump back and forth in history \
+`cw`,` a`,`A`,`I` : rename in different ways like vim\
+
+`zr`: reload config, useful for root ranger (with preview disabled)
