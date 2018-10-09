@@ -35,7 +35,7 @@ source $ZDOTDIR/modules/history_search.zsh
 source $ZDOTDIR/modules/smart_completion.zsh
 source $ZDOTDIR/modules/intel.zsh
 source $ZDOTDIR/modules/zstyle.zsh
-source $ZDOTDIR/modules/vcs.zsh
+# source $ZDOTDIR/modules/vcs.zsh
 # source $ZDOTDIR/modules/prompt.zsh
 source $ZDOTDIR/modules/g.zsh
 source $ZDOTDIR/modules/parser.zsh
@@ -59,3 +59,5 @@ RPROMPT='[ %F{yellow}%?%f]'
 
 source ~/env.sh
 source ~/personal.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
