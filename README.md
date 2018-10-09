@@ -136,6 +136,7 @@ convenient than having to keep pressing `<Tab>`. I could also press `Ctrl+r` to 
 ![zsh](https://camo.githubusercontent.com/a43cfdcf299d31be8274a372d6cbe65d62e2c7be/68747470733a2f2f692e696d6775722e636f6d2f683041586e79622e706e67)
 
 For a more complicated example, let's say my chat log text files have grown far too big, and I want to cut them in half (saving only the recent half), I can script up my own command (don't worry if you have no idea about scripting yet, just know how it is possible)
+
 ~~~shell
 trim50() {
     for x in "$@"
@@ -145,6 +146,7 @@ trim50() {
     done
 }
 ~~~
+
 and run `trim50 *.txt` in the log directory. That's it. In fact, this command is in my current `.zshrc`, which is the configuration file that `zsh` reads on startup.
 
 Finally, we can run shell commands within nvim itself, to either edit
