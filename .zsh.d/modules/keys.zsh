@@ -5,7 +5,7 @@
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-fpath+=$ZPLUG_HOME/repos/knu/zsh-git-escape-magic
+fpath+=$ZPLUG_HOME/plugins/knu---zsh-git-escape-magic
 autoload -Uz git-escape-magic
 git-escape-magic
 

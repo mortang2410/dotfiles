@@ -10,6 +10,8 @@ TRAPUSR2(){ echo "USR2 called before init!" }
 export ZDOTDIR=~/.zsh.d
 mkdir -p $ZDOTDIR
 
+source $ZDOTDIR/modules/zplug.zsh
+
 zstyle :compinstall filename '~/.zshrc'
 skip_global_compinit=1
 fpath=($ZDOTDIR/completers $fpath)
@@ -17,7 +19,6 @@ autoload -Uz compinit  && compinit -d $ZDOTDIR/zcompdump
 echo -n > $ZDOTDIR/startup.log
 setopt function_argzero
 unsetopt MULTIBYTE
-source $ZDOTDIR/modules/zplug.zsh
 source $ZDOTDIR/modules/autoloads.zsh
 source $ZDOTDIR/modules/options.zsh
 source $ZDOTDIR/modules/env.zsh
