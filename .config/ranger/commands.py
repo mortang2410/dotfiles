@@ -135,11 +135,10 @@ class fzf_select(Command):
         import subprocess
         if self.quantifier:
             # match only quantier levels deep
-            command="find -L . -maxdepth " + str(self.quantifier) +" \(   -fstype 'dev' -o -fstype 'proc' \) -prune -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            command="rg . --files --no-ignore --hidden --max-depth " + str(self.quantifier) +"  | sed 1d | cut -b3- | fzf +m"
         else:
             # match all files and directories recursively
-            command="find -L . \(  -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            command="rg . --files --no-ignore --hidden | sed 1d | cut -b3- | fzf +m"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
