@@ -541,6 +541,7 @@ endfunction
 
 let g:voom_ft_modes = {'markdown': 'markdown', 
             \ 'tex': 'latex',
+            \ 'pandoc': 'pandoc',
             \ 'html': 'html',
             \}
 

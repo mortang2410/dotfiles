@@ -52,12 +52,7 @@ for file in $ZDOTDIR/local/*.zsh(nN); do
 done
 
 
-PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f 
-%# '
-RPROMPT='[ %F{yellow}%?%f]'
-
 
 source ~/env.sh
 source ~/personal.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
