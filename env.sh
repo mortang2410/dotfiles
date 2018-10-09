@@ -10,6 +10,7 @@ if [[ -f $HOME/build/dasht/etc/zsh/completions.zsh ]]; then
     source $HOME/build/dasht/etc/zsh/completions.zsh 
 fi
 
+export SHELL=/bin/zsh
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
