@@ -60,9 +60,8 @@ function {
 } &>> $ZDOTDIR/startup.log
 
 {
-  source $ZPLUG_HOME/repos/mafredri/zsh-async/async.zsh
-  source $ZPLUG_HOME/repos/PythonNut/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+  source $ZPLUG_HOME/plugins/mafredri---zsh-async/async.zsh
+  source $ZPLUG_HOME/plugins/PythonNut---zsh-autosuggestions/zsh-autosuggestions.zsh
   if (( $degraded_terminal[colors256] == 1 )); then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black,bold'
   fi

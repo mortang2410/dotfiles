@@ -45,8 +45,6 @@ typeset -U fpath
 typeset -U cdpath
 
 path+=(
-  $ZPLUG_HOME/repos/zplug/zplug/bin
-  $ZPLUG_HOME/bin
   /usr/local/bin
   /sbin
   /usr/sbin
@@ -163,7 +161,7 @@ colors
 if (( $+commands[dircolors] )); then
   function () {
     local DIRCOLORS
-    DIRCOLORS=$ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-universal
+    DIRCOLORS=$HOME/.dircolors
     eval ${$(dircolors $DIRCOLORS):s/di=36/di=1;30/}
   }
 fi
