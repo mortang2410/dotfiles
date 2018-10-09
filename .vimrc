@@ -418,7 +418,6 @@ set history=1000
 "" end of file char = nothing
 "nvim only stuff
 if has('nvim')
-	let g:vimtex_compiler_progname = 'nvr'
     set shada=!,'1000,s100,h
 	set fcs=eob:\ 
     set inccommand=nosplit
@@ -607,17 +606,6 @@ nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
 """" the other ranger plugin.
 let g:ranger_map_keys = 0
-"" remove map from bclose
-map <Leader>r :Ranger<CR>
-
-
-map <Leader>b :Buffers<CR>
-map <Leader>t :Files<CR>
-map <Leader>h :History<CR>
-vnoremap <Leader>cc :TComment<CR>
-nnoremap <Leader>cc :TComment<CR>
-"formatting current paragraph
-map <Leader>F gwap
 """ use this if vimpager chokes on large files
 " let g:vimpager.ansiesc = 0
 "

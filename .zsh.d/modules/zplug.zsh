@@ -1,36 +1,34 @@
-export ZPLUG_HOME=$ZDOTDIR/.zplug
-# Check if zplug is installed
+export ZPLUG_HOME=$ZDOTDIR/.zplugin
+
 if [[ ! -d $ZPLUG_HOME ]]; then
-  git clone https://github.com/zplug/zplug $ZPLUG_HOME
-  chmod og-x $ZPLUG_HOME
+  mkdir -p $ZPLUG_HOME
+  git clone https://github.com/zdharma/zplugin.git $ZPLUG_HOME/bin
 fi
+source $ZPLUG_HOME/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-source $ZPLUG_HOME/init.zsh
-unset ZPLUG_CACHE_CHECK_FOR_CHANGES
+export ZPLGM[HOME_DIR]=$ZPLUG_HOME
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "zsh-users/zsh-syntax-highlighting", at:feec9f5
-zplug "zsh-users/zsh-completions"
-# zplug "yonchu/zsh-vcs-prompt"
-zplug "seebi/dircolors-solarized"
-zplug "Vifon/fasd", as:command
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zaw"
-# zplug "yonchu/zaw-src-git-log", on:"zsh-users/zaw", lazy:true
-# zplug "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw", lazy:true
-zplug "mafredri/zsh-async"
-zplug "knu/zsh-git-escape-magic"
-zplug "coldfix/zsh-soft-history", lazy:true
-zplug "hchbaw/auto-fu.zsh", at:pu, on:"zsh-users/zsh-syntax-highlighting"
-zplug "PythonNut/zsh-autosuggestions", on:"zsh-async", use:"*.zsh"
+zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zsh-users/zsh-completions"
+# zplugin light "yonchu/zsh-vcs-prompt"
+# zplugin light "seebi/dircolors-solarized"
+zplugin light "Vifon/fasd" 
+zplugin light "zsh-users/zsh-history-substring-search"
+zplugin light "zsh-users/zaw"
+# zplugin light "yonchu/zaw-src-git-log", on:"zsh-users/zaw"
+# zplugin light "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw"
+zplugin light "mafredri/zsh-async"
+zplugin light "knu/zsh-git-escape-magic"
+zplugin light "coldfix/zsh-soft-history" 
+zplugin light "PythonNut/auto-fu.zsh" 
+# zplugin light "mortang2410/auto-fu.zsh" 
+# zplugin light "PythonNut/zsh-autosuggestions"
+zplugin light "zsh-users/zsh-autosuggestions"
 
 
 # zplug "marszall87/lambda-pure"
 # export PURE_NODE_ENABLED=0
 
 
-if ! zplug check; then
-    zplug install
-fi
-
-zplug load

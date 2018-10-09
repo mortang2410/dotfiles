@@ -11,7 +11,7 @@
 /.zshrc
 /.zplug
 /.minify-path.cache
-
+/.zplugin
 *.zwc
 *.zwc.old
 *.log

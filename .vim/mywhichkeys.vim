@@ -17,6 +17,18 @@ vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
 " can map either commands, or key combos
 " let g:which_key_map.w.v = ['<C-W>v', 'spibelow']
 
+"" remove map from bclose
+silent!  nunmap <Leader>bd
+map <Leader>r :Ranger<CR>
+
+
+map <Leader>b :Buffers<CR>
+map <Leader>t :Files<CR>
+map <Leader>h :History<CR>
+vnoremap <Leader>cc :TComment<CR>
+nnoremap <Leader>cc :TComment<CR>
+"formatting current paragraph
+map <Leader>F gwap
 let g:which_key_map.F = 'Format paragraph'
 let g:which_key_map.e = { 'name' : 'Edit as' ,
             \ 't' : [ 'set ft=tex' ,  'Tex' ],
