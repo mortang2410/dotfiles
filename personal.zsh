@@ -219,6 +219,7 @@ setopt GLOBDOTS
 bindkey -e
 autoload -Uz compinit; compinit
 
+### ${KEYMAP}<tab> to see the current keymap. Using autofu, so that is 'afu'.
 bindkey -M afu '^Xe' edit-command-line
 bindkey -M afu '^X^E' edit-command-line
 # Normal mode keybindings, please put some more.
@@ -230,9 +231,12 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
 
+#fix home/end. 
+# Use cat -v to figure what what home/end keys map to. 
+# If Home gives ^[[7~, we replace ^[ by \e and get \e[7~. 
 if [[ -n "$TMUX" ]]; then
-	bindkey -e '"\e[1~":"\e[7~"'
-	bindkey -e '"\e[4~":"\e[8~'
+	bindkey -M afu "\e[7~" beginning-of-line
+	bindkey -M afu "\e[8~" end-of-line
 fi
 
 
