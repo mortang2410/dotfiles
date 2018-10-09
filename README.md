@@ -418,8 +418,11 @@ are already copied to `~`.** This is important, since my configuration covers a 
   Note that I have backed up your `.zshrc`. Then run `zsh`. Plugins should
   start installing now. It will finish successfully and require you to close
   the terminal. Then the next time you run `zsh` in the terminal, things should
-  be good. To make sure all keymaps are okay, run `zkbd` and follow the
-  instructions carefully. \ 
+  be good. To make sure all keymaps are okay with your terminal, run `zkbd` and
+  follow the instructions carefully. Once it finishes, it will create a file with some names like
+  `$HOME/.zsh.d/.zkbd/rxvt-unicode-256color-:0`. Then just put `source <file>` at the 
+  end of `~/.zshrc` (replace `<file>` by the name of the file `zkbd` created).
+  
   Then if you want to make `zsh` the default shell,
   execute `chsh` in your current shell to change to the Z shell.  You might
   need to log out and return for the change to take effect. **From this point
@@ -578,24 +581,24 @@ are already copied to `~`.** This is important, since my configuration covers a 
   `C-<tab>` to switch between tabs just like firefox.  `ranger` should also use
   `tza` as soon as `tabbed` is installed.
 
-- ranger itself. We also need `w3m` (for previewing images) and `highlight` (for
-  syntax highlighting). For previewing pdf and djvu, we need `djvulibre-bin`
-  and `poppler-utils`. Install them by apt. For ranger, however, we probably
-  want the [ git version](https://github.com/ranger/ranger), which contains
-  many new updates at this time of writing. Check their page for the optional
-  dependencies as well, and make sure you install them. I also use
+- ranger itself. We also need `w3m` (for previewing images) and `highlight`
+  (for syntax highlighting). For previewing pdf and djvu, we need
+  `djvulibre-bin` and `poppler-utils`. Install them by apt. For ranger,
+  however, we probably want the [ git
+  version](https://github.com/ranger/ranger), which contains many new updates
+  at this time of writing. Check their page for the optional dependencies as
+  well, and make sure you install them. I also use
   [fasd](https://github.com/Vifon/fasd) for autocompleting frequent dirs/files.
   It appears that the [ original repo](https://github.com/clvv/fasd) for fasd
-  is dead (thanks to Vifon for the warning), so use Vifon's repo instead. On
-  Ubuntu you should have most things already installed, so it will probably
+  is dead (thanks to Vifon for the warning), so I now use Vifon's repo instead.
+  When we installed `zsh`, we should have already gotten `fasd` (just try
+  running it in the shell), so no need to do anything for `fasd`. For ranger,
+  on Ubuntu you should have most things already installed, so it will probably
   look like this 
 
   ~~~shell
   sudo apt-get build-dep ranger
   sudo apt install w3m highlight atool poppler-utils djvulibre-bin checkinstall python python-urwid
-  git clone https://github.com/Vifon/fasd ~/fasd
-  cd ~/fasd
-  sudo checkinstall
   git clone https://github.com/ranger/ranger ~/ranger
   cd ~/ranger
   sudo checkinstall

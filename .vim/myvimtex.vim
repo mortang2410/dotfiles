@@ -204,7 +204,6 @@ let g:quicktex_math = {
     \'to'     : '\to ',
     \'mapsto' : '\mapsto ',
     \'comp'   : '\circ ',
-    \'of'     : "\<BS>(<+++>) <++>",
     \'sin'    : '\sin{<+++>} <++>',
     \'cos'    : '\cos{<+++>} <++>',
     \'tan'    : '\tan{<+++>} <++>',
@@ -349,4 +348,8 @@ let g:quicktex_tex = {
     \
 \}
 
+let g:quicktex_pandoc_enable = 0 
+
 "//////////////////////////
+
+
