@@ -52,7 +52,7 @@ Plug 'lambdalisue/suda.vim'
 "Plug 'rafaqz/ranger.vim'
 
 Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
+Plug 'mortang2410/bclose.vim'
 
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-fugitive'
