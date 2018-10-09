@@ -18,7 +18,8 @@ vnoremap <silent> <localleader>     :<c-u>WhichKeyVisual ','<CR>
 " let g:which_key_map.w.v = ['<C-W>v', 'spibelow']
 
 "" remove map from bclose
-silent!  nunmap <Leader>bd
+
+let g:bclose_no_plugin_maps=1
 map <Leader>r :Ranger<CR>
 
 
