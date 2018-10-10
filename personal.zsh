@@ -251,4 +251,4 @@ PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f
 %# '
 RPROMPT='[ %F{yellow}%?%f]'
 unsetopt MULTIBYTE
-source ~/.zsh.d/.zkbd/rxvt-unicode-256color-:0
+source ~/.zsh.d/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
