@@ -14,17 +14,23 @@ zplugin light "zsh-users/zsh-syntax-highlighting"
 zplugin light "zsh-users/zsh-completions"
 # zplugin light "yonchu/zsh-vcs-prompt"
 # zplugin light "seebi/dircolors-solarized"
+
+zplugin ice as"program"
 zplugin light "Vifon/fasd" 
+
 zplugin light "zsh-users/zsh-history-substring-search"
+
 zplugin light "zsh-users/zaw"
 # zplugin light "yonchu/zaw-src-git-log", on:"zsh-users/zaw"
 # zplugin light "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw"
 zplugin light "mafredri/zsh-async"
 zplugin light "knu/zsh-git-escape-magic"
 zplugin light "coldfix/zsh-soft-history" 
+
 zplugin light "PythonNut/auto-fu.zsh" 
 # zplugin light "mortang2410/auto-fu.zsh" 
 # zplugin light "PythonNut/zsh-autosuggestions"
+
 zplugin light "zsh-users/zsh-autosuggestions"
 
 
