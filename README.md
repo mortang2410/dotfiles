@@ -467,22 +467,25 @@ are already copied to `~`.** This is important, since my configuration covers a 
 
   ~~~shell 
   sudo apt install python3-pip curl 
-  curl -LO https://github.com/neovim/neovim/releases/download/nighty/nvim.appimage
-  chmod u+x nvim.appimage
+  [ -f ~/.local/bin/nvim ] && rm -f ~/.local/bin/nvim  
+  sudo add-apt-repository ppa:neovim-ppa/unstable
+  sudo apt install neovim
   pip3 install --user --upgrade neovim 
   pip3 install --user neovim-remote
   ~~~
   
-  then just run nvim.appimage directly. I symlink `nvim.appimage` to
-  `$HOME/.local/bin/nvim` so that `PATH` can find it. Once nvim runs, there
-  might be errors since plugins are missing. Just do a `:PlugInstall` so that
-  the plugins are automatically downloaded and installed.  Vim oldtimers can
-  use  `:h nvim-from-vim` to see what have changed. Then use `:checkhealth` to
-  make sure `nvim` sees all the ruby, python, lua libraries (if not, then
-  install them and configure `PATH` properly). I recommend reading about how
-  [vim-plug](https://github.com/junegunn/vim-plug) works. Do a `:PlugInstall`
-  and `:PlugUpdate` to make sure everything is updated (before that vim / nvim
-  might display some errors).
+   Notice that I remove any local version of `nvim` in `.local` (otherwise we
+   can't run the systemwide version from `apt`). You might have this local
+   version if you've installed `nvim` by hand (or from my older guide), but if not, it's just a sanity
+   check. Once nvim runs, there might be errors since plugins are missing. Just
+   do a `:PlugInstall` so that the plugins are automatically downloaded and
+   installed.  Vim oldtimers can use  `:h nvim-from-vim` to see what have
+   changed. Then use `:checkhealth` to make sure `nvim` sees all the ruby,
+   python, lua libraries (if not, then install them and configure `PATH`
+   properly). I recommend reading about how
+   [vim-plug](https://github.com/junegunn/vim-plug) works. Do a `:PlugInstall`
+   and `:PlugUpdate` to make sure everything is updated (before that vim / nvim
+   might display some errors).
 
 
 - Install `tmux` via `apt` as usual. Upon starting tmux, press `C-b I`  (`C-b` stands
@@ -644,8 +647,7 @@ If you have set up everything correctly:
 
 ![desktop](https://camo.githubusercontent.com/d015da143a73a3cfacdfcaaa7040ed475b4f34ff/68747470733a2f2f692e696d6775722e636f6d2f493835584368342e6a7067)
 
-Misc 
------
+## Misc 
 
 - `pandoc` is important for converting between markdown, latex and html. Install the latest version by
 
@@ -668,35 +670,7 @@ Misc
 
   Then run `:Rg pattern` in `nvim`. 
 
-nvim from git (advanced) 
------ 
-
-Running nvim from the AppImage currently has the disadvantage that `ps` does
-not see nvim, only AppRun. This prevents `vim-tmux-navigator` from working
-properly. A workaround is to compile nvim from git, which itself requires a [
-modded
-checkinstall](https://github.com/neovim/neovim/issues/2364#issuecomment-113966180)
-for `jemalloc`. I also added a modification to `$LIBDIR` in the patch.
-
-~~~shell
-rm ~/.local/bin/nvim
-git clone http://checkinstall.izto.org/checkinstall.git ~/checkinstall
-cd ~/checkinstall
-git apply ~/checkinstall_mall.patch
-make
-sudo make install
-sudo checkinstall
-sudo apt build-dep neovim
-sudo apt install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
-git clone https://github.com/neovim/neovim ~/neovim
-cd ~/neovim
-make CMAKE_BUILD_TYPE=Release -j8
-sudo checkinstall
-~~~
-
-
-Windows Subsystem for Linux
------
+## Windows Subsystem for Linux
 
 So I got stuck with my Windows Surface laptop, and came to the realization that
 there was no Windows replacement for the Linux software stack that I've come to
