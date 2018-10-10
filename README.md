@@ -1,26 +1,3 @@
-<style type='text/css'>
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.portrait {
-    height: 80px;
-    width: 30px;
-}
-
-.landscape {
-    height: 30px;
-    width: 80px;
-}
-
-.square {
-    height: 75px;
-    width: 75px;
-}
-</style>
 
 Dotfiles
 ==============
@@ -28,7 +5,7 @@ Dotfiles
 ![Current desktop](https://camo.githubusercontent.com/e01ef618ce3aa66df7d425293c6154a293b16250/68747470733a2f2f692e696d6775722e636f6d2f4c6c46667869522e6a7067)
 
 <p align="center">
- **Because the terminal should feel like home.**
+ Because the terminal should feel like home.
 </p>
 
 Legal disclaimer: This config is not responsible for blowing your PC up. Many
