@@ -413,15 +413,17 @@ are already copied to `~`.** This is important, since my configuration covers a 
   ~~~shell
   sudo apt install zsh 
   [ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc.backup
+  [ -d ~/.zplugin ] && rm -rf ~/.zplugin
   chmod +x ~/.zsh.d/zsh_init.zsh
   ~/.zsh.d/zsh_init.zsh
   ~~~
   
-  Note that I have backed up your `.zshrc`. Then run `zsh`. Plugins should
-  start installing now. It will finish successfully and require you to close
-  the terminal. Then the next time you run `zsh` in the terminal, things should
-  be good. For WSL users, `zsh` might complain about insecure directories and
-  file permissions. Just run
+  Note that I have backed up your `.zshrc`. Also, any `.zplugin` dir should be
+  removed to have a fresh start. Then run `zsh`. Plugins should start
+  installing now. It will finish successfully and require you to close the
+  terminal. Then the next time you run `zsh` in the terminal, things should be
+  good. For WSL users, `zsh` might complain about insecure directories and file
+  permissions. Just run
   
   ~~~
   compaudit | xargs chmod go-w
