@@ -845,7 +845,7 @@ if has('unix')
     else
         let g:vim_markdown_preview_toggle=3
         let g:vim_markdown_preview_browser='Chromium'
-        let g:vim_markdown_preview_browser_cmd='chromium'
+        let g:vim_markdown_preview_browser_cmd='chromium-browser'
     endif
 endif
 
