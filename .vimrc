@@ -4,7 +4,20 @@ let mapleader = "\<Space>"
 let maplocalleader =  ","
 
 source ~/.vim/myplugins.vim
+
+"" setup airline
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+
+
+
 " "setup ncm
+
+
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANTE: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
