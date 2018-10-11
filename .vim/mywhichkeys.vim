@@ -1,4 +1,7 @@
 " \\\\\\\\\\
+nmap <C-e> $
+nmap <C-a> ^
+
 
 let g:which_key_map =  {}
 call which_key#register('<Space>', "g:which_key_map")
