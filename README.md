@@ -412,29 +412,14 @@ Then copy things in `~/dotfiles` to `~`. There are some new font files in
 just restart your computer). **From this point forward, we assume all the files
 are already copied to `~`.** This is important, since my configuration covers a lot of settings. Things to install after cloning: 
 
-- To change the default shell to zsh, install zsh (duh). **HOWEVER**: I'm using
-  a pretty loaded config (credits to PythonNut) that requires special
-  installation instructions. Open up your terminal in `bash` and run
-
-  ~~~shell
-  sudo apt install zsh 
-  [ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc.backup
-  [ -d ~/.zplugin ] && rm -rf ~/.zplugin
-  chmod +x ~/.zsh.d/zsh_init.zsh
-  ~/.zsh.d/zsh_init.zsh
-  ~~~
-  
-  Note that I have backed up your `.zshrc`. Also, any `.zplugin` dir should be
-  removed to have a fresh start. Then run `zsh`. Plugins should start
-  installing now. It will finish successfully and require you to close the
-  terminal. Then the next time you run `zsh` in the terminal, things should be
-  good. For WSL users, `zsh` might complain about insecure directories and file
+- To change the default shell to zsh, install zsh by `apt`. Credits to PythonNut for inspiration.
+  For WSL users, `zsh` might complain about insecure directories and file
   permissions. Just run
   
   ~~~
   compaudit | xargs chmod go-w
   ~~~
-  
+
   to fix it.
   To make sure all keymaps are okay with your terminal, run `zkbd` and
   follow the instructions carefully. Once it finishes, it will create a file with some names like
