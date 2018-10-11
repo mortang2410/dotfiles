@@ -1,0 +1,21 @@
+[Desktop Entry]
+Type=Application
+Name=Tabbed Zathura
+Comment=View Pdfs in Zathura
+# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+Terminal=false
+# Exec=urxvt -e htop
+Exec=/home/wilder/.scripts/tza
+StartupWMClass=tabbed
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+Icon=evince
+Categories=GNOME;GTK;Office;Viewer;Graphics;2DGraphics;VectorGraphics;
+# Actions=new-window;
+
+# X-AppStream-Ignore=true
+
+# [Desktop Action new-window]
+# Name=New Window
+# Exec=nautilus --new-window
+
+MimeType=application/pdf;image/vnd.djvu+multipage;application/x-ext-djv;application/x-ext-djvu;
