@@ -87,12 +87,12 @@ zstyle ':completion:*' file-patterns \
   "($BORING_FILES)(D^-/):boring-files:boring\ files ($BORING_FILES)(D-/):boring-directories:boring\ directories" \
 
 zstyle ':completion:*' group-order \
-  builtins expansions aliases functions commands files \
+  builtins expansions aliases functions commands options files \
   directories noglob-files noglob-directories hidden-files hidden-directories \
   boring-files boring-directories keywords viewable
 
 zstyle ':completion:*:-command-:*' group-order \
-  builtins expansions aliases functions commands executables directories \
+  builtins expansions aliases functions commands executables options directories \
   files noglob-directories noglob-files hidden-directories hidden-files \
   boring-directories boring-files keywords viewable
 
