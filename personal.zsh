@@ -252,3 +252,16 @@ PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f
 RPROMPT='[ %F{yellow}%?%f]'
 unsetopt MULTIBYTE
 source ~/.zsh.d/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
+
+# Make menu selection a liveable place
+
+bindkey -M menuselect '^F' accept-and-infer-next-history
+bindkey -M menuselect 'i' accept-and-infer-next-history
+bindkey -M menuselect '^?' undo
+bindkey -M menuselect ' ' accept-and-hold
+bindkey -M menuselect '/' history-incremental-search-forward
+bindkey -M menuselect '?' history-incremental-search-backward
+bindkey -M menuselect ${key[PageDown]} forward-word
+bindkey -M menuselect ${key[PageUp]} backward-word
+bindkey -M menuselect 'v' vi-insert
+stty -ixon
