@@ -74,7 +74,6 @@ let g:which_key_map.n = {
             \'t' : 'Edit narrow tex block',
             \'r' : 'Edit narrow block',
             \}
-nnoremap <leader>no :noh<CR>
 vnoremap <leader>nt :NR<CR>:set ft=tex<CR><C-w>=
 nnoremap <esc> :noh<return><esc>
 
