@@ -1006,7 +1006,7 @@ with mouse mode on, use shift with mouse to select stuff / copy
 
 
 
-# Ranger tips
+## Ranger tips
 
 
 
@@ -1051,3 +1051,106 @@ I added .scripts to `$PATH`
 `cw`,` a`,`A`,`I` : rename in different ways like vim\
 
 `zr`: reload config, useful for root ranger (with preview disabled)
+
+
+## zsh tips
+
+Now menu selection is liveable place:
+
+
+ `^F` accept-and-infer-next-history\
+ `/` accept-and-infer-next-history\
+ `^?` undo\
+ `<space>` accept-and-hold\
+ `*` history-incremental-search-forward\
+ ` ${key[PageDown]}` forward-word\
+ `${key[PageUp]}`  backward-word\
+ `v` vi-insert\
+
+How to capture output of command as an array delimited by newlines\
+`export array_of_lines=("${(f)$(cat testing.txt )}")`
+
+Using config from PythonNut now, with `zaw`: try `<C-x>;` for filtering autocompletion.
+
+
+Run `fc` to use vim on your last command. Try `fc -2` to edit the 2nd last command.
+
+Vi mode: `reload` will make vi mode default for next prompts. I don't even
+understand why ;(. `<esc>` to start vi's command mode. `v` in command mode to
+get full vim yay.
+ 
+ Emacs mode (default at startup):\
+type `C-x C-v` in the command line to start vi mode (no visible indication) or
+`C-x C-e` to open the command in full vim. `M-x edit-command-line` to invoke
+the command manually. Bash also has `C-x C-e` for vim editing.
+
+`d <string>` : jump to frequent dir with \<string\> by fasd
+
+imgur to upload to imgur
+
+I now use fzf for autocompletion: try\
+`cat txt<C-t>` and `<C-r>`
+
+sudo -Es\
+= mysu
+
+`firefox &!`\
+Open firefox and detach it immediately from the terminal.\
+
+~~~
+foo=alat
+print ${foo:2}
+~~~ 
+
+will yield `at `\
+See more at parameter expansion \${name:offset}
+
+Assuming I am wilder.
+
+    touch ~/lol.c
+    cd ~
+    print *.c(:a)
+
+will yield `/home/wilder/lol.c ` (see modifiers in zshexpn)
+
+    touch ~/lol.c
+    cd ~
+    print *.c(:r)
+
+will yield` lol ` (see modifiers in zshexpn)
+
+`for x in *.png ; print $x(:r)`\
+Alternatively : `for x in *.png ; print $x:r`\
+Print the filename (with the extension removed) of all png files in
+current dir. See that the parentheses aren\'t required.
+
+\
+
+`ls *.7z | xargs -n 1 7z x -y -pebooksclub.org`\
+Extract 7zip files in current dir whose password is ebooksclub.org
+
+    for x in *.7z; do
+    7z x -y -pebooksclub.org -o$x:r $x    
+    done  
+
+Extract 7zip files in current dir whose password is ebooksclub.org
+
+`print -P %D{%I:%M}`\
+Print current hour and minute. Because %D, %I, %M are all special prompt
+escapes and require prompt expansion (a special type of expansion,
+usually found when you define PS2 and stuff), we need -P for print.
+
+`find programming/ebooks -iname "*refer*"`\
+Somehow we must use double quotes in zsh in order to use the `find`
+command.
+
+\
+
+`ls *(.)`\
+list files
+
+`cat lol | xargs -d "\n" -n 1 touch`
+touch all files listed in lol
+
+`DIR="$(dirname "$(readlink -f "$0")")"`\
+to get current dir of a shell script (even via a symlink)
