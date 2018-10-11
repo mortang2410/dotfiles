@@ -1,7 +1,122 @@
 # 10ms for key sequences 
 KEYTIMEOUT=1 
+source ~/env.sh
+#
+#
 
- # setup auto-fu.zsh, which autocompletes on the fly
+export ZPLUG_HOME=$ZDOTDIR/.zplugin
+if [[ ! -d $ZPLUG_HOME ]]; then
+  mkdir -p $ZPLUG_HOME
+  git clone https://github.com/zdharma/zplugin.git $ZPLUG_HOME/bin
+fi
+source $ZPLUG_HOME/bin/zplugin.zsh
+
+HISTFILE=$ZDOTDIR/.histfile
+HISTSIZE=50000
+SAVEHIST=50000
+autoload -U compinit promptinit
+autoload -Uz zkbd                # automatic keybinding detection
+#### never load compinit twice as it is slow. Zplugin already loads compinit anyway.
+# # compinit
+# # promptinit
+
+zmodload zsh/complist
+
+
+
+function global_bindkey () {
+  bindkey -M command $@
+  bindkey -M emacs   $@
+  bindkey -M main  $@
+  # bindkey -M afu   $@
+  bindkey      $@
+}
+
+global_bindkey "^Hk" describe-key-briefly
+
+# source $ZDOTDIR/smart_completion.zsh
+##### stop inserting completion immediately
+setopt nomenucomplete 
+zstyle ':completion:*' menu select interactive search
+zstyle ':completion:*' completer _expand _complete _match
+zstyle -e ':completion:*' list-colors 'thingy=${PREFIX##*/} reply=( "=(#b)($thingy)(?)*=00=$color[green]=$color[bg-green]" )'
+
+zstyle ':completion:*:options' description yes
+zstyle ':completion:*' auto-description 'specify: %d'
+
+
+# formatting
+zstyle ':completion:*' format '%B── %d%b' # distinct categories
+zstyle ':completion:*' list-separator '─' # distinct descriptions
+
+zstyle ':completion:*' auto-description 'specify: %d' # auto description
+zstyle ':completion:*:descriptions' format '%B%d%b'   # description
+zstyle ':completion:*:messages' format '%d'           # messages
+
+# warnings
+#zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*:warnings' format \
+    "%B%F{red}── no matches found %F{default}%b"
+
+#corrections
+zstyle ':completion:*:corrections' format '%B%d (errors %e)%b'
+export SPROMPT="Correct %B%F{red}%R%F{default}%b to %B%r?%b (Yes, No, Abort, Edit) "
+zstyle ':completion:*' group-name ''
+
+
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' cache-path $ZDOTDIR/cache
+zstyle ':completion:*' list-grouped true
+zstyle ':completion:*:-command-:*' group-order \
+  builtins expansions aliases functions commands executables options directories \
+  files noglob-directories noglob-files hidden-directories hidden-files \
+  boring-directories boring-files keywords viewable
+
+
+zstyle ':completion:*' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+# zstyle ':completion:*' matcher-list                                      \
+#     '                                   m:{[:lower:]}={[:upper:]}' \
+#     '                                   m:{[:lower:]\-}={[:upper:]_}' \
+#     'r:[^[:alpha]]||[[:alpha]]=** r:|=* m:{[:lower:]\-}={[:upper:]_}' \
+#     'r:|?=**                            m:{[:lower:]\-}={[:upper:]_}'
+
+
+
+#
+# export ZPLGM[HOME_DIR]=$ZPLUG_HOME
+#
+# zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zsh-users/zsh-completions"
+# # zplugin light "yonchu/zsh-vcs-prompt"
+# # zplugin light "seebi/dircolors-solarized"
+#
+zplugin ice as"program"
+zplugin light "Vifon/fasd" 
+#
+# zplugin light "zsh-users/zsh-history-substring-search"
+#
+zplugin light "zsh-users/zaw"
+# # zplugin light "yonchu/zaw-src-git-log", on:"zsh-users/zaw"
+# # zplugin light "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw"
+# zplugin light "mafredri/zsh-async"
+# zplugin light "knu/zsh-git-escape-magic"
+# zplugin light "coldfix/zsh-soft-history" 
+#
+# zplugin light "PythonNut/auto-fu.zsh" 
+# # zplugin light "mortang2410/auto-fu.zsh" 
+# # zplugin light "PythonNut/zsh-autosuggestions"
+#
+zplugin light "zsh-users/zsh-autosuggestions"
+#
+
+# zplug "marszall87/lambda-pure"
+# export PURE_NODE_ENABLED=0
+
+
+
+
+# setup auto-fu.zsh, which autocompletes on the fly
 # autofu_file="~/auto-fu.zsh"
 # if [[ -f ~/auto-fu.zsh ]]; then
 #     if [[ ! -f ~/.zsh/auto-fu || ! -f ~/.zsh/auto-fu.zwc ]]; then
@@ -156,10 +271,6 @@ if [[ -n $(whence vimpager)  ]]; then
 	alias zless=$PAGER
 fi
 
-if [[ -n "$TMUX" ]]; then
-	bindkey -e '"\e[1~":"\e[7~"'
-	bindkey -e '"\e[4~":"\e[8~'
-fi
 
 #add git submodule to dotfilesgit
 dotf-addmodule(){
@@ -181,14 +292,15 @@ done
 if [[ ! -f  $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
 fi
+
 source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
-    
-export FZF_COMPLETION_TRIGGER=''
-bindkey -M afu '^T' fzf-completion    
-# bindkey -M afu '^I' complete-word
-bindkey -M afu '^R' fzf-history-widget 
-bindkey -M afu '^[c' fzf-cd-widget
+# if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
+
+export FZF_COMPLETION_TRIGGER='**'
+bindkey  '^T' fzf-completion    
+# bindkey  '^I' complete-word
+bindkey  '^R' fzf-history-widget 
+bindkey  '^[c' fzf-cd-widget
 
 if [[ -n $(whence fd)  ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --color=never --no-ignore -H'
@@ -222,14 +334,10 @@ done
 setopt extendedglob
 unsetopt caseglob
 setopt GLOBDOTS
-# compinit registers some too-emacs-ish-to-me keybindings in ~/.zcompdump
-bindkey -e
-autoload -Uz compinit; compinit
+
 
 ### ${KEYMAP}<tab> to see the current keymap. Using autofu, so that is 'afu'.
-bindkey -M afu '^Xe' edit-command-line
-bindkey -M afu '^X^E' edit-command-line
-# Normal mode keybindings, please put some more.
+# Normal mode keybindings, please put some more.\
 bindkey -v
 bindkey '^P' up-history
 bindkey -v "^?" backward-delete-char
@@ -238,13 +346,13 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
 
-#fix home/end. 
-# Use cat -v to figure what what home/end keys map to. 
-# If Home gives ^[[7~, we replace ^[ by \e and get \e[7~. 
-if [[ -n "$TMUX" ]]; then
-	bindkey -M afu "\e[7~" beginning-of-line
-	bindkey -M afu "\e[8~" end-of-line
-fi
+# #fix home/end. 
+# # Use cat -v to figure what what home/end keys map to. 
+# # If Home gives ^[[7~, we replace ^[ by \e and get \e[7~. 
+# if [[ -n "$TMUX" ]]; then
+# 	bindkey -M afu "\e[7~" beginning-of-line
+# 	bindkey -M afu "\e[8~" end-of-line
+# fi
 
 
 PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f 
@@ -253,8 +361,10 @@ RPROMPT='[ %F{yellow}%?%f]'
 unsetopt MULTIBYTE
 source ~/.zsh.d/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
 
-# Make menu selection a liveable place
 
+stty -ixon
+# Make menu selection a liveable place
+#
 bindkey -M menuselect '^F' accept-and-infer-next-history
 bindkey -M menuselect 'i' accept-and-infer-next-history
 bindkey -M menuselect '^?' undo
@@ -264,4 +374,8 @@ bindkey -M menuselect '?' history-incremental-search-backward
 bindkey -M menuselect ${key[PageDown]} forward-word
 bindkey -M menuselect ${key[PageUp]} backward-word
 bindkey -M menuselect 'v' vi-insert
-stty -ixon
+
+global_bindkey '^X;' zaw
+global_bindkey '^Xe' edit-command-line
+global_bindkey '^X^E' edit-command-line
+bindkey -e
