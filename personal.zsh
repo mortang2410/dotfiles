@@ -114,7 +114,7 @@ alias zgollum_commit='cd ~/vimwiki; git add .; git commit -am "Changes"'
 zr() {
     ranger --choosedir=$HOME/.rangerdir "$@";
     LASTDIR=`cat $HOME/.rangerdir`;
-    cd "$LASTDIR";
+    cd "${$LASTDIR}";
 }
 
 
