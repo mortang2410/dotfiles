@@ -297,10 +297,6 @@ source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
 
 export FZF_COMPLETION_TRIGGER='**'
-bindkey  '^T' fzf-completion    
-# bindkey  '^I' complete-word
-bindkey  '^R' fzf-history-widget 
-bindkey  '^[c' fzf-cd-widget
 
 if [[ -n $(whence fd)  ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --color=never --no-ignore -H'
@@ -378,4 +374,9 @@ bindkey -M menuselect 'v' vi-insert
 global_bindkey '^X;' zaw
 global_bindkey '^Xe' edit-command-line
 global_bindkey '^X^E' edit-command-line
+
+global_bindkey  '^T' fzf-completion    
+# global_bindkey  '^I' complete-word
+global_bindkey  '^R' fzf-history-widget 
+global_bindkey  '^[c' fzf-cd-widget
 bindkey -e
