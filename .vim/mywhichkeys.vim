@@ -75,7 +75,7 @@ let g:which_key_map.n = {
             \'r' : 'Edit narrow block',
             \}
 vnoremap <leader>nt :NR<CR>:set ft=tex<CR><C-w>=
-nnoremap <esc> :noh<return><esc>
+
 
 let g:which_key_map[':'] = { 'name' : 'Command mode'}
 let g:which_key_map.u = {
