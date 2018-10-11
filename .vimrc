@@ -267,7 +267,7 @@ com! DiffSaved call DiffWithSavedFunc()
 
 
 "line hilighting
-let g:conoline_auto_enable = 1
+" let g:conoline_auto_enable = 1
 
 " Put these lines at the very end of your vimrc file.
 
