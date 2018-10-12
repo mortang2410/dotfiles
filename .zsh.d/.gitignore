@@ -5,10 +5,10 @@
 /.histfile.LOCK
 /.fasd
 /cache
+/**/tags
 /zcompdump
 /macros
 /.zcalc_history
-/.zshrc
 /.zplug
 /.minify-path.cache
 /.zplugin
