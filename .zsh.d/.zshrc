@@ -7,6 +7,7 @@ BORING_FILES='*\~|*.elc|*.pyc|!*|_*|*.swp|*.zwc|*.zwc.old|*.synctex.gz'
 #
 #
 
+if [[ `uname -a` =~ "Microsoft" ]] unsetopt BG_NICE 
 
 setopt extendedglob
 unsetopt caseglob
