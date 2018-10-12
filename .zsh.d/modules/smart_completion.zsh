@@ -20,6 +20,7 @@ function pcomplete() {
     zstyle -a ':completion:*' completer completer
     zstyle -a ':completion:*' menu menu
 
+    setopt nomenucomplete
     setopt extendedglob
     unsetopt caseglob
     setopt GLOB_DOTS
