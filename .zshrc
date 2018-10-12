@@ -1,0 +1,1 @@
+/home/wilder/personal.zsh
