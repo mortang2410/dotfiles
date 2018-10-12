@@ -16,8 +16,11 @@ zstyle ':completion:*' cache-path $ZDOTDIR/cache
 zstyle ':completion:*' list-grouped true
 
 # formatting
-zstyle ':completion:*' format '%B── %d%b' # distinct categories
-zstyle ':completion:*' list-separator '─' # distinct descriptions
+
+  zstyle ':completion:*' format '%B-- %d%b' # distinct categories
+  zstyle ':completion:*' list-separator '-' # distinct descriptions
+# zstyle ':completion:*' format '%B── %d%b' # distinct categories
+# zstyle ':completion:*' list-separator '─' # distinct descriptions
 
 zstyle ':completion:*' auto-description 'specify: %d' # auto description
 zstyle ':completion:*:descriptions' format '%B%d%b'   # description
@@ -25,8 +28,9 @@ zstyle ':completion:*:messages' format '%d'           # messages
 
 # warnings
 #zstyle ':completion:*:warnings' format 'No matches for: %d'
+
 zstyle ':completion:*:warnings' format \
-    "%B%F{red}── no matches found %F{default}%b"
+         "%B%F{red}-- no matches found %F{default}%b"
 
 #corrections
 zstyle ':completion:*:corrections' format '%B%d (errors %e)%b'
