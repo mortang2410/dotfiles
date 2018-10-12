@@ -20,9 +20,11 @@ function pcomplete() {
     zstyle -a ':completion:*' completer completer
     zstyle -a ':completion:*' menu menu
 
+    setopt extendedglob
+    unsetopt caseglob
+    setopt GLOB_DOTS
     setopt auto_list              # list if multiple matches
     setopt complete_in_word       # complete at cursor
-    setopt menu_complete          # add first of multiple
     setopt auto_remove_slash      # remove extra slashes if needed
     setopt auto_param_slash       # completed directory ends in /
     setopt auto_param_keys        # smart insert spaces " "
