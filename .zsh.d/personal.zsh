@@ -7,6 +7,12 @@ BORING_FILES='*\~|*.elc|*.pyc|!*|_*|*.swp|*.zwc|*.zwc.old|*.synctex.gz'
 #
 #
 
+
+setopt extendedglob
+unsetopt caseglob
+setopt GLOB_DOTS
+
+
 export ZPLUG_HOME=$ZDOTDIR/.zplugin
 if [[ ! -d $ZPLUG_HOME ]]; then
   mkdir -p $ZPLUG_HOME
@@ -294,10 +300,6 @@ do
     if [ "$i" != "/etc/update-motd.d/98-fsck-at-reboot" ]; then $i; fi; 
 done
 }
-
-setopt extendedglob
-unsetopt caseglob
-setopt GLOBDOTS
 
 
 ### ${KEYMAP}<tab> to see the current keymap. Using autofu, so that is 'afu'.
