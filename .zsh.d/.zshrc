@@ -7,7 +7,7 @@ BORING_FILES='*\~|*.elc|*.pyc|!*|_*|*.swp|*.zwc|*.zwc.old|*.synctex.gz'
 #
 #
 
-
+setopt nomenucomplete
 setopt extendedglob
 unsetopt caseglob
 setopt GLOB_DOTS
