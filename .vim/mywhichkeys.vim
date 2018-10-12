@@ -115,6 +115,8 @@ let g:which_key_map['?'] = {
             \'name' : 'Info',
             \'m' : ['Messages',  'Messages'],
             \}
+nnoremap <leader>fp "=expand('%:p')<CR>p
+
 let g:which_key_map.f = {
             \'name' : 'Files',
             \'w' : ['w',  'Write'],
@@ -123,6 +125,7 @@ let g:which_key_map.f = {
             \'t' : ['Filetypes',  'Filetypes'],
             \'m' : ['set modifiable',  'Modifiable'],
             \'q' : ['q',  'Quit window'],
+            \'p' : 'Paste name of current file',
             \'r' : ['e!',  'Reload file'],
             \'R' : ['FinishRecovery',  'Finish Recovery'],
             \'Q' : ['qa!',  'Quit all windows forcefully'],
