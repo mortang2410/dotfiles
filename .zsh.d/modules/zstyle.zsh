@@ -74,13 +74,13 @@ zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' menu yes no-select
 
-# order files first by default, dirs if command operates on dirs (ls)
-zstyle ':completion:*' file-patterns \
-  "(%p~($BORING_FILES))(-/^D):directories:normal\ directories (%p~($BORING_FILES))(^-/D):files:normal\ files" \
-  "(^($BORING_FILES))(-/^D):noglob-directories:noglob\ directories (^($BORING_FILES))(^-/D):noglob-files:noglob\ files" \
-  "(.*~($BORING_FILES))(D^-/):hidden-files:hidden\ files (.*~($BORING_FILES))(D-/):hidden-directories:hidden\ directories" \
-  "($BORING_FILES)(D^-/):boring-files:boring\ files ($BORING_FILES)(D-/):boring-directories:boring\ directories" \
-
+# # order files first by default, dirs if command operates on dirs (ls)
+# zstyle ':completion:*' file-patterns \
+#   "(%p~($BORING_FILES))(-/^D):directories:normal\ directories (%p~($BORING_FILES))(^-/D):files:normal\ files" \
+#   "(^($BORING_FILES))(-/^D):noglob-directories:noglob\ directories (^($BORING_FILES))(^-/D):noglob-files:noglob\ files" \
+#   "(.*~($BORING_FILES))(D^-/):hidden-files:hidden\ files (.*~($BORING_FILES))(D-/):hidden-directories:hidden\ directories" \
+#   "($BORING_FILES)(D^-/):boring-files:boring\ files ($BORING_FILES)(D-/):boring-directories:boring\ directories" \
+#
 zstyle ':completion:*' group-order \
   builtins expansions aliases functions commands options files \
   directories noglob-files noglob-directories hidden-files hidden-directories \
