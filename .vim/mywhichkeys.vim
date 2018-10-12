@@ -37,6 +37,7 @@ let g:which_key_map.e = { 'name' : 'Edit as' ,
             \ 't' : [ 'set ft=tex' ,  'Tex' ],
             \ 'm' : [ 'set ft=markdown' ,  'Markdown' ],
             \ 'p' : [ 'set ft=pandoc' ,  'Pandoc' ],
+            \ 'v' : [ 'set ft=vimwiki' ,  'Vimwiki' ],
             \ 'h' : [ 'set ft=html' ,  'Html' ],
             \}
 let g:which_key_map.s = { 'name' : 'Source conf' }
@@ -62,7 +63,7 @@ let g:which_key_map.g = {
             \'s' : ['Gstatus', 'Git Status'],
             \'p' : ['Gpull',   'Git Pull'],
             \'u' : ['Gpush',   'Git Push'],
-            \'c' : ['Gcommit', 'Git Commit'],
+            \'c' : ['Gcommit -am changes', 'Git Commit'],
             \'w' : ['Gwrite',  'Git Write'],
             \}
 let g:which_key_map.c = { 'name' : '+TComment' }
@@ -75,7 +76,7 @@ let g:which_key_map.n = {
             \'r' : 'Edit narrow block',
             \}
 vnoremap <leader>nt :NR<CR>:set ft=tex<CR><C-w>=
-
+nnoremap <leader>no :noh<CR>
 
 let g:which_key_map[':'] = { 'name' : 'Command mode'}
 let g:which_key_map.u = {
@@ -166,6 +167,7 @@ let g:which_key_map.w = { 'name' : 'Wiki',
             \'S' : 'Search Wiki',
             \}
 nmap <Leader>wf <Plug>VimwikiFollowLink
+vmap <Leader>wf <Plug>VimwikiNormalizeLinkVisualCR
 nmap <Leader>wn <Plug>VimwikiNextLink
 nmap <Leader>wp <Plug>VimwikiPrevLink
 inoremap <localleader>w<CR> <Esc>:VimwikiReturn 1 5<CR>
