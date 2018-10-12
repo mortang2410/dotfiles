@@ -1,6 +1,9 @@
 # 10ms for key sequences 
 KEYTIMEOUT=1 
 source ~/env.sh
+export ZDOTDIR=~/.zsh.d
+
+BORING_FILES='*\~|*.elc|*.pyc|!*|_*|*.swp|*.zwc|*.zwc.old|*.synctex.gz'
 #
 #
 
@@ -11,9 +14,6 @@ if [[ ! -d $ZPLUG_HOME ]]; then
 fi
 source $ZPLUG_HOME/bin/zplugin.zsh
 
-HISTFILE=$ZDOTDIR/.histfile
-HISTSIZE=50000
-SAVEHIST=50000
 autoload -U compinit promptinit
 autoload -Uz zkbd                # automatic keybinding detection
 #### never load compinit twice as it is slow. Zplugin already loads compinit anyway.
@@ -34,47 +34,14 @@ function global_bindkey () {
 
 global_bindkey "^Hk" describe-key-briefly
 
-# source $ZDOTDIR/smart_completion.zsh
-##### stop inserting completion immediately
-setopt nomenucomplete 
-zstyle ':completion:*' menu select interactive search
-zstyle ':completion:*' completer _expand _complete _match
-zstyle -e ':completion:*' list-colors 'thingy=${PREFIX##*/} reply=( "=(#b)($thingy)(?)*=00=$color[green]=$color[bg-green]" )'
 
-zstyle ':completion:*:options' description yes
-zstyle ':completion:*' auto-description 'specify: %d'
+source $ZDOTDIR/modules/env.zsh
+source $ZDOTDIR/modules/smart_completion.zsh
+source $ZDOTDIR/modules/zstyle.zsh
 
 
-# formatting
-zstyle ':completion:*' format '%B── %d%b' # distinct categories
-zstyle ':completion:*' list-separator '─' # distinct descriptions
-
-zstyle ':completion:*' auto-description 'specify: %d' # auto description
-zstyle ':completion:*:descriptions' format '%B%d%b'   # description
-zstyle ':completion:*:messages' format '%d'           # messages
-
-# warnings
-#zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*:warnings' format \
-    "%B%F{red}── no matches found %F{default}%b"
-
-#corrections
-zstyle ':completion:*:corrections' format '%B%d (errors %e)%b'
-export SPROMPT="Correct %B%F{red}%R%F{default}%b to %B%r?%b (Yes, No, Abort, Edit) "
-zstyle ':completion:*' group-name ''
 
 
-zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*' use-cache true
-zstyle ':completion:*' cache-path $ZDOTDIR/cache
-zstyle ':completion:*' list-grouped true
-zstyle ':completion:*:-command-:*' group-order \
-  builtins expansions aliases functions commands executables options directories \
-  files noglob-directories noglob-files hidden-directories hidden-files \
-  boring-directories boring-files keywords viewable
-
-
-zstyle ':completion:*' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
 # zstyle ':completion:*' matcher-list                                      \
 #     '                                   m:{[:lower:]}={[:upper:]}' \
 #     '                                   m:{[:lower:]\-}={[:upper:]_}' \
@@ -86,7 +53,7 @@ zstyle ':completion:*' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
 #
 # export ZPLGM[HOME_DIR]=$ZPLUG_HOME
 #
-# zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zsh-users/zsh-syntax-highlighting"
 zplugin light "zsh-users/zsh-completions"
 # # zplugin light "yonchu/zsh-vcs-prompt"
 # # zplugin light "seebi/dircolors-solarized"
@@ -289,11 +256,12 @@ done
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [[ ! -f  $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
-fi
-
-source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#### use zplugin now which loads this.
+# if [[ ! -f  $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+#     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
+# fi
+#
+# source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
 
 export FZF_COMPLETION_TRIGGER='**'
