@@ -713,7 +713,7 @@ let g:ranger_map_keys = 0
 " set statusline+=%{gutentags#statusline()}
 
 "" timeout insert
-set timeoutlen=700 ttimeoutlen=0
+set timeoutlen=500 ttimeoutlen=0
 
 source ~/.vim/mywhichkeys.vim
 
