@@ -170,7 +170,7 @@ function edlink {
 alias ztmux-close='tmux kill-session'
 # dot file aliases
 alias edbash='edlink $HOME/.bashrc; if [ "$(echo $BASH_VERSION)" ]; then source $HOME/.bashrc; fi'
-alias edzsh='edlink $HOME/.zshrc; if [ "$(echo $ZSH_VERSION)" ]; then source $HOME/.zshrc; fi'
+alias edzsh='edlink $ZDOTDIR/.zshrc; if [ "$(echo $ZSH_VERSION)" ]; then source $ZDOTDIR/.zshrc; fi'
 alias edvim='edlink $HOME/.vimrc'
 alias edgvim='edlink $HOME/.gvimrc'
 alias ednvim='edlink $HOME/.config/nvim/init.vim'
@@ -335,7 +335,7 @@ bindkey -M menuselect '^F' accept-and-infer-next-history
 bindkey -M menuselect 'i' accept-and-infer-next-history
 bindkey -M menuselect '^?' undo
 bindkey -M menuselect ' ' accept-and-hold
-bindkey -M menuselect '/' history-incremental-search-forward
+bindkey -M menuselect '^S' history-incremental-search-forward
 bindkey -M menuselect '?' history-incremental-search-backward
 bindkey -M menuselect ${key[PageDown]} forward-word
 bindkey -M menuselect ${key[PageUp]} backward-word

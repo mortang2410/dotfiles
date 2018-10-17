@@ -12,7 +12,10 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_powerline_fonts = 1
 let g:airline_theme='dark'
-
+ " for tmuxline + vim-airline integration
+let g:airline#extensions#tmuxline#enabled = 1
+" save snapshot
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 
 
 " "setup ncm
