@@ -290,16 +290,16 @@ workarounds in those files that you will know nothing about. So, as
 with most things in life, there is a tradeoff. If you can accept
 that, proceed.**
 
-This guide is meant for Ubuntu users, but it should be the same for
-other distributions, as long as one knows the equivalent packages /
-package managers.  Besides, Archers and Gentoomen need no guides. ;)
-People on Mac OS already have `zsh` installed by default (which was
-surprising for me to find out), though they might need to update it
-with [ homebrew ](https://brew.sh/). They could also use homebrew to
-install `nvim`, `tmux` etc. People on Windows can also install these
-programs via the [ Windows Subsystem for Linux feature
+This guide is meant for Ubuntu users, but it should be the same for other
+distributions, as long as one knows the equivalent packages / package managers.
+Besides, Archers and Gentoomen need no guides. ;) People on Mac OS already have
+`zsh` installed by default (which was surprising for me to find out), though
+they might need to update it with [ homebrew ](https://brew.sh/). They could
+also use homebrew to install `nvim`, `tmux` etc. People on Windows can also
+install these programs via the [ Windows Subsystem for Linux feature
 ](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
-That requires some expertise though, in case something goes wrong. 
+**UPDATE**: I am using WSL on Windows, running Ubuntu with these same config files, and things
+work pretty mostly. Just remember that file operations can be slow, antivirus software needs to be told not to scan everything, and do not edit Linux files via Windows programs (though you can call Windows programs from Linux).
 
 So without loss of generality, assume we're using Ubuntu.
 
