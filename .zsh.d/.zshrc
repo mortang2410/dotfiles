@@ -204,7 +204,7 @@ alias zgollum_commit='cd ~/vimwiki; git add .; git commit -am "Changes"'
 zr() {
     ranger --choosedir=$HOME/.rangerdir "$@";
     LASTDIR=`cat $HOME/.rangerdir`;
-    cd "${$LASTDIR}";
+    cd "$LASTDIR";
 }
 
 
@@ -323,7 +323,7 @@ bindkey -M vicmd v edit-command-line
 # fi
 
 
-PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%1~%f 
+PROMPT='%F{red}%n%f@%F{blue}%m%f  %F{yellow}%d%f 
 %# '
 RPROMPT='[ %F{yellow}%?%f]'
 unsetopt MULTIBYTE
