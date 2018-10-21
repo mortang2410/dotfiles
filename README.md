@@ -611,17 +611,6 @@ are already copied to `~`.** This is important, since my configuration covers a 
   sudo checkinstall python3 setup.py install --optimize=1 --record=install_log.txt
   ~~~
 
-  Once you are ready to live with ranger as the default file manager, run 
-
-  ~~~shell
-  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
-  ~~~
-
-  Obviously we assume `ranger.desktop` is already in the right place, such as
-  `~/.local/share/applications`. This should already be the case when we copied
-  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
-  `ranger` within a `urxvt` terminal.  Now enjoy `ranger`.
-
 
 You're done. Now just find some quickstart guides to see how those
 programs work.
@@ -663,8 +652,12 @@ If you have set up everything correctly:
   Then run `:Rg pattern` in `nvim`. 
 
 - I'm also trying out `st` from suckless. This little terminal can indeed
-  replace `urxvt` as most features are already taken care of by `tmux`.
-  I suppose the only thing I miss is setting the background image. 
+  replace `urxvt` as most features are already taken care of by `tmux`. `tmux`
+  can even select URLs and copy them into its clipboard, but the final part of
+  actually launching a browser still depends on the terminal as we might be
+  using `tmux` over `ssh`. Use `<M-l>` to select & copy the last URL, and
+  `<M-o>` to open any URL in the clipboard. I suppose the only thing I miss is
+  setting the background image. 
 
   ~~~shell
   git clone  https://github.com/mortang2410/st ~/st
@@ -674,6 +667,16 @@ If you have set up everything correctly:
   sudo checkinstall make clean install
   ~~~
 
+  Once you are ready to live with ranger as the default file manager, run 
+
+  ~~~shell
+  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
+  ~~~
+
+  Obviously we assume `ranger.desktop` is already in the right place, such as
+  `~/.local/share/applications`. This should already be the case when we copied
+  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
+  `ranger` within the `st` terminal.
 
 ## Windows Subsystem for Linux
 
