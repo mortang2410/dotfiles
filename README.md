@@ -607,7 +607,8 @@ are already copied to `~`.** This is important, since my configuration covers a 
   sudo apt install w3m highlight atool poppler-utils djvulibre-bin checkinstall python python-urwid
   git clone https://github.com/ranger/ranger ~/ranger
   cd ~/ranger
-  sudo checkinstall
+  sudo python3 setup.py install --optimize=1 --record=install_log.txt
+  sudo checkinstall python3 setup.py install --optimize=1 --record=install_log.txt
   ~~~
 
   Once you are ready to live with ranger as the default file manager, run 
