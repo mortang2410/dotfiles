@@ -86,12 +86,12 @@ zstyle ':completion:*' menu yes no-select
 #   "($BORING_FILES)(D^-/):boring-files:boring\ files ($BORING_FILES)(D-/):boring-directories:boring\ directories" \
 #
 zstyle ':completion:*' group-order \
-  builtins expansions aliases functions commands options files \
+  options builtins expansions aliases functions commands files \
   directories noglob-files noglob-directories hidden-files hidden-directories \
   boring-files boring-directories keywords viewable
 
 zstyle ':completion:*:-command-:*' group-order \
-  builtins expansions aliases functions commands executables options directories \
+  options builtins expansions aliases functions commands executables directories \
   files noglob-directories noglob-files hidden-directories hidden-files \
   boring-directories boring-files keywords viewable
 
