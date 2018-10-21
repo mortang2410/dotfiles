@@ -661,6 +661,19 @@ If you have set up everything correctly:
 
   Then run `:Rg pattern` in `nvim`. 
 
+- I'm also trying out `st` from suckless. This little terminal can indeed
+  replace `urxvt` as most features are already taken care of by `tmux`.
+  I suppose the only thing I miss is setting the background image. 
+
+  ~~~shell
+  git clone  https://github.com/mortang2410/st ~/st
+  sudo apt install libx11-dev
+  cd ~/st
+  make
+  sudo checkinstall make clean install
+  ~~~
+
+
 ## Windows Subsystem for Linux
 
 So I got stuck with my Windows Surface laptop, and came to the realization that
