@@ -295,6 +295,7 @@ do
     print $x " \: " $(TZ=$x date)
 done
 }
+alias zdate='ztime'
 #motd for ubuntu
 zmotd_ubuntu() {
 for i in /etc/update-motd.d/*; 
