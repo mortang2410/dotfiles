@@ -7,6 +7,7 @@
 .vim/.netrwhist
 .vim/vimball
 .vim/.VimballRecord
+.vim/thesaurus/*
 .weechat/.mypy_cache
 .weechat/weechat_fifo
 .config/sublime-text-3/Packages/User/Sublundo
