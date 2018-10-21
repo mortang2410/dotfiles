@@ -76,7 +76,7 @@ URxvt.lineSpace: 0
 ! /* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
 ! ! URxvt.font:  -*-terminus-medium-r-*-*-18-*-*-*-*-*-*-*
 ! ! URxvt.font: xft:Terminess Powerline
-URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=16,xft:Unifont,xft:NotoEmoji Nerd Font
+URxvt*font: xft:DejaVuSansMono Nerd Font Mono:pixelsize=16,xft:Unifont,xft:NotoEmoji Nerd Font
 ! ! Fix font space
  URxvt*letterSpace: -1
 
