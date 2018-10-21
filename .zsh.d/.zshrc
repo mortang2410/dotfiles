@@ -270,7 +270,7 @@ done
 # fi
 #
 # source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
+if [[ -n $(whence fasd)  ]] eval "$(fasd --init auto)"
 
 export FZF_COMPLETION_TRIGGER='**'
 

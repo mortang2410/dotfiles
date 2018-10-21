@@ -8,45 +8,46 @@
 force-window=yes
 autosync=0
 alang=jpn
-cache=no
+cache=yes
+cache-initial=10000
 sub-auto=all
 screenshot-template="%f-%wH.%wM.%wS-%n"
 screenshot-tag-colorspace=yes
 screenshot-format=png
 audio-channels=stereo
 #save-position-on-quit=yes
-framedrop=no
+# framedrop=no
 # use alsa for audio output, choose pulse, or oss4 as fallback
-ao=pulse
+ao=jack
 #audio-device=jack
-icc-profile-auto=yes
+# icc-profile-auto=yes
 terminal=yes
 player-operation-mode=pseudo-gui
 idle=yes
 
 #quality stuff
 profile=gpu-hq
-
-scale=ewa_lanczossharp
-cscale=ewa_lanczossharp
-blend-subtitles=yes
-video-sync=display-resample
-interpolation
-tscale=oversample
-
-#Debanding on all videos
-#Set it "no" if you rather handle it with profiles
-deband=yes
-
-#Deband steps (More = Better quality, but higher GPU cost)
-deband-iterations=4
-
-#Deband strength (More = Less banding, but more detail loss)
-deband-threshold=48
-
-#Deband range (More = Less banding, but higher GPU cost)
-deband-range=16
-
-#Dynamic Grain (More = More dynamic grain)
-#Set it to "0" in case you use the static grain shader
-deband-grain=48
+#
+# scale=ewa_lanczossharp
+# cscale=ewa_lanczossharp
+# blend-subtitles=yes
+# video-sync=display-resample
+# interpolation
+# tscale=oversample
+#
+# #Debanding on all videos
+# #Set it "no" if you rather handle it with profiles
+# deband=yes
+#
+# #Deband steps (More = Better quality, but higher GPU cost)
+# deband-iterations=4
+#
+# #Deband strength (More = Less banding, but more detail loss)
+# deband-threshold=48
+#
+# #Deband range (More = Less banding, but higher GPU cost)
+# deband-range=16
+#
+# #Dynamic Grain (More = More dynamic grain)
+# #Set it to "0" in case you use the static grain shader
+# deband-grain=48
