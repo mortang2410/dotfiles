@@ -750,21 +750,6 @@ put into system32 so that WSL can see it. Then Vim can operate with the
 Windows clipboard ( `<Leader>v` by default).
 <http://jasonfaulkner.com/ClipOut.aspx>
 
-=======
-
-WSL tips 
----------------
-
-Use the `wsltty` terminal. Install by `chocolate` as instructed.
-
-To copy a file under WSL to your Windows clipboard: `cat report.txt |
-clip.exe`
-
-To view the contents of your Windows clipboard, download from this and
-put into system32 so that WSL can see it. Then Vim can operate with the
-Windows clipboard ( `<Leader>v` by default).
-<http://jasonfaulkner.com/ClipOut.aspx>
-
 Don't forget about unison for syncing (see `zsync_wiki` in `.zshrc`).
 
 Use `wslpath` to convert between Windows and WSL paths. Use it to
@@ -1027,6 +1012,17 @@ vi mode: `C-b [`, select with Space, then `y` to yank into system clipboard
 
 with mouse mode on, use shift with mouse to select stuff / copy
 
+Use `tmux loadb -` and `tmux saveb -` to paste into & from tmux clipboard. \
+
+## weechat integration 
+
+So in weechat, I set:\
+`/set plugins.var.lua.urlselect.cmd.i "/exec -bg -sh echo ${url} | tmux loadb -"`\
+Then just `Alt-u` or `/urlselect`, choose link then `Alt+i` to paste link into tmux's clipboard.\
+Also `<Esc>yy` to use weechat-vimode to paste input line into tmux clipboard via `tmux loadb -`
+`/set plugins.var.python.vimode.copy_clipboard_cmd "tmux loadb -"`
+
+
 
 
 ## Ranger tips
@@ -1078,17 +1074,14 @@ I added .scripts to `$PATH`
 
 ## zsh tips
 
+
+`cdr` for history of directories.
+
 Now menu selection is liveable place:
 
-
- `^F` accept-and-infer-next-history\
- `/` accept-and-infer-next-history\
- `^?` undo\
- `<space>` accept-and-hold\
- `*` history-incremental-search-forward\
+ `^F` accept-and-hold\
  ` ${key[PageDown]}` forward-word\
  `${key[PageUp]}`  backward-word\
- `v` vi-insert\
 
 How to capture output of command as an array delimited by newlines\
 `export array_of_lines=("${(f)$(cat testing.txt )}")`
@@ -1172,7 +1165,7 @@ command.
 `ls *(.)`\
 list files
 
-`cat lol | xargs -d "\n" -n 1 touch`
+`cat lol | xargs -d "\n" -n 1 touch`\
 touch all files listed in lol
 
 `DIR="$(dirname "$(readlink -f "$0")")"`\
