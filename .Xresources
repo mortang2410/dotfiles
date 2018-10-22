@@ -88,6 +88,7 @@ URxvt.cursorUnderline: false
 ! URxvt.pointerBlank: true
  
 !!Source http://github.com/altercation/solarized
+<<<<<<< HEAD
 
 !
 ! Generated with :

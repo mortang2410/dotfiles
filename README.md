@@ -611,6 +611,7 @@ are already copied to `~`.** This is important, since my configuration covers a 
   sudo checkinstall python3 setup.py install --optimize=1 --record=install_log.txt
   ~~~
 
+<<<<<<< HEAD
   Once you are ready to live with ranger as the default file manager, run 
 
   ~~~shell
@@ -620,6 +621,8 @@ are already copied to `~`.** This is important, since my configuration covers a 
   Obviously we assume `ranger.desktop` is already in the right place, such as
   `~/.local/share/applications`. This should already be the case when we copied
   everything from `~/dotfiles` to `~`. 
+=======
+>>>>>>> cdee6df0e0b5bc8942bc5f17cff40e7129ec4df5
 
 You're done. Now just find some quickstart guides to see how those
 programs work.
@@ -665,8 +668,14 @@ If you have set up everything correctly:
   can even select URLs and copy them into its clipboard, but the final part of
   actually launching a browser still depends on the terminal as we might be
   using `tmux` over `ssh`. Use `<M-l>` to select & copy the last URL, and
+<<<<<<< HEAD
   `<M-o>` to open any URL in the clipboard.
   
+=======
+  `<M-o>` to open any URL in the clipboard. I suppose the only thing I miss is
+  setting the background image. 
+
+>>>>>>> cdee6df0e0b5bc8942bc5f17cff40e7129ec4df5
   ~~~shell
   git clone  https://github.com/mortang2410/st ~/st
   sudo apt install libx11-dev
@@ -675,6 +684,7 @@ If you have set up everything correctly:
   sudo checkinstall make clean install
   ~~~
 
+<<<<<<< HEAD
   That said, that are 2 big drawbacks, which make me stay with `urxvt` for now:
   - `st` does not support background images. The farmer blood runs in my veins, and I must rice.
 
@@ -683,6 +693,18 @@ If you have set up everything correctly:
     way. But still I rely on `w3m` a lot, so I must patch `w3m` myself if
     I want to use `st`. 
 
+=======
+  Once you are ready to live with ranger as the default file manager, run 
+
+  ~~~shell
+  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
+  ~~~
+
+  Obviously we assume `ranger.desktop` is already in the right place, such as
+  `~/.local/share/applications`. This should already be the case when we copied
+  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
+  `ranger` within the `st` terminal.
+>>>>>>> cdee6df0e0b5bc8942bc5f17cff40e7129ec4df5
 
 ## Windows Subsystem for Linux
 
@@ -736,6 +758,7 @@ However, there are still some drawbacks:
 
 - Some tinkering is required to translate the clipboard and file paths between
   Windows and WSL (mainly `clip.exe`, `ClipOut.exe` and `wslpath`). 
+<<<<<<< HEAD
 
 WSL tips 
 ---------------
@@ -750,6 +773,22 @@ put into system32 so that WSL can see it. Then Vim can operate with the
 Windows clipboard ( `<Leader>v` by default).
 <http://jasonfaulkner.com/ClipOut.aspx>
 
+=======
+
+WSL tips 
+---------------
+
+Use the `wsltty` terminal. Install by `chocolate` as instructed.
+
+To copy a file under WSL to your Windows clipboard: `cat report.txt |
+clip.exe`
+
+To view the contents of your Windows clipboard, download from this and
+put into system32 so that WSL can see it. Then Vim can operate with the
+Windows clipboard ( `<Leader>v` by default).
+<http://jasonfaulkner.com/ClipOut.aspx>
+
+>>>>>>> cdee6df0e0b5bc8942bc5f17cff40e7129ec4df5
 Don't forget about unison for syncing (see `zsync_wiki` in `.zshrc`).
 
 Use `wslpath` to convert between Windows and WSL paths. Use it to
