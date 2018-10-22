@@ -1074,7 +1074,6 @@ I added .scripts to `$PATH`
 
 ## zsh tips
 
-
 `cdr` for history of directories.
 
 Now menu selection is liveable place:
@@ -1091,10 +1090,6 @@ Using config from PythonNut now, with `zaw`: try `<C-x>;` for filtering autocomp
 
 Run `fc` to use vim on your last command. Try `fc -2` to edit the 2nd last command.
 
-Vi mode: `reload` will make vi mode default for next prompts. I don't even
-understand why ;(. `<esc>` to start vi's command mode. `v` in command mode to
-get full vim yay.
- 
  Emacs mode (default at startup):\
 type `C-x C-v` in the command line to start vi mode (no visible indication) or
 `C-x C-e` to open the command in full vim. `M-x edit-command-line` to invoke
