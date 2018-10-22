@@ -611,6 +611,15 @@ are already copied to `~`.** This is important, since my configuration covers a 
   sudo checkinstall python3 setup.py install --optimize=1 --record=install_log.txt
   ~~~
 
+  Once you are ready to live with ranger as the default file manager, run 
+
+  ~~~shell
+  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
+  ~~~
+
+  Obviously we assume `ranger.desktop` is already in the right place, such as
+  `~/.local/share/applications`. This should already be the case when we copied
+  everything from `~/dotfiles` to `~`. 
 
 You're done. Now just find some quickstart guides to see how those
 programs work.
@@ -656,8 +665,7 @@ If you have set up everything correctly:
   can even select URLs and copy them into its clipboard, but the final part of
   actually launching a browser still depends on the terminal as we might be
   using `tmux` over `ssh`. Use `<M-l>` to select & copy the last URL, and
-  `<M-o>` to open any URL in the clipboard. I suppose the only thing I miss is
-  setting the background image. 
+  `<M-o>` to open any URL in the clipboard.
 
   ~~~shell
   git clone  https://github.com/mortang2410/st ~/st
@@ -667,16 +675,14 @@ If you have set up everything correctly:
   sudo checkinstall make clean install
   ~~~
 
-  Once you are ready to live with ranger as the default file manager, run 
+  That said, that are 2 big drawbacks, which make me stay with `urxvt` for now:
+  - `st` does not support background images. The farmer blood runs in my veins, and I must rice.
 
-  ~~~shell
-  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
-  ~~~
+  - `st` does double-buffering, and `w3m` does not yet work on it properly.
+    Technically, `st` is not at fault here, as `w3m` does render in a hackish
+    way. But still I rely on `w3m` a lot, so I must patch `w3m` myself if
+    I want to use `st`. 
 
-  Obviously we assume `ranger.desktop` is already in the right place, such as
-  `~/.local/share/applications`. This should already be the case when we copied
-  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
-  `ranger` within the `st` terminal.
 
 ## Windows Subsystem for Linux
 
@@ -1006,6 +1012,17 @@ vi mode: `C-b [`, select with Space, then `y` to yank into system clipboard
 
 with mouse mode on, use shift with mouse to select stuff / copy
 
+Use `tmux loadb -` and `tmux saveb -` to paste into & from tmux clipboard. \
+
+## weechat integration 
+
+So in weechat, I set:\
+`/set plugins.var.lua.urlselect.cmd.i "/exec -bg -sh echo ${url} | tmux loadb -"`\
+Then just `Alt-u` or `/urlselect`, choose link then `Alt+i` to paste link into tmux's clipboard.\
+Also `<Esc>yy` to use weechat-vimode to paste input line into tmux clipboard via `tmux loadb -`
+`/set plugins.var.python.vimode.copy_clipboard_cmd "tmux loadb -"`
+
+
 
 
 ## Ranger tips
@@ -1057,17 +1074,13 @@ I added .scripts to `$PATH`
 
 ## zsh tips
 
+`cdr` for history of directories.
+
 Now menu selection is liveable place:
 
-
- `^F` accept-and-infer-next-history\
- `/` accept-and-infer-next-history\
- `^?` undo\
- `<space>` accept-and-hold\
- `*` history-incremental-search-forward\
+ `^F` accept-and-hold\
  ` ${key[PageDown]}` forward-word\
  `${key[PageUp]}`  backward-word\
- `v` vi-insert\
 
 How to capture output of command as an array delimited by newlines\
 `export array_of_lines=("${(f)$(cat testing.txt )}")`
@@ -1077,10 +1090,6 @@ Using config from PythonNut now, with `zaw`: try `<C-x>;` for filtering autocomp
 
 Run `fc` to use vim on your last command. Try `fc -2` to edit the 2nd last command.
 
-Vi mode: `reload` will make vi mode default for next prompts. I don't even
-understand why ;(. `<esc>` to start vi's command mode. `v` in command mode to
-get full vim yay.
- 
  Emacs mode (default at startup):\
 type `C-x C-v` in the command line to start vi mode (no visible indication) or
 `C-x C-e` to open the command in full vim. `M-x edit-command-line` to invoke
@@ -1151,7 +1160,7 @@ command.
 `ls *(.)`\
 list files
 
-`cat lol | xargs -d "\n" -n 1 touch`
+`cat lol | xargs -d "\n" -n 1 touch`\
 touch all files listed in lol
 
 `DIR="$(dirname "$(readlink -f "$0")")"`\
