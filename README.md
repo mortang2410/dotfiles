@@ -683,16 +683,6 @@ If you have set up everything correctly:
     way. But still I rely on `w3m` a lot, so I must patch `w3m` myself if
     I want to use `st`. 
 
-  Once you are ready to live with ranger as the default file manager, run 
-
-  ~~~shell
-  xdg-mime default ranger.desktop inode/directory application/x-gnome-saved-search
-  ~~~
-
-  Obviously we assume `ranger.desktop` is already in the right place, such as
-  `~/.local/share/applications`. This should already be the case when we copied
-  everything from `~/dotfiles` to `~`. My `ranger.desktop` file launches
-  `ranger` within the `st` terminal.
 
 ## Windows Subsystem for Linux
 
