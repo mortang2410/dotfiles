@@ -334,15 +334,12 @@ source ~/.zsh.d/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
 stty -ixon
 # Make menu selection a liveable place
 #
-bindkey -M menuselect '^F' accept-and-infer-next-history
-bindkey -M menuselect 'i' accept-and-infer-next-history
 bindkey -M menuselect '^?' undo
-bindkey -M menuselect ' ' accept-and-hold
+bindkey -M menuselect '^F' accept-and-hold
 bindkey -M menuselect '^S' history-incremental-search-forward
 bindkey -M menuselect '?' history-incremental-search-backward
 bindkey -M menuselect ${key[PageDown]} forward-word
 bindkey -M menuselect ${key[PageUp]} backward-word
-bindkey -M menuselect 'v' vi-insert
 
 global_bindkey '^X;' zaw
 global_bindkey '^Xe' edit-command-line

@@ -11,6 +11,8 @@
 .weechat/.mypy_cache
 .weechat/weechat_fifo
 .config/sublime-text-3/Packages/User/Sublundo
+.config/sublime-text-3/Packages/User/Sublundo
+.config/sublime-text-3/Packages/User/Package Control.cache
 .config/sublime-text-3/Local
 .config/sublime-text-3/Backup
 .config/ranger/luke_oldconfig
