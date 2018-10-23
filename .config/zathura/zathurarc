@@ -1,9 +1,14 @@
 set selection-clipboard clipboard
 set window-height 1024
 set window-width 768
+
 map = zoom in
+map <PageUp> scroll half-up
+map <PageDown> scroll half-down
+
 set window-title-basename true
 set window-title-home-tilde true
+set page-padding 0
 
 # colors
 set recolor-darkcolor  "#FFFFFF"

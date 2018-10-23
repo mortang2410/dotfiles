@@ -70,6 +70,9 @@ URxvt.lineSpace: 0
 ! URxvt*italicFont:     xft:font1:italic:pixelsize=16, xft:font2:pixelsize=14:minspace=False,xft:font3:pixelsize=14,xft:font4:pixelsize=14
 ! URxvt*boldItalicFont: xft:font1:bold:italic:pixelsize=16, xft:font2:pixelsize=14:minspace=False, xft:font3:pixelsize=14, xft:font4:pixelsize=14
 
+URxvt*font: xft:DejaVuSansMono Nerd Font Mono:pixelsize=16,xft:Unifont,xft:NotoEmoji Nerd Font
+! ! Fix font space
+ URxvt*letterSpace: -1
 
 ! ! My Fonts
 ! /* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
