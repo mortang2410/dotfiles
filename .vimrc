@@ -12,9 +12,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_powerline_fonts = 1
 
-" let g:airline_solarized_bg='dark'
-let g:airline_theme='distinguished'
-
+" let g:airline_solarized_bg='ayu_mirage'
 
  " for tmuxline + vim-airline integration
 let g:airline#extensions#tmuxline#enabled = 1
@@ -495,7 +493,7 @@ source ~/.vim/myvimtex.vim
 " then clean up stale undo files
 " set undofile
 if has("persistent_undo")
-    set undodir="~/.undodir/"
+    set undodir=~/.undodir/
     set undofile
 endif
 
@@ -902,5 +900,7 @@ let g:dasht_filetype_docsets = {} " filetype => list of docset name regexp
 
 " and so on... }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 """//////////////////
+
+
 
 " vim: set ft=vim :
