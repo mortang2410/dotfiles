@@ -10,9 +10,11 @@ set window-title-basename true
 set window-title-home-tilde true
 set page-padding 0
 
+set recolor true
+set recolor-darkcolor "#c6c6c6"
+set recolor-lightcolor "#545864"
+
 # colors
-set recolor-darkcolor  "#FFFFFF"
-set recolor-lightcolor "#333333"
 set statusbar-fg "#000000"
 set statusbar-bg "#C2BFA5"
 set inputbar-fg "#FFFFFF"
@@ -23,3 +25,7 @@ set completion-highlight-bg "#6B8E23"
 # set highlight-active-color "#F0E68C"
 set notification-fg "#FFFFFF"
 set notification-bg "#333333"
+
+
+
+# vim: set ft=conf :

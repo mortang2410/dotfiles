@@ -6,8 +6,8 @@ Comment=Access and organize files
 Keywords=folder;manager;explore;disk;filesystem;
 # Terminal=false
 # Exec=urxvt -e htop
+Exec=urxvt -e zsh -lc "source ~/env.sh; ranger --choosedir=$HOME/.rangerdir %U"
 Terminal=false
-# Exec=urxvt -e htop
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=org.gnome.Nautilus
 Type=Application
