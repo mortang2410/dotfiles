@@ -11,7 +11,11 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
+
+" let g:airline_solarized_bg='dark'
+let g:airline_theme='distinguished'
+
+
  " for tmuxline + vim-airline integration
 let g:airline#extensions#tmuxline#enabled = 1
 " save snapshot
@@ -339,10 +343,14 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 nmap <C-N><C-N> :set invnumber<CR>
 " time to get efficient
 nnoremap ; :
-vnoremap ; :
-colorscheme molokai
-"for molokai 
-let g:rehash256 = 1
+
+"" for solarized dark
+set background=dark
+colorscheme solarized8_low
+
+" "for molokai 
+" let g:rehash256 = 1
+" colorscheme molokai
 
 " make CSapprox respect terminal's normal fg, bg choice
 let g:CSApprox_hook_post = ['hi Normal  ctermbg=NONE ctermfg=NONE',
