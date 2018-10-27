@@ -75,7 +75,7 @@ nvim/vim.
 
 
 - "How to delete everything from the cursor to the end of the current line?"
-  `D`. "To delete the current line?" `5dd`. "To delete 5 lines?" `5dd`.
+  `D`. "To delete the current line?" `dd`. "To delete 5 lines?" `5dd`.
 
 - "How to indent a paragraph?" `=ap`. "To delete a paragraph"? `dap` (notice
   the mnemonic). "To delete a tag in HTML?" `dat`. "To delete everything

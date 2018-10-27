@@ -96,11 +96,14 @@ zstyle ':completion:*:-command-:*' group-order \
   boring-directories boring-files keywords viewable
 
 zstyle ':completion:*:(\ls|ls):*' group-order \
-  directories noglob-directories hidden-directories boring-directories\
+  options directories noglob-directories hidden-directories boring-directories\
   files noglob-files hidden-files boring-files
 
+zstyle ':completion:*:(\man|man):*' group-order \
+    options
+
 zstyle ':completion:*:(\cd|cd):*' group-order \
-       directories noglob-directories hidden-directories boring-directories\
+    options directories noglob-directories hidden-directories boring-directories\
 
 # complete more processes, typing names substitutes PID
 zstyle ':completion:*:*:kill:*:processes' list-colors \

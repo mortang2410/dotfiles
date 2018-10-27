@@ -18,7 +18,7 @@ audio-channels=stereo
 #save-position-on-quit=yes
 # framedrop=no
 # use alsa for audio output, choose pulse, or oss4 as fallback
-ao=jack
+# ao=pulse
 #audio-device=jack
 # icc-profile-auto=yes
 terminal=yes
