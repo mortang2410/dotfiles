@@ -72,6 +72,7 @@ Plug 'SirVer/ultisnips'
 Plug 'mortang2410/vim-markdown-preview'
 Plug 'chrisbra/NrrwRgn'
 Plug 'andymass/vim-matchup'
+Plug 'romainl/vim-cool'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
