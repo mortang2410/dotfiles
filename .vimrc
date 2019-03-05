@@ -902,5 +902,7 @@ let g:dasht_filetype_docsets = {} " filetype => list of docset name regexp
 """//////////////////
 
 
+" setup vim-cool
+let g:CoolTotalMatches = 1
 
 " vim: set ft=vim :
