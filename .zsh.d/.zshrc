@@ -124,7 +124,7 @@ pastebin () { curl -F "c=@${1:--}" https://ptpb.pw/ }
 alias pdfzip='gs -dEmbedAllFonts=true -dCompatibilityLevel=1.5 -dAutoRotatePages=/None -dQUIET -sDEVICE=pdfwrite -o out.pdf'
 alias zinstall='sudo apt-fast -y install'
 alias zaudio='sudo chmod 777 /dev/snd -R; pulseaudio -k; pulseaudio --start'
-alias zup='sudo apt-fast -y dist-upgrade'
+alias zup='sudo apt update; sudo apt-fast -y dist-upgrade'
 alias beep='paplay /usr/share/sounds/KDE-Im-Irc-Event.ogg'
 alias myebwin='env LANG=ja_JP.utf8 wine "$HOME/.wine/drive_c/Program Files/EBWin/EBWin.exe"'
 alias mylatex='latexmk -pdf -pvc'
@@ -148,15 +148,15 @@ alias python='python3'
 alias pip='pip3'
 alias zs='sublime_text'
 alias xclipz='xclip -sel clip'
-dotfilesgit() {
-    export GIT_DIR=$HOME/.cfg/ 
-    export GIT_WORK_TREE=$HOME 
-    git add ~/.vim ~/.scripts ~/.zsh.d ~/.config/ranger
-    if [[ -n "$TMUX" ]]; then
-        ztmux-set-title DOTFILESGIT
-    fi
-}
-
+# dotfilesgit() {
+#     export GIT_DIR=$HOME/.cfg/ 
+#     export GIT_WORK_TREE=$HOME 
+#     git add ~/.vim ~/.scripts ~/.zsh.d ~/.config/ranger
+#     if [[ -n "$TMUX" ]]; then
+#         ztmux-set-title DOTFILESGIT
+#     fi
+# }
+#
 # set title of tmux
 ztmux-set-title() {
     printf "\033k$1\033\\"
@@ -199,6 +199,7 @@ alias checkinstall='checkinstall -D --install'
 
 alias zpandoc_latex='pandoc --template ~/.pandoc/templates/eisvogel.tex'
 alias zgollum_commit='cd ~/vimwiki; git add .; git commit -am "Changes"'
+alias zt='tmux'
 
 #ranger exit with cd 
 zr() {
