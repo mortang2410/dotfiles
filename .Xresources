@@ -53,7 +53,7 @@ URxvt.fading: 25
 ! URxvt.visualBell: true
 URxvt.loginShell: true
 URxvt.saveLines: 2000
-URxvt.internalBorder: 3
+URxvt.internalBorder: 0
 URxvt.lineSpace: 0
 
 ! URxvt.transparent: true
