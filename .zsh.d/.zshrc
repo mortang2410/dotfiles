@@ -1,7 +1,17 @@
 # 10ms for key sequences 
 KEYTIMEOUT=1 
+
+# # for profiling. Also see the end of file.
+# zmodload zsh/zprof
+
+# Skip the not really helping Ubuntu global compinit
+skip_global_compinit=1
+
 source ~/env.sh
 export ZDOTDIR=~/.zsh.d
+
+
+
 
 BORING_FILES='*\~|*.elc|*.pyc|!*|_*|*.swp|*.zwc|*.zwc.old|*.synctex.gz'
 #
@@ -14,19 +24,50 @@ setopt extendedglob
 unsetopt caseglob
 setopt GLOB_DOTS
 
-
-export ZPLUG_HOME=$ZDOTDIR/.zplugin
-if [[ ! -d $ZPLUG_HOME ]]; then
-  mkdir -p $ZPLUG_HOME
-  git clone https://github.com/zdharma/zplugin.git $ZPLUG_HOME/bin
-fi
-source $ZPLUG_HOME/bin/zplugin.zsh
-
-autoload -U compinit promptinit
+autoload -U promptinit
 autoload -Uz zkbd                # automatic keybinding detection
-#### never load compinit twice as it is slow. Zplugin already loads compinit anyway.
+
+#### never load compinit twice as it is slow. zinit already loads compinit anyway.
 # # compinit
 # # promptinit
+
+export ZPLUG_HOME=$ZDOTDIR/.zinit
+if [[ ! -d $ZPLUG_HOME ]]; then
+  mkdir -p $ZPLUG_HOME
+  git clone https://github.com/zdharma/zinit.git $ZPLUG_HOME/bin
+fi
+source $ZPLUG_HOME/bin/zinit.zsh
+#
+# export ZPLGM[HOME_DIR]=$ZPLUG_HOME
+#
+zinit light "zsh-users/zsh-syntax-highlighting"
+zinit light "zsh-users/zsh-completions"
+# # zinit light "yonchu/zsh-vcs-prompt"
+# # zinit light "seebi/dircolors-solarized"
+#
+zinit ice as"program"
+zinit light "Vifon/fasd" 
+#
+# zinit light "zsh-users/zsh-history-substring-search"
+#
+zinit light "zsh-users/zaw"
+# # zinit light "yonchu/zaw-src-git-log", on:"zsh-users/zaw"
+# # zinit light "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw"
+# zinit light "mafredri/zsh-async"
+# zinit light "knu/zsh-git-escape-magic"
+# zinit light "coldfix/zsh-soft-history" 
+#
+# zinit light "PythonNut/auto-fu.zsh" 
+# # zinit light "mortang2410/auto-fu.zsh" 
+# # zinit light "PythonNut/zsh-autosuggestions"
+#
+zinit light "zsh-users/zsh-autosuggestions"
+#
+autoload -Uz compinit
+compinit
+zinit cdreplay -q 
+
+
 
 zmodload zsh/complist
 
@@ -58,35 +99,6 @@ source $ZDOTDIR/modules/zstyle.zsh
 
 
 
-#
-# export ZPLGM[HOME_DIR]=$ZPLUG_HOME
-#
-zplugin light "zsh-users/zsh-syntax-highlighting"
-zplugin light "zsh-users/zsh-completions"
-# # zplugin light "yonchu/zsh-vcs-prompt"
-# # zplugin light "seebi/dircolors-solarized"
-#
-zplugin ice as"program"
-zplugin light "Vifon/fasd" 
-#
-# zplugin light "zsh-users/zsh-history-substring-search"
-#
-zplugin light "zsh-users/zaw"
-# # zplugin light "yonchu/zaw-src-git-log", on:"zsh-users/zaw"
-# # zplugin light "yonchu/zaw-src-git-show-branch", on:"zsh-users/zaw"
-# zplugin light "mafredri/zsh-async"
-# zplugin light "knu/zsh-git-escape-magic"
-# zplugin light "coldfix/zsh-soft-history" 
-#
-# zplugin light "PythonNut/auto-fu.zsh" 
-# # zplugin light "mortang2410/auto-fu.zsh" 
-# # zplugin light "PythonNut/zsh-autosuggestions"
-#
-zplugin light "zsh-users/zsh-autosuggestions"
-#
-
-# zplug "marszall87/lambda-pure"
-# export PURE_NODE_ENABLED=0
 
 
 
@@ -265,7 +277,7 @@ done
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#### use zplugin now which loads this.
+#### use zinit now which loads this.
 # if [[ ! -f  $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
 #     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
 # fi
@@ -351,3 +363,7 @@ global_bindkey  '^T' fzf-completion
 global_bindkey  '^R' fzf-history-widget 
 global_bindkey  '^[c' fzf-cd-widget
 bindkey -e
+
+
+# # for profiling. Also see start of page
+# zprof
