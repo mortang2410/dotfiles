@@ -765,6 +765,7 @@ running
 Vim tips (messy, for personal use) 
 ------
 
+`:g/^\s ids/s/\\_/_/g` : set the range to be all lines containing ` ids` at the beginning, then within those lines, replace `\_` with `_`
 
 Ranger-vim: `<leader>re` to let ranger choose file for editing.
 `<leader>rp` to paste last dir open by rangervim, and `<leader>rc` to cd there directly.
