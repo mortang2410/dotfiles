@@ -3,6 +3,9 @@ theme = "mytheme"
 [editor]
 bufferline="multiple"
 
+[editor.soft-wrap]
+enable = true
+
 [editor.cursor-shape]
 insert = "bar"
 
