@@ -34,7 +34,7 @@ autoload -Uz zkbd                # automatic keybinding detection
 export ZPLUG_HOME=$ZDOTDIR/.zinit
 if [[ ! -d $ZPLUG_HOME ]]; then
   mkdir -p $ZPLUG_HOME
-  git clone https://github.com/zdharma/zinit.git $ZPLUG_HOME/bin
+  git clone https://github.com/zdharma-continuum/zinit.git $ZPLUG_HOME/bin
 fi
 source $ZPLUG_HOME/bin/zinit.zsh
 #
