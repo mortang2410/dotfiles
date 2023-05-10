@@ -21,5 +21,4 @@ Remember that for reverse search to work in LyX we need to start lyxserver by sp
 
 For Zotero, I use zotfile for file management and Better Bibtex. In zotfile preferences, be careful not to confuse between "Base directory" for linked attachment (should be a Dropbox folder), and "Data Directory location" (which should be local and synced by Zotero).
 
-
-
+For tmux, `C-b I` the first time it starts to install plugins. Then `C-b ?` for keybindings, `C-b %` to split, `C-b <Space>` to change split layout, `C-b !` to break the current pane into a new window. Custom keybind: `C-b @` to add a pane from other windows into current window.
