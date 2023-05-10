@@ -13,12 +13,13 @@ Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who ca
  
 Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Run "open" to open in Finder. I also made F2 in finder open iterm2.
 
-Check `bind | rg fzf`  to see the binding in fish with fzf. Fish does not allow auto-completing hidden files (stubborn author). So fzf is the next best.
+Check `bind | rg fzf`  to see the binding in fish with fzf. Fish does not allow auto-completing hidden files (stubborn author). So fzf is the next best. 
 
 Helix is awesome. `clipboard-yank` is nice.
 
 Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences.
 
+For Zotero, I use zotfile for file management and Better Bibtex. In zotfile preferences, be careful not to confuse between "Base directory" for linked attachment (should be a Dropbox folder), and "Data Directory location" (which should be local and synced by Zotero).
 
 
 
