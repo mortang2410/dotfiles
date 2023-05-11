@@ -38,3 +38,13 @@ Pictures
 Public
 .cargo
 .local/share/fish/generated_completions
+Applications
+Desktop
+Dropbox
+Zotero
+.config/karabiner/automatic_backups
+.vim.old
+.swp
+go
+git-repos
+zsh-syntax-highlighting
