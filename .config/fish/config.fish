@@ -23,7 +23,7 @@ export GOPATH=$HOME/go
 
 # for nnn
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_PLUG='f:finder;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
+export NNN_PLUG='f:-!&open .;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
 export NNN_PAGER='bat'
 ### using pistol in NNN will disable viu image previewer
 # export NNN_PISTOL=1
