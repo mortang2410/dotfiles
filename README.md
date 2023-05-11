@@ -7,7 +7,7 @@ Dotfiles
 Mac OS has the worst UX design.
 Use Synergy + remap Ctrl and Cmd in setting + remap Ctrl and Cmd in iterm2.
 Use Alt-tab with search (beta build).
-Keycastr, Karabiner, Maccy, Rectangle, Easy Move+Resize, Whichspace make Mac OS half usable. Note that Karabiner does not work with Synergy unless the Mac is the host.
+Keycastr, Karabiner, Maccy, Rectangle, Easy Move+Resize, Whichspace make Mac OS half usable. Note that Karabiner does not work with Synergy unless the Mac is the host. I had to [enable](https://www.macworld.com/article/351347/how-to-activate-key-repetition-through-the-macos-terminal.html) repeating keys and [disable](https://apple.stackexchange.com/questions/14001/how-to-turn-off-all-animations-on-os-x) window opening animations in the terminal.
 
 Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who can bother to remember configs? 0-config with sane defaults is the future.
 
@@ -19,13 +19,15 @@ fish
 ----
 Run "open" to open in Finder. Use `fish_add_path` to add to `$PATH` (I had to add $GOPATH/bin for Go). Press `C-E` or `<Esc>-e` to edit prompt in editor. Press `<super>-<left>` to move back in dir history. My own functions: use `mant <command>` to open man page in Skim, and `abrew` to replace `brew` (adding `arch -arm64` to `brew`).
 
-I also made F2 in finder open iterm2.
+I hardcoded cursor shape `line` by `printf "\e[6 q"` in the fish_prompt.
 
 Check `bind | rg fzf`  to see the binding in fish with fzf. Fish does not allow auto-completing hidden files (stubborn author). So fzf is the next best. 
 
 Misc
 ----
 Helix is awesome. `clipboard-yank` is nice.
+I also made F2 in finder open iterm2.
+iterm2's preferences is stored in `~/Library/Preferences` like other programs. I changed "dimming for inactive panes" for `nnn`.
 
 Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences.
 
