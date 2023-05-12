@@ -45,6 +45,7 @@ gettext
 ghostscript
 giflib
 git
+glances
 glib
 glow
 gmp
