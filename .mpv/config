@@ -6,10 +6,10 @@
 # note: opengl has numerous quality/performance trade-off options.
 # as per the mpv(1), "opengl-hq" is just an alias for "opengl:lscale=lanczos2:dither-depth=auto:fbo-format=rgb16"
 force-window=yes
+autofit=100%
 autosync=0
 alang=jpn
 cache=yes
-cache-initial=10000
 sub-auto=all
 screenshot-template="%f-%wH.%wM.%wS-%n"
 screenshot-tag-colorspace=yes

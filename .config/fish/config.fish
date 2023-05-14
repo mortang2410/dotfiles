@@ -1,3 +1,4 @@
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
@@ -27,3 +28,10 @@ export NNN_PLUG='f:-!&open .;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
 export NNN_PAGER='bat'
 ### using pistol in NNN will disable viu image previewer
 # export NNN_PISTOL=1
+
+# make bat have readable color as a replacement for less 
+export BAT_THEME=ansi
+export PAGER='bat --terminal-width -10'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+alias t="tmux"

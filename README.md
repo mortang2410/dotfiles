@@ -7,7 +7,7 @@ Dotfiles
 Mac OS has the worst UX design.
 Use Synergy + remap Ctrl and Cmd in setting + remap Ctrl and Cmd in iterm2.
 Use Alt-tab with search (beta build).
-Keycastr, Karabiner, Maccy, Rectangle, Easy Move+Resize, Whichspace make Mac OS half usable. Note that Karabiner does not work with Synergy unless the Mac is the host. I had to [enable](https://www.macworld.com/article/351347/how-to-activate-key-repetition-through-the-macos-terminal.html) repeating keys and [disable](https://apple.stackexchange.com/questions/14001/how-to-turn-off-all-animations-on-os-x) window opening animations in the terminal.
+Keycastr, Karabiner, Maccy, Rectangle, Easy Move+Resize, Whichspace make Mac OS half usable. Note that Karabiner does not work with Synergy unless the Mac is the host. I had to [enable](https://www.macworld.com/article/351347/how-to-activate-key-repetition-through-the-macos-terminal.html) repeating keys and [disable](https://apple.stackexchange.com/questions/14001/how-to-turn-off-all-animations-on-os-x) window opening animations in the terminal, and [disabled](https://github.com/pqrs-org/Karabiner-Elements/issues/2981) globe key changing input source, and enabled [passwordless sudo](https://jefftriplett.com/2022/enable-sudo-without-a-password-on-macos/) + [unsigned binaries](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for yabai.
 
 Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who can bother to remember configs? 0-config with sane defaults is the future.
 
