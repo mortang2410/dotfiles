@@ -24,7 +24,7 @@ export GOPATH=$HOME/go
 
 # for nnn
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_PLUG='f:-!&open .;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
+export NNN_PLUG='f:-!&open .;o:-!&open "$nnn";p:preview-tui;d:diffs;t:nmount;v:imgview'
 export NNN_PAGER='bat'
 ### using pistol in NNN will disable viu image previewer
 # export NNN_PISTOL=1
@@ -35,3 +35,4 @@ export PAGER='bat --terminal-width -10'
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 alias t="tmux"
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /Users/wilder/.ghcup/bin $PATH # ghcup-env
