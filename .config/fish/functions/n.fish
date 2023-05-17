@@ -23,7 +23,7 @@ function n --wraps nnn --description 'support nnn quit and change directory'
 
     # The command function allows one to alias this function to `nnn` without
     # making an infinitely recursive alias
-    command nnn -aAdHnez -Tt $argv
+    command nnn -aAdHnexz -Tt $argv
 
     if test -e $NNN_TMPFILE
         source $NNN_TMPFILE

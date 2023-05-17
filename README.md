@@ -13,7 +13,7 @@ Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who ca
 
 nnn
 ----
-Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;f` to open finder at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried). I also have my own nnn fork to add "force yes" to cp/mv prompts.
+Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;m` to open Marta at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried). I also have my own nnn fork to add "force yes" to cp/mv prompts. Selecting a file copies the path into clipboard, and we can use `C-G` to paste file path into the open file dialog in Mac.
 
 fish
 ----
@@ -27,7 +27,7 @@ Misc
 ----
 Helix is awesome. `clipboard-yank` is nice.
 I also made F2 in finder and marta open iterm2. Also `C-M` in Finder to open marta. Play with `C-p` and `C-P` in marta.
-iterm2's preferences is stored in `~/Library/Preferences` like other programs. I changed "dimming for inactive panes" for `nnn`.
+iterm2's preferences is stored in `~/Library/Preferences` like other programs. I modified the setting "dimming for inactive panes". Also I set `<Super>-=` to open iterm2 in Guake style.
 Press `C-?` to open help menu search for GUI apps.
 
 Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences.
