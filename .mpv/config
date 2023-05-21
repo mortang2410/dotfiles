@@ -14,6 +14,7 @@ sub-auto=all
 screenshot-template="%f-%wH.%wM.%wS-%n"
 screenshot-tag-colorspace=yes
 screenshot-format=png
+screenshot-directory=~/Pictures
 audio-channels=stereo
 # use alsa for audio output, choose pulse, or oss4 as fallback
 # ao=pulse

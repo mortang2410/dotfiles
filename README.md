@@ -17,7 +17,7 @@ Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on qu
 
 fish
 ----
-Run "open" to open in Finder. Use `fish_add_path` to add to `$PATH` (I had to add $GOPATH/bin for Go). Press `C-E` or `<Esc>-e` to edit prompt in editor. Press `<super>-<left>` to move back in dir history. My own functions: use `mant <command>` to open man page in Skim, and `abrew` to replace `brew` (adding `arch -arm64` to `brew`).
+Run "open" to open in Finder. Use `fish_add_path` to add to `$PATH` (I had to add $GOPATH/bin for Go). Press `<Esc>-e` to edit prompt in editor. Press `<super>-<left>` to move back in dir history. My own functions: use `mant <command>` to open man page in Skim, and `abrew` to replace `brew` (adding `arch -arm64` to `brew`).
 
 I hardcoded cursor shape `line` by `printf "\e[6 q"` in the fish_prompt.
 
@@ -30,8 +30,15 @@ I also made F2 in finder and marta open iterm2. Also `C-M` in Finder to open mar
 iterm2's preferences is stored in `~/Library/Preferences` like other programs. I modified the setting "dimming for inactive panes". Also I set `<Super>-=` to open iterm2 in Guake style.
 Press `C-?` to open help menu search for GUI apps.
 
+Press `<Super>-T` to float and `<Super>-t` to toggle sticky + topmost for window with yabai.
+
 Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences.
 
 For Zotero, I use zotfile for file management and Better Bibtex. In zotfile preferences, be careful not to confuse between "Base directory" for linked attachment (should be a Dropbox folder), and "Data Directory location" (which should be local and synced by Zotero).
 
 For tmux, `C-b I` the first time it starts to install plugins. Then `C-b ?` for keybindings, `C-b %` to split, `C-b <Space>` to change split layout, right-click and choose "Zoom" to temporarily zoom without moving panes, and `C-b !` to break the current pane into a new window. Custom keybind: `C-b @` to add a pane from other windows into current window. I added `C-c C-c` to change tmux's current dir.
+
+nvim tips
+-----
+running astronvim with user folder git cloned inside astro git repo. Use `plugin/user.lua` to add plugins (add `lazy = false` to always load).
+`:Bufferize <command>` to view output of command in another buffer. `C-]` to jump into help tags. Use `:Legendary` or `<space><space>` for command palette. `za` to toggle fold.

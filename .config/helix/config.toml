@@ -1,7 +1,8 @@
-theme = "mytheme"
+theme = "dark_plus"
 
 [editor]
 bufferline="multiple"
+lsp.display-inlay-hints=true
 
 [editor.soft-wrap]
 enable = true
