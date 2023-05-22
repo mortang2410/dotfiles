@@ -13,7 +13,9 @@ Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who ca
 
 nnn
 ----
-Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;m` to open Marta at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried). I also have my own nnn fork to add "force yes" to cp/mv prompts. Selecting a file copies the path into clipboard, and we can use `C-G` to paste file path into the open file dialog in Mac.
+Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Use `np` like in `file (np)` to file-pick with nnn. 
+Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;m` to open Marta at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried).
+I also have my own nnn fork to add "force yes" to cp/mv prompts. Selecting a file copies the path into clipboard, and we can use `C-G` to paste file path into the open file dialog in Mac. 
 
 fish
 ----
@@ -40,5 +42,5 @@ For tmux, `C-b I` the first time it starts to install plugins. Then `C-b ?` for 
 
 nvim tips
 -----
-running astronvim with user folder git cloned inside astro git repo. Use `plugin/user.lua` to add plugins (add `lazy = false` to always load).
-`:Bufferize <command>` to view output of command in another buffer. `C-]` to jump into help tags. Use `:Legendary` or `<space><space>` for command palette. `za` to toggle fold.
+Watch [this](https://youtu.be/GEHPiZ10gOk) to use/configure astronvim. Use `plugin/user.lua` to add plugins (add `lazy = false` to always load).
+`:Bufferize <command>` to view output of command in another buffer. Use `:SudaWrite` to sudo write. `C-]` to jump into help tags. Use `<Space>fk` and `<Space>fC` for user keymaps and ex+plugin commands, and `<Space>?` for built-in keymaps. `za` to toggle fold. `<space>fw` to find words by telescope and `:Spectre` to find + replace. `<space>fk` and search for "split" and "buffer" to work with windows and buffers.
