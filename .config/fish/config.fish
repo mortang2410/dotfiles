@@ -32,6 +32,8 @@ export NNN_PLUG='f:-!&open .;o:-!&open "$nnn";p:preview-tui;m:-!&open -a marta "
 export NNN_PAGER='bat'
 #use nnn as file picker
 alias np="n -p -"
+#use nnn to drag and drop selected
+alias ndr="np | dr"
 
 ### using pistol in NNN will disable viu image previewer
 # export NNN_PISTOL=1

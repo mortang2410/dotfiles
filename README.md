@@ -1,6 +1,4 @@
-
-Dotfiles
-==============
+# Dotfiles
 
 ![current](https://github.com/mortang2410/dotfiles/assets/3200308/98c18c21-6158-4701-8821-74c624f73ce2)
 
@@ -11,22 +9,23 @@ Keycastr, Karabiner, Maccy, yabai, Whichspace make Mac OS half usable. Note that
 
 Replace nvim with helix, ranger with nnn and zsh with fish + fzf. Because who can bother to remember configs? 0-config with sane defaults is the future.
 
-nnn
-----
-Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Use `np` like in `file (np)` to file-pick with nnn. 
-Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;m` to open Marta at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried).
-I also have my own nnn fork to add "force yes" to cp/mv prompts. Selecting a file copies the path into clipboard, and we can use `C-G` to paste file path into the open file dialog in Mac. 
+## nnn
 
-fish
-----
+Use n (function in fish) to invoke nnn with auto-dir entry disabled and cd on quit. Use `np` like in `file (np)` to file-pick with nnn. Use `ndr` to file-pick into Dropover for drag-and-drop, or `dr /file/path`. 
+
+Press `ta`,`td`, `ts` in nnn to display/undisplay folder sizes. I installed plugins as [instructed](https://github.com/jarun/nnn/tree/master/plugins), and many things for [live preview](https://github.com/jarun/nnn/blob/master/plugins/preview-tui#LL29), including [pistol](https://github.com/doronbehar/pistol#from-source) from Go. Press `;<Enter>` to choose which plugin to use, `;m` to open Marta at current dir and `;p` for `preview-tui`. Note that previewing images with `viu` in `tmux` in `iterm` is pixelated (half-blocks) because `tmux` sucks (there's a fork with sixel I haven't tried).
+I also have my own nnn fork to add "force yes" to cp/mv prompts. Selecting a file copies the path into clipboard, and we can use `C-G` to paste file path into the open file dialog in Mac.
+
+## fish
+
 Run "open" to open in Finder. Use `fish_add_path` to add to `$PATH` (I had to add $GOPATH/bin for Go). Press `<Esc>-e` to edit prompt in editor. Press `<super>-<left>` to move back in dir history. My own functions: use `mant <command>` to open man page in Skim, and `abrew` to replace `brew` (adding `arch -arm64` to `brew`).
 
 I hardcoded cursor shape `line` by `printf "\e[6 q"` in the fish_prompt.
 
-Check `bind | rg fzf`  to see the binding in fish with fzf. Fish does not allow auto-completing hidden files (stubborn author). So fzf is the next best. 
+Check `bind | rg fzf` to see the binding in fish with fzf. Fish does not allow auto-completing hidden files (stubborn author). So fzf is the next best.
 
-Misc
-----
+## Misc
+
 Helix is awesome. `clipboard-yank` is nice.
 I also made F2 in finder and marta open iterm2. Also `C-M` in Finder to open marta. Play with `C-p` and `C-P` in marta.
 iterm2's preferences is stored in `~/Library/Preferences` like other programs. I modified the setting "dimming for inactive panes". Also I set `<Super>-=` to open iterm2 in Guake style.
@@ -40,7 +39,9 @@ For Zotero, I use zotfile for file management and Better Bibtex. In zotfile pref
 
 For tmux, `C-b I` the first time it starts to install plugins. Then `C-b ?` for keybindings, `C-b %` to split, `C-b <Space>` to change split layout, right-click and choose "Zoom" to temporarily zoom without moving panes, and `C-b !` to break the current pane into a new window. Custom keybind: `C-b @` to add a pane from other windows into current window. I added `C-c C-c` to change tmux's current dir.
 
-nvim tips
------
+## nvim tips
+
 Watch [this](https://youtu.be/GEHPiZ10gOk) to use/configure astronvim. Use `plugin/user.lua` to add plugins (add `lazy = false` to always load).
-`:Bufferize <command>` to view output of command in another buffer. Use `:SudaWrite` to sudo write. `C-]` to jump into help tags. Use `<Space>fk` and `<Space>fC` for user keymaps and ex+plugin commands, and `<Space>?` for built-in keymaps. `za` to toggle fold. `<space>fw` to find words by telescope and `:Spectre` to find + replace. `<space>fk` and search for "split" and "buffer" to work with windows and buffers.
+`:Bufferize <command>` to view output of command in another buffer. Use `:SudaWrite` to sudo write. `C-]` to jump into help tags. Use `<Space>fk` and `<Space>fC` for user keymaps and ex+plugin commands, and `<Space>?` for built-in keymaps. `za` to toggle fold. `<space>fw` to find words by telescope and `:Spectre` to find + replace. `<space>fk` and search for "split" and "buffer" to work with windows and buffers. `<space>n` to use nnn as file picker.
+
+Type `<space>fh` and search for "surround.usage" to learn how to use nvim-surround. In particular `[` adds a whitespace gap while `]` doesn't.
