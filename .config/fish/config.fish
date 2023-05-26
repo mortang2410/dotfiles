@@ -4,9 +4,9 @@ if status is-interactive
 end
 
 #for fzf
-export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore -l ""'
-export FZF_CTRL_T_COMMAND='rg --hidden --no-ignore -l ""'
-export FZF_ALT_C_COMMAND='fd --hidden -t d'
+export FZF_DEFAULT_COMMAND='fd -HI'
+export FZF_CTRL_T_COMMAND='fd -HI'
+export FZF_ALT_C_COMMAND='fd -HI -t d'
 
 set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
 set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
@@ -28,7 +28,7 @@ export GOPATH=$HOME/go
 
 # for nnn
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_PLUG='f:-!&open .;o:-!&open "$nnn";p:preview-tui;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
+export NNN_PLUG='f:fzopen;o:-!&open "$nnn";d:-!&open -a Dropover "$nnn";p:preview-tui;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
 export NNN_PAGER='bat'
 #use nnn as file picker
 alias np="n -p -"
@@ -46,7 +46,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 
 alias t="tmux"
+alias tda="tmux detach -a" # detach all but current terminal
 alias nv="nvim"
-alias rgi="rg -a. -i --no-ignore"
 alias fdi="fd -HI"
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /Users/wilder/.ghcup/bin $PATH # ghcup-env
