@@ -28,7 +28,8 @@ export GOPATH=$HOME/go
 
 # for nnn
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_PLUG='f:fzopen;o:-!&open "$nnn";d:-!&open -a Dropover "$nnn";p:preview-tui;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
+export nnn_selection=$HOME/.config/nnn/.selection
+export NNN_PLUG='f:fzopen;o:-!&open "$nnn";F:-!&open -R "$nnn";d:dropover;p:preview-tui;n:!nvr -s "$nnn"*;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
 export NNN_PAGER='bat'
 #use nnn as file picker
 alias np="n -p -"
@@ -47,6 +48,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 alias t="tmux"
 alias tda="tmux detach -a" # detach all but current terminal
-alias nv="nvim"
+alias nv="nvr -s"
 alias fdi="fd -HI"
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /Users/wilder/.ghcup/bin $PATH # ghcup-env

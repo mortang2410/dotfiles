@@ -52,12 +52,13 @@ yabai -m rule --add app="^Discord$" grid=1:1:0:0:1:1 manage=off
 yabai -m rule --add app="^Steam$" manage=off
 yabai -m rule --add app="Stats" manage=off mouse_follows_focus=off
 yabai -m rule --add app="iBar" manage=off mouse_follows_focus=off
+yabai -m rule --add app="Capture One" manage=off mouse_follows_focus=off
 yabai -m rule --add app="foobar2000" manage=off mouse_follows_focus=off
 yabai -m rule --add app="Finder" title=".+Info" manage=off mouse_follows_focus=off
 yabai -m rule --add app="Activity Monitor" manage=off mouse_follows_focus=off
 yabai -m rule --add app="Mullvad VPN" manage=off sticky=on mouse_follows_focus=off
 yabai -m rule --add app="^(Calculator|System Preferences|Archive Utility)$" manage=off
-yabai -m rule --add app="^mpv$" border=off opacity=1
+yabai -m rule --add app="mpv" border=off opacity=1 manage=off sticky=on 
 
 
 

@@ -37,11 +37,15 @@ Remember that for reverse search to work in LyX we need to start lyxserver by sp
 
 Reminder that DarkReader makes Duckduckgo slower. Deactivate it for DDG.
 
-For Zotero, I use zotfile for file management and Better Bibtex. In zotfile preferences, be careful not to confuse between "Base directory" for linked attachment (should be a Dropbox folder), and "Data Directory location" (which should be local and synced by Zotero).
+In Vimium, press `>>` to move tabs. 
+
+For Zotero, I use zotfile for file management and Better Bibtex. In zotfile preferences, be careful not to confuse between "Base directory" for linked attachment (should be a Dropbox folder), and "Data Directory location" (which should be local and synced by Zotero). Also remember to go into zotfile preferences and change the `Location of files` setting to the  Dropbox folder.
 
 For tmux, `C-b I` the first time it starts to install plugins. Then `C-b ?` for keybindings, `C-b %` to split, `C-b <Space>` to change split layout, right-click and choose "Zoom" to temporarily zoom without moving panes, and `C-b !` to break the current pane into a new window. Custom keybind: `C-b @` to add a pane from other windows into current window. I added `C-c C-c` to change tmux's current dir.
 
 ## nvim tips
+
+Install [neovim-remote](https://github.com/mhinz/neovim-remote) as I use it for single-instance.
 
 Watch [this](https://youtu.be/GEHPiZ10gOk) to use/configure astronvim. Use `plugins/user.lua` to add plugins (add `lazy = false` to always load). Check `plugins/mason.lua` to install more LSP.
 `:Bufferize <command>` to view output of command in another buffer. Use `:SudaWrite` to sudo write. `C-]` to jump into help tags. Use `<Space>fk` and `<Space>fC` for user keymaps and ex+plugin commands, and `<Space>?` for built-in keymaps. `za` to toggle fold. `<space>fw` to find words by telescope and `:Spectre` to find + replace. `<space>fk` and search for "split" and "buffer" to work with windows and buffers. `<C-w>L` to move window to right.  `<space>N` to use nnn as file picker. `<space>lt` to toggle LSP diagnostics. `<space>tv` to open terminal and `<C-\><C-n>` to enter normal node in terminal.
@@ -50,4 +54,4 @@ Type `<space>fh` and search for "surround.usage" to learn how to use nvim-surrou
 
 Pressing `q:` will triggle cmdwin editing (':h comdwin'); keep pressing `C-c` to quit. Press `C-n` and `C-p` during snippets to jump to next / prev positions. Be careful to check that `jsregexp` (used for transformation) is working for LuaSnip by using `_hex` snippet in latex. See [here](https://stackoverflow.com/questions/57381007/vscode-if-else-conditions-in-user-defined-snippet?rq=1) to learn about transformations.
 
-For latex and vimtex, check help of 'vimtex and friends'. Use `cse` to change surrounding environment.
+For latex and vimtex, check help of 'vimtex and friends'. Use `cse` to change surrounding environment. See [this series](https://www.ejmastnak.com/tutorials/vim-latex/luasnip/) for more help.
