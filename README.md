@@ -33,9 +33,11 @@ Press `C-?` to open help menu search for GUI apps.
 
 Press `<Super>-T` to float and `<Super>-t` to toggle sticky + topmost for window with yabai. Use `yabai -m query --windows | jq` to find window information. 
 
-Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences.
+Remember that for reverse search to work in LyX we need to start lyxserver by specifying lyxpipe in path preferences. Press `Ctrl+Shift` while clicking in Skim to activating synctex.
 
 Reminder that DarkReader makes Duckduckgo slower. Deactivate it for DDG.
+
+[Snapdrop](https://snapdrop.net/#) is awesome for sharing files locally.
 
 In Vimium, press `>>` to move tabs. 
 
