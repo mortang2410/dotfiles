@@ -15,6 +15,8 @@ shift + alt - right : yabai -m window --display east; yabai -m display --focus e
 shift + alt - up : yabai -m window --display north; yabai -m display --focus north;
 shift + alt - down : yabai -m window --display south; yabai -m display --focus south;
 
+#refresh
+alt - r : yabai --restart-service
 
 # rotate layout clockwise
 shift + alt - r : yabai -m space --rotate 270
@@ -29,10 +31,13 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # toggle window sticky
-alt - t : yabai -m window --toggle sticky; yabai -m window --toggle topmost
+alt - t : yabai -m window --toggle sticky; yabai --message window --layer (if [ (yabai --message query --windows --window | jq --raw-output .layer) = 'below' ]; echo 'above'; else; echo 'below'; end)
 
 # pipe window info to file
 alt - i : yabai -m query --windows --window > ~/.window_info
+
+# minimize a window
+alt - m : yabai -m window --minimize
 
 # maximize a window
 shift + alt - m : yabai -m window --toggle zoom-fullscreen
@@ -67,6 +72,8 @@ shift + alt - 4 : yabai -m window --space 4;
 shift + alt - 5 : yabai -m window --space 5;
 shift + alt - 6 : yabai -m window --space 6;
 shift + alt - 7 : yabai -m window --space 7;
+shift + alt - 8 : yabai -m window --space 8;
+shift + alt - 9 : yabai -m window --space 9;
 
 
 # requires disabling system integrity and unsigned binaries to load-sa
@@ -77,6 +84,8 @@ alt - 4 : yabai -m space --focus 4
 alt - 5 : yabai -m space --focus 5
 alt - 6 : yabai -m space --focus 6
 alt - 7 : yabai -m space --focus 7
+alt - 8 : yabai -m space --focus 8
+alt - 9 : yabai -m space --focus 9
 
 alt - n : yabai -m space --focus next
 alt - p : yabai -m space --focus prev

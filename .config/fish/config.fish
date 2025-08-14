@@ -29,7 +29,7 @@ export GOPATH=$HOME/go
 # for nnn
 export NNN_FIFO='/tmp/nnn.fifo'
 export nnn_selection=$HOME/.config/nnn/.selection
-export NNN_PLUG='f:fzopen;o:-!&open "$nnn";F:-!&open -R "$nnn";d:dropover;p:preview-tui;n:!nvr -s "$nnn"*;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
+export NNN_PLUG='f:finder-custom;o:-!&open "$nnn";F:-!&open -R "$nnn";d:dropover;p:preview-tui;n:!nvr -s "$nnn"*;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
 export NNN_PAGER='bat'
 #use nnn as file picker
 alias np="n -p -"
@@ -41,13 +41,16 @@ alias ndr="np | dr"
 
 # make bat have readable color as a replacement for less 
 export BAT_THEME=ansi
-export PAGER='bat --terminal-width -10'
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export PAGER='bat --terminal-width -10'
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 
 
 alias t="tmux"
 alias tda="tmux detach -a" # detach all but current terminal
-alias nv="nvr -s"
+alias nv="nvim"
 alias fdi="fd -HI"
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /Users/wilder/.ghcup/bin $PATH # ghcup-env
+
+# setting up zoxide
+zoxide init fish | source

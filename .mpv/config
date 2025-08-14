@@ -28,13 +28,13 @@ save-position-on-quit=yes
 keep-open=yes
 
 ## motion interpolation
-video-sync=display-resample
-interpolation
-tscale=triangle
+# video-sync=display-resample
+# interpolation=yes
+# tscale=spline16
 
 
 #quality stuff
-profile=gpu-hq
+# profile=gpu-hq
 #
 # scale=ewa_lanczossharp
 # cscale=ewa_lanczossharp
@@ -59,3 +59,11 @@ profile=gpu-hq
 # #Dynamic Grain (More = More dynamic grain)
 # #Set it to "0" in case you use the static grain shader
 # deband-grain=48
+
+
+# SVP settings
+input-ipc-server=/tmp/mpvsocket
+hwdec-codecs=all
+hwdec=auto-copy
+opengl-early-flush=no
+hr-seek-framedrop=no

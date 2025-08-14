@@ -27,6 +27,10 @@
 .config/ranger/rc_personal.conf
 .config/ranger/tagged
 .config/ranger/__pycache__
+.config/emacs
+.config/xnviewmp
+.config/gtk-3.0
+.config/*
 Library
 Documents
 Downloads
