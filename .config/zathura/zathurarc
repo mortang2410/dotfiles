@@ -12,7 +12,7 @@ set page-padding 0
 
 set recolor true
 set recolor-darkcolor "#c6c6c6"
-set recolor-lightcolor "#545864"
+set recolor-lightcolor "#292929"
 
 # colors
 set statusbar-fg "#000000"
@@ -26,6 +26,10 @@ set completion-highlight-bg "#6B8E23"
 set notification-fg "#FFFFFF"
 set notification-bg "#333333"
 
+
+set synctex true
+set synctex-editor-command "/opt/homebrew/bin/emacsclient --no-wait +%{line} %{input}"
+set selection-clipboard clipboard
 
 
 # vim: set ft=conf :
