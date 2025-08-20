@@ -52,5 +52,6 @@ Zotero
 go
 git-repos
 zsh-syntax-highlighting
-
+mnt/linux
+mnt/*
 .bash_history

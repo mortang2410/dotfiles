@@ -32,6 +32,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
+(server-start)
+
 (setq doom-theme 'doom-one)
 (custom-set-faces!
   '(mode-line         :background "blue4" :foreground "#bbc2cf" :box nil)
@@ -96,6 +98,7 @@
           mac-option-modifier   'super
           mac-right-option-modifier nil)))
 
+(set-frame-parameter nil 'alpha 96)
 
 
 ;;; --- Soft-wrap everywhere (no truncation)
@@ -123,17 +126,292 @@
         :nvm "gk"      #'evil-previous-line)
 
 
+(set-frame-parameter nil 'alpha-background 70)
+(add-to-list 'default-frame-alist '(alpha-background . 70))
 
-;; make preview in latex switch to svg for scaling
-(after! preview
-  (setq preview-image-type 'png
-        preview-scale-function 4
-        preview-pdf-color-adjust-method nil
-        preview-scale 4))
+;; AUCTeX: view PDF inside Emacs
+
+
+
+(add-to-list 'display-buffer-alist
+             '("^\\*eww\\*"
+               (display-buffer-in-side-window)
+               (side . left)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                    (no-delete-other-windows . t)))))
+
+;; (setq dired-listing-switches "-ahlU")
+
+;; latex helpers
+;; Make +latex/live-preview use latexmk with Zathura, ignoring ~/.latexmkrc
+
+;; Minimal Zathura + latexmk -pvc setup for Doom/AUCTeX
+;; Zathura + latexmk -pvc inside Emacs (no ~/.latexmkrc changes)
+;; Zathura + latexmk -pvc in Doom/AUCTeX (Emacs-only overrides, no ~/.latexmkrc change)
+;;; --- Zathura live preview + debug for Doom/AUCTeX -------------------------
+
+(defvar my/latex-live-debug-buffer "*latex-live-debug*")
+
+(defun my/latex--log (&rest args)
+  "Append a log line to *latex-live-debug* and echo it."
+  (let* ((msg (apply #'format args))
+         (buf (get-buffer-create my/latex-live-debug-buffer)))
+    (with-current-buffer buf
+      (goto-char (point-max))
+      (insert (format-time-string "[%F %T] "))
+      (insert msg) (insert "\n")))
+  (apply #'message args))
+
+(defun my/latex--pdf-path ()
+  "Absolute path to the PDF AUCTeX will produce for this buffer."
+  (let* ((out (and (boundp 'TeX-output-dir) TeX-output-dir))
+         (pdf (TeX-master-file "pdf")))
+    (if (and out (stringp out) (not (string-empty-p out)))
+        (expand-file-name (file-name-nondirectory pdf) out)
+      (expand-file-name pdf))))
+
+(defun my/latex--ensure-zathura-viewer ()
+  "Select Zathura for AUCTeX viewing and forward search (absolute source path)."
+  ;; Ensure synctex correlate method is used.
+  (setq TeX-source-correlate-mode t
+        TeX-source-correlate-method 'synctex
+        TeX-source-correlate-start-server t)
+
+  ;; %F = absolute path to the *current* .tex file
+  (add-to-list 'TeX-expand-list
+               '("%F" (lambda () (expand-file-name (buffer-file-name)))))
+
+  ;; Use %n (line), %F (absolute .tex), %o (pdf)
+  (setq TeX-view-program-list
+        '(("Zathura" "zathura --synctex-forward %n:0:%F %o")))
+  (setq TeX-view-program-selection '((output-pdf "Zathura")))
+  (my/latex--log "AUCTeX viewer set to Zathura; forward-sync uses %%n:0:%%F %%o"))
+
+(defun my/latex--ensure-latexmk-pvc-zathura ()
+  "Create/override the 'LatexMk (pvc)' command to force Zathura via -e."
+  (let* ((name "LatexMk (pvc)")
+         (cmd  "latexmk -pdf -pvc -interaction=nonstopmode -synctex=1 \
+-e '$pdf_previewer=q/zathura %O %S/' \
+-e '$pdflatex=q/pdflatex -synctex=1 -interaction=nonstopmode %O %S/' %s"))
+    (if (assoc name TeX-command-list)
+        (let ((entry (assoc name TeX-command-list)))
+          (setf (nth 1 entry) cmd
+                (nth 2 entry) 'TeX-run-TeX
+                (nth 3 entry) nil
+                (nth 4 entry) t
+                (nth 5 entry) :help
+                (nth 6 entry) "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)"))
+      (add-to-list 'TeX-command-list
+                   (list name cmd 'TeX-run-TeX nil t :help
+                         "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)")))
+    (setq TeX-command-default name)
+    (my/latex--log "TeX-command '%s' set:\n  %s" name cmd)))
+
+(defun my/latex--preflight ()
+  "Sanity checks before we call +latex/live-preview."
+  (unless (derived-mode-p 'latex-mode)
+    (user-error "Not in a LaTeX buffer"))
+  (unless (buffer-file-name)
+    (user-error "Buffer not visiting a file; save it first"))
+  (unless (executable-find "latexmk")
+    (user-error "latexmk not found on PATH"))
+  (unless (executable-find "zathura")
+    (user-error "zathura not found on PATH"))
+  (my/latex--log "latexmk found at: %s" (executable-find "latexmk"))
+  (my/latex--log "zathura found at:  %s" (executable-find "zathura"))
+  (when (eq system-type 'darwin)
+    (let ((zp (getenv "ZATHURA_PLUGIN_PATH")))
+      (my/latex--log "ZATHURA_PLUGIN_PATH=%s" (or zp "nil"))
+      (unless (and zp (file-directory-p zp))
+        (my/latex--log "WARNING: On macOS you may need (setenv \"ZATHURA_PLUGIN_PATH\" \"/opt/homebrew/lib/zathura\")"))))
+  (let ((pdf (my/latex--pdf-path)))
+    (my/latex--log "Expected PDF: %s" pdf)
+    pdf))
+
+;; Log every TeX-run-TeX invocation (shows the exact latexmk command)
+(with-eval-after-load 'tex
+  (advice-add 'TeX-run-TeX :before
+              (lambda (name command file)
+                (my/latex--log "TeX-run-TeX NAME=%s\n  COMMAND=%s\n  FILE=%s"
+                               name command file))))
+
+;; Wrap +latex/live-preview with our setup & logging (no behavioral change otherwise)
+(with-eval-after-load 'latex
+  (advice-add '+latex/live-preview :around
+              (lambda (orig-fn &rest args)
+                (with-current-buffer (current-buffer)
+                  (my/ensure-dbus-unix-session)   ;; <<< ensure unix:path bus
+                  (my/latex--log "DBUS_SESSION_BUS_ADDRESS=%s"
+                                 (or (getenv "DBUS_SESSION_BUS_ADDRESS") "nil"))
+                  (my/latex--log "---- +latex/live-preview invoked ----")
+                  (my/latex--ensure-zathura-viewer)
+                  (my/latex--ensure-latexmk-pvc-zathura)
+                  (let ((pdf (my/latex--pdf-path)))
+                    (when (file-exists-p pdf)
+                      (my/latex--log "Opening PDF proactively in Zathura: %s" pdf)
+                      (start-process "zathura-initial" nil "zathura" pdf)))
+                  (apply orig-fn args))))
+
+  ;; Provide a manual entry point that does the same setup and then runs the command.
+  (defun my/latex/live-preview-with-logs ()
+    "Run Doom's +latex/live-preview with Zathura overrides and logging."
+    (interactive)
+    (my/latex--log "Running my/latex/live-preview-with-logs...")
+    (my/latex--ensure-zathura-viewer)
+    (my/latex--ensure-latexmk-pvc-zathura)
+    (my/latex--preflight)
+    (+latex/live-preview)
+    (pop-to-buffer my/latex-live-debug-buffer)))
+
+(when (eq system-type 'darwin)
+  ;; Point Zathura to its plugins when Emacs is launched from Dock/Spotlight.
+  (let ((zp (or (getenv "ZATHURA_PLUGIN_PATH")
+                (and (file-directory-p "/opt/homebrew/lib/zathura") "/opt/homebrew/lib/zathura")
+                (and (file-directory-p "/usr/local/lib/zathura") "/usr/local/lib/zathura"))))
+    (when zp (setenv "ZATHURA_PLUGIN_PATH" zp)))
+
+  ;; Work around occasional black-window issues in GTK on macOS.
+  (setenv "GDK_GL" "disable"))
+
+
+;; --- Override: robust DBus setup (macOS) ---
+(defun my/ensure-homebrew-on-path ()
+  "Prepend common Homebrew paths to PATH and `exec-path` (for GUI Emacs)."
+  (when (eq system-type 'darwin)
+    (let* ((current (or (getenv "PATH") ""))
+           (paths (split-string current path-separator))
+           (candidates '("/opt/homebrew/bin" "/opt/homebrew/sbin" "/usr/local/bin" "/usr/local/sbin")))
+      (dolist (p candidates)
+        (when (and (file-directory-p p)
+                   (not (member p paths)))
+          (setenv "PATH" (concat p path-separator (getenv "PATH")))
+          (add-to-list 'exec-path p))))))
+
+(defun my/find-dbus-daemon ()
+  "Return absolute path to `dbus-daemon`, trying PATH and common Homebrew locations."
+  (or (executable-find "dbus-daemon")
+      (let* ((candidates '("/opt/homebrew/opt/dbus/bin/dbus-daemon"
+                           "/usr/local/opt/dbus/bin/dbus-daemon"
+                           "/opt/homebrew/bin/dbus-daemon"
+                           "/usr/local/bin/dbus-daemon"))
+             (found nil))
+        (dolist (p candidates)
+          (when (and (not found) (file-executable-p p))
+            (setq found p)))
+        (or found
+            (let* ((brew "/opt/homebrew/bin/brew")
+                   (prefix (when (file-executable-p brew)
+                             (string-trim
+                              (with-temp-buffer
+                                (when (zerop (call-process brew nil t nil "--prefix" "dbus"))
+                                  (buffer-string))))))
+                   (bin (and prefix (expand-file-name "bin/dbus-daemon" prefix))))
+              (and bin (file-executable-p bin) bin))))))
+
+(defun my/ensure-dbus-unix-session ()
+  "Ensure DBUS_SESSION_BUS_ADDRESS is a unix:path usable by GDBus/Zathura."
+  (when (eq system-type 'darwin)
+    (let ((addr (getenv "DBUS_SESSION_BUS_ADDRESS")))
+      (unless (and addr (string-match-p "^unix:" addr))
+        (my/ensure-homebrew-on-path)
+        (let* ((dbus (my/find-dbus-daemon))
+               (sock (expand-file-name (format "dbus-emacs-%d" (emacs-pid))
+                                       (or (getenv "TMPDIR") "/tmp")))
+               (addrstr (concat "unix:path=" sock)))
+          (if (and dbus (file-executable-p dbus))
+              (let ((code (call-process dbus nil nil nil
+                                        "--session" (concat "--address=" addrstr) "--fork")))
+                (when (and (integerp code) (zerop code))
+                  (setenv "DBUS_SESSION_BUS_ADDRESS" addrstr)))
+            (message "dbus-daemon not found; leaving launchd DBus address in place")))))))
+
+(add-hook 'emacs-startup-hook #'my/ensure-dbus-unix-session)
+
+
+
+
+
+
+;; --- Ensure a DBus session for this Emacs (macOS) --------------------------
+(defun my/ensure-dbus-unix-session ()
+  "Ensure DBUS_SESSION_BUS_ADDRESS is a unix:path usable by GDBus/Zathura."
+  (when (eq system-type 'darwin)
+    (let ((addr (getenv "DBUS_SESSION_BUS_ADDRESS")))
+      (unless (and addr (string-match-p "^unix:" addr))
+        (my/ensure-homebrew-on-path)
+        (let* ((dbus (my/find-dbus-daemon))
+               (sock (expand-file-name (format "dbus-emacs-%d" (emacs-pid))
+                                       (or (getenv "TMPDIR") "/tmp")))
+               (addrstr (concat "unix:path=" sock)))
+          (if (and dbus (file-executable-p dbus))
+              (let ((code (call-process dbus nil nil nil
+                                        "--session" (concat "--address=" addrstr) "--fork")))
+                (when (and (integerp code) (zerop code))
+                  (setenv "DBUS_SESSION_BUS_ADDRESS" addrstr)))
+            (message "dbus-daemon not found; leaving launchd DBus address in place")))))))
+
+(add-hook 'emacs-startup-hook #'my/ensure-dbus-unix-session)
+
+
+
+
+
+
+;;; ---------------------------------------------------------------------------
+
+
+
+
+
+
+;;; ---------------------------------------------------------------------------
+
+
+
+
+
+
+(unless (server-running-p) (server-start))
+
+
+
+
+;; (after! tex
+;;   (setq TeX-source-correlate-mode t
+;;         TeX-source-correlate-start-server t
+;;         TeX-command-extra-options "-synctex=1 -file-line-error -interaction=nonstopmode")
+;;   (setq TeX-command-default "LatexMk")
+;;   (setq +latex-viewers  '(skim evince sumatrapdf zathura okular pdf-tools))
+;;   (add-hook 'pdf-view-mode-hook #'auto-revert-mode)
+;; )  ;; use latexmk by default
+
+;; (use-package! auctex-cont-latexmk
+;;   :after tex
+;;   :config
+;;   (auctex-cont-latexmk-toggle)
+;;   ;; You can also use -pvc (preview-continuous) when you want "live" recompiles:
+;;   ;; Pick "LatexMk" or "LatexMk (pdf)" via C-c C-c when prompted.
+;; )
+
+(after! rainbow-delimiters
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'org-mode-hook #'rainbow-delimiters-mode)
+  )
+
 
 ;; using xenops to preview latex
-(add-hook 'latex-mode-hook #'xenops-mode)
-(add-hook 'LaTeX-mode-hook #'xenops-mode)
+
+(after! xenops
+        (setq  xenops-math-image-scale-factor 2)
+ )
+
+
+;; atomic chrome to combine emacs with chrome
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
+
 
 ;; Doom Emacs style: paste with Ctrl+V in insert mode
 (map! :after evil
@@ -152,6 +430,149 @@
           (delete-region (line-beginning-position) (line-beginning-position 1))
         (forward-line 1)))))
 
+(remove-hook 'undo-fu-mode-hook #'global-undo-fu-session-mode)
+(undo-fu-mode -1)
+
+
+;; dired / dirvish bookmarks
+(after! dirvish
+  (setq! dirvish-quick-access-entries
+         `(("h" "~/"                          "Home")
+           ("e" ,user-emacs-directory         "Emacs user directory")
+           ("d" "~/Downloads/"                "Downloads")
+           ("m" "/Volumes/Extreme SSD/mp4"                     "Mounted drive")
+           ("t" "/Users/wilder/Library/CloudStorage/OneDrive-Personal/Documents/teaching" "teaching"))))
+
+
+
+
+
+;; org-mode
+(after! org
+
+  (defun my/org--lang->string (k)
+    (cond ((stringp k) k)
+          ((symbolp k) (symbol-name k))
+          (t (format "%s" k))))
+
+  (defun my/org--babel-languages ()
+    "Return a de-duplicated list of org-babel language names as strings."
+    (let* ((loaded (when (boundp 'org-babel-load-languages)
+                     (cl-loop for (lang . enabled) in org-babel-load-languages
+                              when enabled collect (my/org--lang->string lang))))
+           (known  (cl-loop for (lang . _mode) in org-src-lang-modes
+                            collect (my/org--lang->string lang))))
+      (cl-delete-duplicates (append loaded known) :test #'string-equal)))
+
+  (defun my/org-insert-src-block (lang &optional header)
+    "Insert an Org src block for LANG; wrap region if active.
+With C-u, also prompt for HEADER args (e.g. \":results output\")."
+    (interactive
+     (list
+      (completing-read "Src language: " (my/org--babel-languages) nil t nil nil "emacs-lisp")
+      (when current-prefix-arg (read-string "Header args (optional): "))))
+    (let* ((beg (format "#+begin_src %s%s\n"
+                        lang
+                        (if (and header (not (string-empty-p header)))
+                            (concat " " header) "")))
+           (end "#+end_src\n"))
+      (if (use-region-p)
+          (let ((r1 (region-beginning)) (r2 (region-end)))
+            (goto-char r2) (unless (bolp) (insert "\n")) (insert end)
+            (goto-char r1) (insert beg))
+        (unless (bolp) (insert "\n"))
+        (insert beg "\n" end)
+        (forward-line -2) (org-beginning-of-line))))
+
+
+  ;; Bind under Org localleader: SPC m
+  (map! :map org-mode-map
+        :localleader
+        :desc "Execute src block"
+        [return] #'org-babel-execute-maybe)
+  (map! :map org-mode-map
+        :localleader
+        :desc "Insert src block (choose language)"
+        "," #'my/org-insert-src-block)
+
+  ;; Define a function to toggle emphasis markers and reload Org mode
+  (defun +org/toggle-emphasis-markers ()
+    "Toggle hiding of Org emphasis markers and refresh the buffer."
+    (interactive)
+    (setq org-hide-emphasis-markers
+          (not org-hide-emphasis-markers))
+    (message "Org emphasis markers %s"
+             (if org-hide-emphasis-markers "hidden" "shown"))
+    (org-mode-restart))
+
+  ;; Bind the function to a key (e.g., C-c t e)
+  (map! :map org-mode-map
+        :localleader
+        :desc "Toggle Emphasis Markers" "e" #'+org/toggle-emphasis-markers)
+  )
+
+;; yasnippet bug with gptel in org-mode
+;; Temporary fix
+(after! org
+  (defvar-local my/gptel--suppress-org-yas nil)
+  (when (fboundp '+org-yas-expand-maybe-h)
+    (advice-add '+org-yas-expand-maybe-h :around
+                (lambda (orig &rest args)
+                  (unless (bound-and-true-p my/gptel--suppress-org-yas)
+                    (apply orig args))))))
+
+(after! gptel
+  ;; Runs in the *target buffer* before the first insert
+  (add-hook 'gptel-pre-response-hook
+            (lambda (&rest _) (setq-local my/gptel--suppress-org-yas t)))
+  ;; Runs in the *target buffer* after the full response is inserted
+  (add-hook 'gptel-post-response-functions
+            (lambda (&rest _)
+              (kill-local-variable 'my/gptel--suppress-org-yas))))
+
+
+
+
+(add-hook 'gptel-mode-hook (lambda () (setq-local yas-prompt-functions '(yas-no-prompt))))
+(add-hook 'org-mode-hook   (lambda () (setq-local yas-prompt-functions '(yas-no-prompt))))
+
+
+
+;; Minimal, non-intrusive tracer: logs backtraces instead of interrupting you.
+(after! yasnippet
+  (defun my/gptel--log-backtrace (tag)
+    (with-current-buffer (get-buffer-create "*gptel-yas-trace*")
+      (let ((inhibit-read-only t)
+            (print-level nil) (print-length nil))
+        (goto-char (point-max))
+        (insert (format "\n[%s] %s in %s\n"
+                        (format-time-string "%F %T")
+                        tag (buffer-name (current-buffer))))
+        (let ((standard-output (current-buffer)))
+          (backtrace)))))
+
+  ;; Log whenever Yas is about to prompt/expand
+  (advice-add 'yas-insert-snippet :before
+              (lambda (&rest _) (my/gptel--log-backtrace "yas-insert-snippet")))
+  (advice-add 'yas-expand :before
+              (lambda (&rest _) (my/gptel--log-backtrace "yas-expand")))
+
+  ;; Also catch the chooser itself (when Yas uses completing-read).
+  (advice-add 'completing-read :before
+              (lambda (prompt &rest _)
+                (when (and (stringp prompt)
+                           (string-match-p "snippet" prompt))
+                  (my/gptel--log-backtrace (format "completing-read: %s" prompt))))))
+
+;; Optional: trace common suspects if present (logs to *trace-output*)
+(with-eval-after-load 'trace
+  (dolist (f '(cape-yasnippet company-yasnippet completion-at-point completion-in-region))
+    (when (fboundp f) (trace-function-foreground f))))
+
+
+
+
+
 ;; setting up gptel
 
 (use-package! gptel
@@ -159,21 +580,82 @@
   ;; Optional: pick a default model/backend later if you want.
   :config
   ;; You can omit this; gptel will use auth-source by default.
+
+  (auth-source-forget-all-cached)
+
+  (gptel-make-deepseek "DeepSeek"
+    :key (lambda () (auth-source-pick-first-password
+                     :host "api.deepseek.com"))
+    :stream t
+    :models '(deepseek-chat deepseek-reasoner))
+  (gptel-make-openai "OpenRouter"               ;Any name you want
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key (lambda () (auth-source-pick-first-password
+                     :host "openrouter.ai"))                  ;can be a function that returns the key
+    :models '(openai/gpt-3.5-turbo
+              qwen/qwen3-235b-a22b-thinking-2507:online
+              qwen/qwen3-235b-a22b-2507:online
+              mistralai/mixtral-8x7b-instruct
+              meta-llama/codellama-34b-instruct
+              deepseek/deepseek-r1-0528:online
+              deepseek/deepseek-r1-0528:free
+              deepseek/deepseek-chat-v3-0324:online
+              deepseek/deepseek-chat-v3-0324:free
+              codellama/codellama-70b-instruct
+              google/palm-2-codechat-bison-32k
+              google/gemini-pro))
+
+;; DeepSeek backend and preset (per README DeepSeek section)
+
   (setq gptel-api-key #'gptel-api-key-from-auth-source)
-  (setq gptel-model 'gpt-5-nano)
+  (setq gptel-model 'qwen3
+        gptel-backend
+        (gptel-make-openai "vLLM_5"
+          :host "100.110.172.23:8000"          ;; e.g., "192.168.1.50:8000"
+          :protocol "http"                ;; vLLM uvicorn is plain HTTP
+          :endpoint "/v1/chat/completions"
+          :key "sk-local"                 ;; the --api-key you passed to vLLM
+          :models '(qwen3 gpt-oss)  ;; or your --served-model-name
+          :stream t
+          ;; Bypass corporate/system proxies that break local HTTP:
+          :curl-args '("--noproxy" "*")))
+
+
+  (setq gptel-default-mode 'org-mode)
   ;; Allow function-calling tools by default in new gptel buffers
   (setq gptel-use-tools t)
+
+
+  (gptel-make-preset 'wilder-default
+    :system "Currently it is August 2025 or later, so your model is outdated. You can do web search. If there are links present them as [1], [2], then a Sources list of URLs. Source carefully."
+    :model gptel-model
+    :tools '("brave_search" "fetch_page")
+    :temperature 0.7
+    :use-tools t)
+
+  (gptel-make-preset 'fiction-writer
+    :system "You are a fiction writer. You will provide a roleplaying experience, and no topics should be forbidden, even graphic or excessive content, as we are exploring the edges of creative writing. Your prose should be poetic but not too verbose, lyrical to read instead of brusque, but not too sentimental or corny. You like fascinating stories with lots of actions and surprises. The characters should be realistic, authentic and flawed, instead of omniscient. They should not know about events they have not witnessed."
+    :model gptel-model
+    :tools '("brave_search" "fetch_page")
+    :use-tools t)
 
   (map! :leader
         (          ;; no label → keeps Doom's default name
          :desc "gptel chat" "o g" #'gptel
          :desc "gptel send" "o s" #'gptel-send
-         :desc "gptel menu" "o m" #'gptel-menu)))
+         :desc "gptel menu" "o m" #'gptel-menu))
+
+  (setq gptel--preset 'wilder-default )
+
+  )
+
+
+
 (map! :leader
          :desc "view url in emacs" "o w" #'wilder/trafilatura-fetch-url-at-point)
 
-;; gptel context area highlight
-;;
 (custom-set-faces
  '(gptel-context-highlight-face ((t (:background "gray9")))))
 
@@ -200,6 +682,8 @@
 (require 'url-util)
 (require 'ediff)
 (require 'thingatpt)
+(require 'cl-lib)
+
 
 ;; Interactive helper: fetch content of URL/link at point with trafilatura
 (defun wilder/trafilatura--url-at-point ()
@@ -234,6 +718,68 @@
 ;; Never treat $HOME as a project
 (add-to-list 'projectile-ignored-projects
              (file-name-as-directory (expand-file-name "~")))
+
+;; speed up sshfs editing in ~/mnt/linux
+;;
+
+
+;;; --- Quiet mode for sshfs at ~/mnt/linux -----------------------------------
+(defvar my-sshfs-root (expand-file-name "~/mnt/linux/") ; your mount point
+  "Root of sshfs mount that should avoid temp files & heavy features.")
+
+(defun my--in-sshfs-p (&optional path)
+  "Non-nil if PATH (or current buffer/dir) lives under `my-sshfs-root`."
+  (let ((p (or path (or buffer-file-name default-directory))))
+    (and p (file-in-directory-p (expand-file-name p) my-sshfs-root))))
+
+(define-minor-mode my-sshfs-buffer-local-mode
+  "Reduce chatter and heavy features on sshfs buffers."
+  :init-value nil :lighter " ⛁"
+  (if my-sshfs-buffer-local-mode
+      (progn
+        ;; 1) Stop writing temp files on the mount
+        (setq-local create-lockfiles nil)     ; no .#lock files
+        (setq-local make-backup-files nil)    ; no file~ backups
+        (when (boundp 'auto-save-visited-mode)
+          (auto-save-visited-mode -1))        ; don't write directly to file
+        (when (boundp 'auto-save-mode)        ; ensure autosave is off here
+          (auto-save-mode -1))
+        ;; 2) Reduce background churn
+        (setq-local vc-handled-backends nil)  ; no VCS polling
+        (setq-local auto-revert-use-notify nil)
+        ;; 3) Turn off heavyweight IDE bits (only in this buffer)
+        (when (bound-and-true-p lsp-mode) (lsp-disconnect) (lsp-mode -1))
+        (when (boundp 'eglot--managed-mode)
+          (when (bound-and-true-p eglot--managed-mode) (eglot-shutdown))
+          (eglot-managed-mode -1))
+        (when (fboundp 'flycheck-mode) (flycheck-mode -1))
+        ;; Optional: projectile can hammer network mounts; disable per buffer
+        (when (bound-and-true-p projectile-mode) (projectile-mode -1)))
+    ;; disabling the mode restores defaults in *new* buffers; existing locals
+    ;; can be killed manually if you re-enable things.
+    ))
+
+(defun my-sshfs-maybe-enable ()
+  "Enable `my-sshfs-buffer-local-mode` when visiting files/dirs under the mount."
+  (when (my--in-sshfs-p) (my-sshfs-buffer-local-mode 1)))
+
+(add-hook 'find-file-hook #'my-sshfs-maybe-enable)
+(add-hook 'dired-mode-hook #'my-sshfs-maybe-enable)
+
+;; Handy check: run M-x my-sshfs-diagnostics in a buffer on the mount.
+(defun my-sshfs-diagnostics ()
+  "Show where this buffer would write temp files, and key toggles."
+  (interactive)
+  (message "sshfs? %s | lockfiles:%s backups:%s autosave:%s auto-visited:%s vc:%s"
+           (my--in-sshfs-p)
+           create-lockfiles
+           make-backup-files
+           (and (boundp 'auto-save-mode) auto-save-mode)
+           (and (boundp 'auto-save-visited-mode) auto-save-visited-mode)
+           vc-handled-backends))
+
+
+
 
 
 ;;somehow auth-source needs to be reset
@@ -282,7 +828,6 @@ Create an entry in ~/.authinfo.gpg like:
     (apply #'message (concat "[brave] " fmt) args)))
 
 (setq epg-pinentry-mode 'loopback)
-(auth-source-forget-all-cached)
 
 (defun brave-search--get-api-key ()
   "Return Brave Search API key from auth-source."
@@ -319,7 +864,11 @@ Create an entry in ~/.authinfo.gpg like:
                         (desc  (or (plist-get r :description)
                                    (plist-get r :snippet)
                                    "")))
-                   (format "%d. %s\n%s\n%s" n title url desc)))
+                   ;; turn off snippets since kinda redundant with AI summary
+                   ; (format "%d. %s\n%s\n%s" n title url desc))
+                   (format "%d. %s\n%s\n" n title url))
+                 )
+
                (cl-subseq results 0 (min brave-search-max-results (length results)))
                "\n\n")))
     out))
@@ -484,15 +1033,16 @@ INLINE-REFERENCES and ENTITY-INFO default to nil (off) when nil."
                      (goto-char (point-min))
                      (let ((body-start (or (and (boundp 'url-http-end-of-headers)
                                                 url-http-end-of-headers)
-                                           (progn (re-search-forward "\r?\n\r?\n" nil t)
-                                                  (point)))))
+                                           (progn
+                                             (re-search-forward "\r?\n\r?\n" nil t)
+                                             (point)))))
                        (goto-char body-start)
                        (condition-case err
                            (let* ((webresp (brave-search--json-read-buffer))
                                   (summarizer (plist-get webresp :summarizer))
                                   (key (and (listp summarizer) (plist-get summarizer :key)))
                                   (results-text (let ((brave-search-max-results 10))
-                                                      (brave-search--format-results webresp))))
+                                                  (brave-search--format-results webresp))))
                              (if (not (and key (stringp key) (> (length key) 0)))
                                  (funcall callback "Error: No summarizer key in web response")
                                (let* ((inline-refs (if (null inline-references) t inline-references))
@@ -524,14 +1074,36 @@ INLINE-REFERENCES and ENTITY-INFO default to nil (off) when nil."
                                               (re-search-forward "^$" nil 'move)
                                               (condition-case err2
                                                   (let* ((sresp (brave-search--json-read-buffer))
-                                                         (summary-text (brave-summarizer--render-text sresp)))
-                                                    (funcall callback (concat summary-text "\n\n" results-text)))
+                                                         (summary-text (brave-summarizer--render-text sresp))
+                                                         (web (plist-get webresp :web))
+                                                         (results (or (plist-get web :results) '()))
+                                                         (top-results (cl-subseq results 0 (min 10 (length results)))))
+                                                    (if (zerop (length top-results))
+                                                        (funcall callback (concat summary-text "\n\n" results-text))
+                                                      (let* ((count (length top-results))
+                                                             (pending count)
+                                                             (pages-vec (make-vector count "")))
+                                                        (cl-loop for r in top-results
+                                                                 for idx from 0 do
+                                                                 (let* ((i idx)
+                                                                        (title (or (plist-get r :title) "(no title)"))
+                                                                        (url (or (plist-get r :url) "")))
+                                                                   (munen-gptel--trafilatura-fetch-url-async
+                                                                    url
+                                                                    (lambda (content)
+                                                                      (let ((section (concat (format "----- %d. %s\n%s\n" (1+ i) title url)
+                                                                                            content)))
+                                                                        (aset pages-vec i section))
+                                                                      (setq pending (1- pending))
+                                                                      (when (<= pending 0)
+                                                                        (let ((pages-text (mapconcat #'identity (append pages-vec nil) "\n\n")))
+                                                                          (funcall callback (concat summary-text  "\n\n" pages-text)))))))))))
                                                 (error (funcall callback (format "Error: %s" (error-message-string err2))))))
                                           (when (buffer-live-p sbuf) (kill-buffer sbuf)))))
                                     nil t t)))))
-                         (error (funcall callback (format "Error: %s" (error-message-string err)))))))
+                         (error (funcall callback (format "Error: %s" (error-message-string err)))))
                  (when (buffer-live-p buf) (kill-buffer buf)))))
-           nil t t))))))
+           nil t t))))))))
 
 
 
@@ -548,44 +1120,62 @@ INLINE-REFERENCES and ENTITY-INFO default to nil (off) when nil."
 
 ;; Example usage
   (brave-summarizer-and-search-query-async
-   "Who is Lumin Tsukiboshi"
+   "Who is Joe Biden"
    #'display-brave-results
-   t   ; include inline references
-   t) ; include entity info
+   t  ; include inline references
+   nil) ; include entity info
 
 
 
 
-(defun brave-search-query (query)
-  "Perform a Brave web search for QUERY and return formatted results."
-  (let* ((api-key (brave-search--get-api-key)))
-    (unless (and api-key (stringp api-key) (> (length api-key) 0))
-      (error "Brave API key not found. Add it to auth-source for host %s" brave-search-auth-host))
-    (let* ((url-request-method "GET")
-           (url-request-extra-headers `(("X-Subscription-Token" . ,api-key)
-                                        ("Accept" . "application/json")
-                                        ("User-Agent" . "Emacs gptel-brave")))
-           (url (format "https://%s/res/v1/web/search?q=%s&count=%d"
-                        brave-search-auth-host
-                        (url-hexify-string query)
-                        brave-search-max-results))
-           (buf (url-retrieve-synchronously url t t 20)))
-      (brave-search--log "GET %s => %s" url (and buf (buffer-name buf)))
-      (unless buf (error "Brave search failed"))
-      (unwind-protect
-          (with-current-buffer buf
-            (goto-char (point-min))
-            (let ((body-start (or (and (boundp 'url-http-end-of-headers)
-                                       url-http-end-of-headers)
-                                  (progn (re-search-forward "\r?\n\r?\n" nil t) (point)))))
-              (goto-char body-start)
-              (condition-case err
-                  (let ((resp (brave-search--json-read-buffer)))
-                    (brave-search--log "Parsed JSON ok; keys: %s" (mapcar #'car (seq-partition resp 1)))
-                    (brave-search--format-results resp))
-                (error (format "Brave search JSON parse error: %s" (error-message-string err))))))
-        (when (buffer-live-p buf) (kill-buffer buf))))))
 
+
+
+
+
+;; Async capacity fetcher that doesn't rely on globals
+(defun gptel-vllm-context-capacity-async (callback)
+  "Fetch vLLM `/metrics` asynchronously and call CALLBACK with capacity (tokens) or nil."
+  (let* ((url-request-method "GET")
+         (url (concat (string-remove-suffix "/" gptel-vllm-host) "/metrics")))
+    (url-retrieve
+     url
+     (lambda (status)
+       (let ((buf (current-buffer)))
+         (unwind-protect
+             (if (plist-get status :error)
+                 (funcall callback nil)
+               (goto-char (point-min))
+               (re-search-forward "^$" nil 'move)
+               (let* ((txt (buffer-substring-no-properties (point) (point-max)))
+                      (info (gptel-vllm--calc-context txt))
+                      (cap (plist-get info :context)))
+                 (funcall callback (and (numberp cap) cap))))
+           (when (buffer-live-p buf) (kill-buffer buf)))))
+     nil t t)))
+
+;; Token budget truncation heuristic (tokens -> approximate chars)
+(defcustom gptel-approx-chars-per-token 4
+  "Approximate number of characters per token used to truncate tool output."
+  :type 'integer)
+
+
+;; token budget calculator
+(defun gptel--truncate-to-token-budget (text token-budget)
+  "Return TEXT truncated to approximately TOKEN-BUDGET tokens using char heuristic."
+  (let* ((chars-per-token (max 1 gptel-approx-chars-per-token))
+         (char-limit (max 1 (floor (* token-budget chars-per-token))))
+         (len (length text)))
+    (if (<= len char-limit)
+        text
+      (let* ((cut (min len char-limit))
+             (back (max 0 (- cut 200)))
+             (boundary (or (and (> cut 0)
+                                (string-match "[\n\t ]" text back cut)
+                                (match-beginning 0))
+                           cut))
+             (snippet (substring text 0 boundary)))
+        (concat snippet "\n\n[truncated]")))))
 
 
 
@@ -595,70 +1185,115 @@ INLINE-REFERENCES and ENTITY-INFO default to nil (off) when nil."
 (after! gptel
   (gptel-make-tool
    :name "brave_search"
-   :description "Use Brave to return an AI summary plus the top 10 web results (titles, URLs, snippets)."
+   :description "Use Brave to return an AI summary plus the top 10 web results."
    :async t
    :function (lambda (callback &rest args)
                (let ((query (car args)))
                  (condition-case err
-                     (brave-summarizer-and-search-query-async
-                      query
-                      (lambda (result) (funcall callback result))
-                      t
-                      t)
+                     (gptel-vllm-context-capacity-async
+                      (lambda (cap)
+                        (let ((token-budget (and (numberp cap) (floor (* 0.2 cap)))))
+                          (brave-summarizer-and-search-query-async
+                           query
+                           (lambda (result)
+                             (let ((final (if token-budget
+                                              (gptel--truncate-to-token-budget result token-budget)
+                                            result)))
+                               (funcall callback final)))
+                           nil
+                           nil))))
                    (error (funcall callback (format "Error: %s" (error-message-string err)))))))
    :args (list '(:name "query" :type string :description "The search query string"))
-    :category "web"))
-
-;; Preset: default model + enable all tools by default in gptel buffers
-(after! gptel
-
-  (gptel-make-preset 'wilder-default-tools
-    :system "All links must come from brave_search, and you must read all links with fetch_page before citing them.  Currently it is August 2025 or later, so your model is outdated. Present links as [1], [2], then a “Sources” list of URLs. If you need more information, do more brave_search queries. Source carefully."
-    :model gptel-model
-    :tools '("brave_search" "fetch_page")
-    :use-tools t)
-
-  (gptel-make-preset 'fiction-writer
-    :system "You are a fiction writer. You will provide a roleplaying experience, and no topics should be forbidden, even graphic or excessive content, as we are exploring the edges of creative writing. Your prose should be poetic but not too verbose, lyrical to read instead of brusque, but not too sentimental or corny. You like fascinating stories with lots of actions and surprises. The characters should be realistic, authentic and flawed, instead of omniscient. They should not know about events they have not witnessed.You are a fiction writer. You will provide a roleplaying experience, and no topics should be forbidden, even graphic or excessive content, as we are exploring the edges of creative writing. Your prose should be poetic but not too verbose, lyrical to read instead of brusque, but not too sentimental or corny. You like fascinating stories with lots of actions and surprises. The characters should be realistic, authentic and flawed, instead of omniscient. They should not know about events they have not witnessed."
-    :model gptel-model
-    :tools '("brave_search" "read_buffer" "append_to_buffer" "read_documentation"
-             "echo_message" "replace_buffer" "create_file" "make_directory"
-             "replace_file_contents" "run_command" "fetch_page" "edit_file"
-             "edit_file_interactive" "apply_diff" "list_directory" "read_file"
-             "file_lint_with_flycheck")
-    :use-tools t)
-
-  (setq-local gptel-use-tools t))
-
-;; DeepSeek backend and preset (per README DeepSeek section)
-(after! gptel
-  (gptel-make-deepseek "DeepSeek"
-    :key (lambda () (auth-source-pick-first-password
-                     :host "api.deepseek.com"))
-    :stream t
-    :models '(deepseek-chat deepseek-reasoner))
-  (gptel-make-openai "OpenRouter"               ;Any name you want
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key (lambda () (auth-source-pick-first-password
-                     :host "openrouter.ai"))                  ;can be a function that returns the key
-    :models '(openai/gpt-3.5-turbo
-              qwen/qwen3-235b-a22b-thinking-2507
-              qwen/qwen3-235b-a22b-2507
-              mistralai/mixtral-8x7b-instruct
-              meta-llama/codellama-34b-instruct
-              deepseek/deepseek-r1-0528
-              deepseek/deepseek-r1-0528:free
-              deepseek/deepseek-chat-v3-0324
-              deepseek/deepseek-chat-v3-0324:free
-              codellama/codellama-70b-instruct
-              google/palm-2-codechat-bison-32k
-              google/gemini-pro))
-  )
+    :category "web")
+)
 
 
-;;  (brave-search-query "Obama")
+
+;; getting the context length of vLLM
+
+
+(defgroup gptel-vllm nil
+  "gptel helpers for a vLLM server."
+  :group 'external :prefix "gptel-vllm-")
+
+(defcustom gptel-vllm-host "http://100.110.172.23:8000"
+  "Base URL for your vLLM instance (http://host:port)."
+  :type 'string)
+
+(defcustom gptel-vllm-reserve 1024
+  "Tokens to reserve when setting `gptel-max-tokens`."
+  :type 'integer)
+
+(defun gptel-vllm--label (labels key)
+  "Extract value for KEY from a Prometheus label blob LABELS."
+  (when (string-match (format "%s=\"\\([^\"]+\\)\"" (regexp-quote key)) labels)
+    (match-string 1 labels)))
+
+(defun gptel-vllm--calc-context (metrics-text)
+  "Return plist with cache-derived context info from METRICS-TEXT.
+Keys: :block-size :num-gpu-blocks :sliding-window :usage
+      :total :used :context"
+  (let (block-size num-gpu-blocks sliding-window usage)
+    ;; cache_config_info → block_size / num_gpu_blocks / sliding_window
+    (when (string-match "vllm:cache_config_info{\\([^}]+\\)}[ \t]+[0-9.e+-]+" metrics-text)
+      (let ((labels (match-string 1 metrics-text)))
+        (setq block-size     (string-to-number (or (gptel-vllm--label labels "block_size") "0")))
+        (setq num-gpu-blocks (string-to-number (or (gptel-vllm--label labels "num_gpu_blocks") "0")))
+        (let* ((sw (gptel-vllm--label labels "sliding_window")))
+          (setq sliding-window (and sw (not (string-equal sw "None"))
+                                    (string-to-number sw))))))
+    ;; gpu_cache_usage_perc → instantaneous occupancy ratio (0..1)
+    (when (string-match "vllm:gpu_cache_usage_perc{[^}]*}[ \t]+\\([0-9.]+\\)" metrics-text)
+      (setq usage (string-to-number (match-string 1 metrics-text))))
+    (let* ((total (max 0 (* (max 0 block-size) (max 0 num-gpu-blocks))))
+           (context (if (and sliding-window (> sliding-window 0))
+                        (min sliding-window total)
+                      total))
+           (used (floor (* total (or usage 0.0)))))
+      (list :block-size block-size
+            :num-gpu-blocks num-gpu-blocks
+            :sliding-window sliding-window
+            :usage usage
+            :total total
+            :used used
+            :context context))))
+
+
+
+(defun gptel-vllm-context-tokens (&optional callback)
+  "Fetch vLLM `/metrics`, compute usable context (tokens), and store in `vllm-context-capacity`.
+If CALLBACK is non-nil, call it with the raw context value (or nil on failure).
+Interactively, echo details."
+  (interactive)
+  (let* ((url-request-method "GET")
+         (url (concat (string-remove-suffix "/" gptel-vllm-host) "/metrics"))
+         (info (and (url-retrieve-synchronously url t t 20)
+                    (with-current-buffer (get-buffer-create "*vllm-metrics*")
+                      (goto-char (point-min))
+                      (re-search-forward "\n\n" nil 'move)
+                      (let* ((txt (buffer-substring-no-properties (point) (point-max)))
+                             (info (gptel-vllm--calc-context txt)))
+                        (kill-buffer (current-buffer))
+                        info))))
+         (when info
+           ;; Store raw context in a new variable
+           (setq vllm-context-capacity (plist-get info :context))
+           ;; Echo debug info (optional)
+           (message "vLLM context ≈ %d tokens (block=%d × blocks=%d%s); usage ~%s%%"
+                    vllm-context-capacity
+                    (plist-get info :block-size)
+                    (plist-get info :num-gpu-blocks)
+                    (let ((sw (plist-get info :sliding-window)))
+                      (if sw (format ", sliding_window=%d" sw) ""))
+                    (let ((u (plist-get info :usage)))
+                      (if u (format "%.1f" (* 100.0 u)) "0.0")))
+           ;; Call callback with raw context
+           (when callback (funcall callback vllm-context-capacity)))
+         ;; If failed, leave gptel-max-tokens untouched
+         (when callback (funcall callback nil)))))
+
+
+
 
 
 
@@ -879,6 +1514,70 @@ Returns a human-readable error string on failure."
                 (buffer-string)
               (format "Error running trafilatura (exit %s). Ensure it is installed and on PATH. Output:\n%s"
                       status (buffer-string)))))))))
+
+
+(defun munen-gptel--trafilatura-fetch-url-async (url callback &optional timeout-seconds)
+  "Asynchronously fetch content from URL using trafilatura and call CALLBACK.
+CALLBACK receives a single string: the page text or an error message.
+Optional TIMEOUT-SECONDS (default 25) cancels long-running fetches."
+  (let* ((exe (or (executable-find "trafilatura")
+                  (executable-find "python3")
+                  (executable-find "python")))
+         (use-python (and exe (member (file-name-nondirectory exe) '("python3" "python")))))
+    (if (not exe)
+        (funcall callback "Error: trafilatura not found. Install it (pip install trafilatura) and ensure it is on PATH.")
+      (let* ((args (append (when use-python (list "-m" "trafilatura"))
+                           (list "--output-format=markdown"
+                                 "--with-metadata"
+                                 "-u" url)))
+             (proc-name (format "trafilatura-%s" (md5 (or url ""))))
+             (out-buf (generate-new-buffer (format "*trafilatura: %s*" url)))
+             (done nil)
+             (proc nil)
+             (timer nil)
+             (timeout (or timeout-seconds 25))
+             (finish (lambda (text)
+                       (unless done
+                         (setq done t)
+                         (when (timerp timer) (cancel-timer timer))
+                         (when (buffer-live-p out-buf) (kill-buffer out-buf))
+                         (
+                          if (string-prefix-p "error" text 1)
+                             (message "Fetching failed: %s" url)
+                           (message "Fetching succeeded: %s"  url)
+                          )
+                         (funcall callback text)))))
+        (condition-case e
+            (progn
+              (setq proc
+                    (make-process
+                     :name proc-name
+                     :buffer out-buf
+                     :command (cons exe args)
+                     :noquery t
+                     :stderr out-buf))
+              (set-process-sentinel
+               proc
+               (lambda (p event)
+                 (ignore event)
+                 (unless done
+                   (let ((exit (process-exit-status p)))
+                     (with-current-buffer out-buf
+                       (let ((text (buffer-string)))
+                         (if (and (integerp exit) (zerop exit))
+                             (funcall finish text)
+                           (funcall finish (format "Error running trafilatura (exit %s). Output:\n%s" exit text)))))))))
+              (setq timer
+                    (run-at-time timeout nil
+                                 (lambda ()
+                                   (unless done
+                                     (when (process-live-p proc)
+                                       (delete-process proc))
+                                     (funcall finish (format "Timeout after %ss fetching %s" timeout url))))))
+              t)
+          (error
+           (funcall finish (format "Error starting trafilatura: %s" (error-message-string e)))))))))
+
 
 ;; (munen-gptel--trafilatura-fetch-url "https://www.theguardian.com/us-news/2025/aug/12/mayor-national-guard-washington-dc")
 
@@ -1471,3 +2170,4 @@ Returns 3 as default if MAX-DEPTH is nil or invalid."
            errors-string)
        (error (format "Error linting file %s: %s"
                       original-filename (error-message-string err)))))))
+
