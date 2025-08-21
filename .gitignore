@@ -31,6 +31,10 @@
 .config/xnviewmp
 .config/gtk-3.0
 .config/*
+!.config/fish/
+!.config/fish/**
+!.config/nvim/
+!.config/nvim/**
 Library
 Documents
 Downloads

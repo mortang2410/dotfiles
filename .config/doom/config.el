@@ -100,6 +100,13 @@
           mac-option-modifier   'super
           mac-right-option-modifier nil)))
 
+;; Always open .fish files in sh-mode
+(add-to-list 'auto-mode-alist '("\\.fish\\'" . sh-mode))
+
+;; Also catch files detected by shebang lines like "#!/usr/bin/env fish"
+(add-to-list 'interpreter-mode-alist '("fish" . sh-mode))
+
+
 
 ;; linux-specific options
 
