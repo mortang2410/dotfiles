@@ -35,6 +35,9 @@
 !.config/fish/**
 !.config/nvim/
 !.config/nvim/**
+.config/nvim/.git
+.config/nvim/.git/
+.config/nvim/.git/**
 Library
 Documents
 Downloads
