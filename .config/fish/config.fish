@@ -17,21 +17,25 @@ case Darwin
     export CGO_CFLAGS="-I$HOMEBREW_PREFIX/include"
     export CGO_LDFLAGS="-L$HOMEBREW_PREFIX/lib"
     export NNN_PLUG='f:finder-custom;o:-!&open "$nnn";F:-!&open -R "$nnn";d:dropover;p:preview-tui;n:!nvr -s "$nnn"*;m:-!&open -a marta "$nnn";t:nmount;v:imgview'
-
-
     export ARCHFLAGS='-arch arm64'
     #use nnn to drag and drop selected
     alias ndr="np | dr"
+    export FZF_DEFAULT_COMMAND='fd -HI'
+    export FZF_CTRL_T_COMMAND='fd -HI'
+    export FZF_ALT_C_COMMAND='fd -HI -t d'
+    alias fdi="fd -HI"
 case Linux
     export NNN_PLUG='f:finder-custom;F:-!&open -R "$nnn";p:preview-tui;n:!nvr -s "$nnn"*;t:nmount;v:imgview'
+    functions -q __tmux_gui_env; and __tmux_gui_env
+    export FZF_DEFAULT_COMMAND='fdfind -HI'
+    export FZF_CTRL_T_COMMAND='fdfind -HI'
+    export FZF_ALT_C_COMMAND='fdfind -HI -t d'
+    alias fdi="fdfind -HI"
     # Linux-only or shared stuff
     #
 end
 
 #for fzf
-export FZF_DEFAULT_COMMAND='fd -HI'
-export FZF_CTRL_T_COMMAND='fd -HI'
-export FZF_ALT_C_COMMAND='fd -HI -t d'
 
 
 
@@ -67,7 +71,6 @@ export BAT_THEME=ansi
 alias t="tmux"
 alias tda="tmux detach -a" # detach all but current terminal
 alias nv="nvim"
-alias fdi="fd -HI"
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /Users/wilder/.ghcup/bin $PATH # ghcup-env
 
 # setting up zoxide

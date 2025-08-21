@@ -85,6 +85,8 @@
 ;; macOS: reinterpret modifiers for your OS-level remap
 (when (eq system-type 'darwin)
   ;; GNU Emacs app ("NS" build):
+
+  (set-frame-parameter nil 'alpha 96)
   (when (boundp 'ns-control-modifier)
     (setq ns-control-modifier  'meta     ;; macOS sends ^ from your Alt → make it Meta
           ns-command-modifier  'control  ;; macOS sends ⌘ from your Control → make it Control
@@ -98,8 +100,36 @@
           mac-option-modifier   'super
           mac-right-option-modifier nil)))
 
-(set-frame-parameter nil 'alpha 96)
 
+;; linux-specific options
+
+(when (eq system-type 'gnu/linux)
+  ;; GNU Emacs app ("NS" build):
+
+  (set-frame-parameter nil 'alpha 100)
+  (set-frame-parameter nil 'alpha-background 80)
+  ;; Main monospaced face (Ubuntu Mono Nerd Font)
+  (setq doom-font (font-spec :family "UbuntuMono Nerd Font"))
+
+  ;; Optional: bigger font for presentations/zoom
+  (setq doom-big-font (font-spec :family "UbuntuMono Nerd Font"))
+
+  ;; Optional but recommended: make sure icon glyphs render
+  ;; (needs Symbols Nerd Font installed)
+  (setq doom-unicode-font (font-spec :family "Symbols Nerd Font Mono"))
+
+  ;; If you also installed proportional Ubuntu Nerd Font, uncomment:
+  ;; (setq doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 15))
+
+)
+
+
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 
 ;;; --- Soft-wrap everywhere (no truncation)
 (setq-default truncate-lines nil
