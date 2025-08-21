@@ -20,9 +20,9 @@ set statusbar-bg "#C2BFA5"
 set inputbar-fg "#FFFFFF"
 set inputbar-bg "#333333"
 set completion-highlight-fg "#F0E68C"
-set completion-highlight-bg "#6B8E23"
-# set highlight-color "#CD853F"
-# set highlight-active-color "#F0E68C"
+set completion-highlight-bg "#5f9ea0"
+set highlight-color rgba(15,25,0,0.2)
+set highlight-active-color rgba(14,44,21,0.2)
 set notification-fg "#FFFFFF"
 set notification-bg "#333333"
 

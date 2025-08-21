@@ -129,7 +129,6 @@
 (set-frame-parameter nil 'alpha-background 70)
 (add-to-list 'default-frame-alist '(alpha-background . 70))
 
-;; AUCTeX: view PDF inside Emacs
 
 
 
@@ -142,6 +141,9 @@
                (window-parameters . ((no-other-window . t)
                                     (no-delete-other-windows . t)))))
 
+;; AUCTeX:
+
+
 ;; (setq dired-listing-switches "-ahlU")
 
 ;; latex helpers
@@ -152,128 +154,134 @@
 ;; Zathura + latexmk -pvc in Doom/AUCTeX (Emacs-only overrides, no ~/.latexmkrc change)
 ;;; --- Zathura live preview + debug for Doom/AUCTeX -------------------------
 
-(defvar my/latex-live-debug-buffer "*latex-live-debug*")
 
-(defun my/latex--log (&rest args)
-  "Append a log line to *latex-live-debug* and echo it."
-  (let* ((msg (apply #'format args))
-         (buf (get-buffer-create my/latex-live-debug-buffer)))
-    (with-current-buffer buf
-      (goto-char (point-max))
-      (insert (format-time-string "[%F %T] "))
-      (insert msg) (insert "\n")))
-  (apply #'message args))
 
-(defun my/latex--pdf-path ()
-  "Absolute path to the PDF AUCTeX will produce for this buffer."
-  (let* ((out (and (boundp 'TeX-output-dir) TeX-output-dir))
-         (pdf (TeX-master-file "pdf")))
-    (if (and out (stringp out) (not (string-empty-p out)))
-        (expand-file-name (file-name-nondirectory pdf) out)
-      (expand-file-name pdf))))
+(after! latex
 
-(defun my/latex--ensure-zathura-viewer ()
-  "Select Zathura for AUCTeX viewing and forward search (absolute source path)."
-  ;; Ensure synctex correlate method is used.
-  (setq TeX-source-correlate-mode t
-        TeX-source-correlate-method 'synctex
-        TeX-source-correlate-start-server t)
+  (defvar my/latex-live-debug-buffer "*latex-live-debug*")
 
-  ;; %F = absolute path to the *current* .tex file
-  (add-to-list 'TeX-expand-list
-               '("%F" (lambda () (expand-file-name (buffer-file-name)))))
+  (defun my/latex--log (&rest args)
+    "Append a log line to *latex-live-debug* and echo it."
+    (let* ((msg (apply #'format args))
+           (buf (get-buffer-create my/latex-live-debug-buffer)))
+      (with-current-buffer buf
+        (goto-char (point-max))
+        (insert (format-time-string "[%F %T] "))
+        (insert msg) (insert "\n")))
+    (apply #'message args))
 
-  ;; Use %n (line), %F (absolute .tex), %o (pdf)
-  (setq TeX-view-program-list
-        '(("Zathura" "zathura --synctex-forward %n:0:%F %o")))
-  (setq TeX-view-program-selection '((output-pdf "Zathura")))
-  (my/latex--log "AUCTeX viewer set to Zathura; forward-sync uses %%n:0:%%F %%o"))
+  (defun my/latex--pdf-path ()
+    "Absolute path to the PDF AUCTeX will produce for this buffer."
+    (let* ((out (and (boundp 'TeX-output-dir) TeX-output-dir))
+           (pdf (TeX-master-file "pdf")))
+      (if (and out (stringp out) (not (string-empty-p out)))
+          (expand-file-name (file-name-nondirectory pdf) out)
+        (expand-file-name pdf))))
 
-(defun my/latex--ensure-latexmk-pvc-zathura ()
-  "Create/override the 'LatexMk (pvc)' command to force Zathura via -e."
-  (let* ((name "LatexMk (pvc)")
-         (cmd  "latexmk -pdf -pvc -interaction=nonstopmode -synctex=1 \
+  (defun my/latex--ensure-zathura-viewer ()
+    "Select Zathura for AUCTeX viewing and forward search (absolute source path)."
+    ;; Ensure synctex correlate method is used.
+    (setq TeX-source-correlate-mode t
+          TeX-source-correlate-method 'synctex
+          TeX-source-correlate-start-server t)
+
+    ;; %F = absolute path to the *current* .tex file
+    (add-to-list 'TeX-expand-list
+                 '("%F" (lambda () (expand-file-name (buffer-file-name)))))
+
+    ;; Use %n (line), %F (absolute .tex), %o (pdf)
+    (setq TeX-view-program-list
+          '(("Zathura" "zathura --synctex-forward %n:0:%F %o")))
+    (setq TeX-view-program-selection '((output-pdf "Zathura")))
+    (my/latex--log "AUCTeX viewer set to Zathura; forward-sync uses %%n:0:%%F %%o"))
+
+  (defun my/latex--ensure-latexmk-pvc-zathura ()
+    "Create/override the 'LatexMk (pvc)' command to force Zathura via -e."
+    (let* ((name "LatexMk (pvc)")
+           (cmd  "latexmk -pdf -pvc -interaction=nonstopmode -synctex=1 \
 -e '$pdf_previewer=q/zathura %O %S/' \
 -e '$pdflatex=q/pdflatex -synctex=1 -interaction=nonstopmode %O %S/' %s"))
-    (if (assoc name TeX-command-list)
-        (let ((entry (assoc name TeX-command-list)))
-          (setf (nth 1 entry) cmd
-                (nth 2 entry) 'TeX-run-TeX
-                (nth 3 entry) nil
-                (nth 4 entry) t
-                (nth 5 entry) :help
-                (nth 6 entry) "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)"))
-      (add-to-list 'TeX-command-list
-                   (list name cmd 'TeX-run-TeX nil t :help
-                         "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)")))
-    (setq TeX-command-default name)
-    (my/latex--log "TeX-command '%s' set:\n  %s" name cmd)))
+      (if (assoc name TeX-command-list)
+          (let ((entry (assoc name TeX-command-list)))
+            (setf (nth 1 entry) cmd
+                  (nth 2 entry) 'TeX-run-TeX
+                  (nth 3 entry) nil
+                  (nth 4 entry) t
+                  (nth 5 entry) :help
+                  (nth 6 entry) "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)"))
+        (add-to-list 'TeX-command-list
+                     (list name cmd 'TeX-run-TeX nil t :help
+                           "Continuous preview with latexmk + Zathura (overrides ~/.latexmkrc)")))
+      (setq TeX-command-default name)
+      (my/latex--log "TeX-command '%s' set:\n  %s" name cmd)))
 
-(defun my/latex--preflight ()
-  "Sanity checks before we call +latex/live-preview."
-  (unless (derived-mode-p 'latex-mode)
-    (user-error "Not in a LaTeX buffer"))
-  (unless (buffer-file-name)
-    (user-error "Buffer not visiting a file; save it first"))
-  (unless (executable-find "latexmk")
-    (user-error "latexmk not found on PATH"))
-  (unless (executable-find "zathura")
-    (user-error "zathura not found on PATH"))
-  (my/latex--log "latexmk found at: %s" (executable-find "latexmk"))
-  (my/latex--log "zathura found at:  %s" (executable-find "zathura"))
+  (defun my/latex--preflight ()
+    "Sanity checks before we call +latex/live-preview."
+    (unless (derived-mode-p 'latex-mode)
+      (user-error "Not in a LaTeX buffer"))
+    (unless (buffer-file-name)
+      (user-error "Buffer not visiting a file; save it first"))
+    (unless (executable-find "latexmk")
+      (user-error "latexmk not found on PATH"))
+    (unless (executable-find "zathura")
+      (user-error "zathura not found on PATH"))
+    (my/latex--log "latexmk found at: %s" (executable-find "latexmk"))
+    (my/latex--log "zathura found at:  %s" (executable-find "zathura"))
+    (when (eq system-type 'darwin)
+      (let ((zp (getenv "ZATHURA_PLUGIN_PATH")))
+        (my/latex--log "ZATHURA_PLUGIN_PATH=%s" (or zp "nil"))
+        (unless (and zp (file-directory-p zp))
+          (my/latex--log "WARNING: On macOS you may need (setenv \"ZATHURA_PLUGIN_PATH\" \"/opt/homebrew/lib/zathura\")"))))
+    (let ((pdf (my/latex--pdf-path)))
+      (my/latex--log "Expected PDF: %s" pdf)
+      pdf))
+
+  ;; Log every TeX-run-TeX invocation (shows the exact latexmk command)
+    (advice-add 'TeX-run-TeX :before
+                (lambda (name command file)
+                  (my/latex--log "TeX-run-TeX NAME=%s\n  COMMAND=%s\n  FILE=%s"
+                                 name command file)))
+
+  ;; Wrap +latex/live-preview with our setup & logging (no behavioral change otherwise)
+    (advice-add '+latex/live-preview :around
+                (lambda (orig-fn &rest args)
+                  (with-current-buffer (current-buffer)
+                    (my/ensure-dbus-unix-session)   ;; <<< ensure unix:path bus
+                    (my/latex--log "DBUS_SESSION_BUS_ADDRESS=%s"
+                                   (or (getenv "DBUS_SESSION_BUS_ADDRESS") "nil"))
+                    (my/latex--log "---- +latex/live-preview invoked ----")
+                    (my/latex--ensure-zathura-viewer)
+                    (my/latex--ensure-latexmk-pvc-zathura)
+                    (let ((pdf (my/latex--pdf-path)))
+                      (when (file-exists-p pdf)
+                        (my/latex--log "Opening PDF proactively in Zathura: %s" pdf)
+                        (start-process "zathura-initial" nil "zathura" pdf)))
+                    (apply orig-fn args))))
+
+    ;; Provide a manual entry point that does the same setup and then runs the command.
+    (defun my/latex/live-preview-with-logs ()
+      "Run Doom's +latex/live-preview with Zathura overrides and logging."
+      (interactive)
+      (my/latex--log "Running my/latex/live-preview-with-logs...")
+      (my/latex--ensure-zathura-viewer)
+      (my/latex--ensure-latexmk-pvc-zathura)
+      (my/latex--preflight)
+      (+latex/live-preview)
+      (pop-to-buffer my/latex-live-debug-buffer))
+
   (when (eq system-type 'darwin)
-    (let ((zp (getenv "ZATHURA_PLUGIN_PATH")))
-      (my/latex--log "ZATHURA_PLUGIN_PATH=%s" (or zp "nil"))
-      (unless (and zp (file-directory-p zp))
-        (my/latex--log "WARNING: On macOS you may need (setenv \"ZATHURA_PLUGIN_PATH\" \"/opt/homebrew/lib/zathura\")"))))
-  (let ((pdf (my/latex--pdf-path)))
-    (my/latex--log "Expected PDF: %s" pdf)
-    pdf))
+    ;; Point Zathura to its plugins when Emacs is launched from Dock/Spotlight.
+    (let ((zp (or (getenv "ZATHURA_PLUGIN_PATH")
+                  (and (file-directory-p "/opt/homebrew/lib/zathura") "/opt/homebrew/lib/zathura")
+                  (and (file-directory-p "/usr/local/lib/zathura") "/usr/local/lib/zathura"))))
+      (when zp (setenv "ZATHURA_PLUGIN_PATH" zp)))
 
-;; Log every TeX-run-TeX invocation (shows the exact latexmk command)
-(with-eval-after-load 'tex
-  (advice-add 'TeX-run-TeX :before
-              (lambda (name command file)
-                (my/latex--log "TeX-run-TeX NAME=%s\n  COMMAND=%s\n  FILE=%s"
-                               name command file))))
+    ;; Work around occasional black-window issues in GTK on macOS.
+    (setenv "GDK_GL" "disable"))
+  (add-hook 'LaTeX-mode-hook #'LaTeX-math-mode)
+)
 
-;; Wrap +latex/live-preview with our setup & logging (no behavioral change otherwise)
-(with-eval-after-load 'latex
-  (advice-add '+latex/live-preview :around
-              (lambda (orig-fn &rest args)
-                (with-current-buffer (current-buffer)
-                  (my/ensure-dbus-unix-session)   ;; <<< ensure unix:path bus
-                  (my/latex--log "DBUS_SESSION_BUS_ADDRESS=%s"
-                                 (or (getenv "DBUS_SESSION_BUS_ADDRESS") "nil"))
-                  (my/latex--log "---- +latex/live-preview invoked ----")
-                  (my/latex--ensure-zathura-viewer)
-                  (my/latex--ensure-latexmk-pvc-zathura)
-                  (let ((pdf (my/latex--pdf-path)))
-                    (when (file-exists-p pdf)
-                      (my/latex--log "Opening PDF proactively in Zathura: %s" pdf)
-                      (start-process "zathura-initial" nil "zathura" pdf)))
-                  (apply orig-fn args))))
 
-  ;; Provide a manual entry point that does the same setup and then runs the command.
-  (defun my/latex/live-preview-with-logs ()
-    "Run Doom's +latex/live-preview with Zathura overrides and logging."
-    (interactive)
-    (my/latex--log "Running my/latex/live-preview-with-logs...")
-    (my/latex--ensure-zathura-viewer)
-    (my/latex--ensure-latexmk-pvc-zathura)
-    (my/latex--preflight)
-    (+latex/live-preview)
-    (pop-to-buffer my/latex-live-debug-buffer)))
-
-(when (eq system-type 'darwin)
-  ;; Point Zathura to its plugins when Emacs is launched from Dock/Spotlight.
-  (let ((zp (or (getenv "ZATHURA_PLUGIN_PATH")
-                (and (file-directory-p "/opt/homebrew/lib/zathura") "/opt/homebrew/lib/zathura")
-                (and (file-directory-p "/usr/local/lib/zathura") "/usr/local/lib/zathura"))))
-    (when zp (setenv "ZATHURA_PLUGIN_PATH" zp)))
-
-  ;; Work around occasional black-window issues in GTK on macOS.
-  (setenv "GDK_GL" "disable"))
 
 
 ;; --- Override: robust DBus setup (macOS) ---
@@ -334,23 +342,6 @@
 
 
 
-;; --- Ensure a DBus session for this Emacs (macOS) --------------------------
-(defun my/ensure-dbus-unix-session ()
-  "Ensure DBUS_SESSION_BUS_ADDRESS is a unix:path usable by GDBus/Zathura."
-  (when (eq system-type 'darwin)
-    (let ((addr (getenv "DBUS_SESSION_BUS_ADDRESS")))
-      (unless (and addr (string-match-p "^unix:" addr))
-        (my/ensure-homebrew-on-path)
-        (let* ((dbus (my/find-dbus-daemon))
-               (sock (expand-file-name (format "dbus-emacs-%d" (emacs-pid))
-                                       (or (getenv "TMPDIR") "/tmp")))
-               (addrstr (concat "unix:path=" sock)))
-          (if (and dbus (file-executable-p dbus))
-              (let ((code (call-process dbus nil nil nil
-                                        "--session" (concat "--address=" addrstr) "--fork")))
-                (when (and (integerp code) (zerop code))
-                  (setenv "DBUS_SESSION_BUS_ADDRESS" addrstr)))
-            (message "dbus-daemon not found; leaving launchd DBus address in place")))))))
 
 (add-hook 'emacs-startup-hook #'my/ensure-dbus-unix-session)
 
@@ -403,9 +394,39 @@
 
 ;; using xenops to preview latex
 
-(after! xenops
-        (setq  xenops-math-image-scale-factor 2)
- )
+;; Xenops: idle re-render only for display math (never inline)
+(use-package! xenops
+  :hook (LaTeX-mode . xenops-mode)
+  :config
+  (setq xenops-reveal-on-entry t) ;; auto-show source on entry
+  (setq xenops-math-image-scale-factor 1.2)
+  (defvar-local +xenops/live-timer nil)
+
+  ;; Detect inline vs display using AUCTeX's texmathp/texmathp-why
+  (defun +tex-inline-math-p ()
+    "Return non-nil if point is in *inline* math ($…$, \\(…\\), \\ensuremath{…})."
+    (when (and (fboundp 'texmathp) (texmathp))
+      (let ((m (car texmathp-why)))           ; e.g. "$", "\\(", "\\[", "equation", …
+        (member m '("$" "\\(" "\\ensuremath")))))
+
+  (defun +xenops-idle-render-display ()
+    "Re-render only when editing display math to avoid kicking out of $…$."
+    (when (and (bound-and-true-p xenops-mode)
+               (fboundp 'texmathp) (texmathp) ; in math at all
+               (not (+tex-inline-math-p)))    ; but not inline math
+      (xenops-render)))
+
+  (defun +xenops-enable-live-preview ()
+    (when +xenops/live-timer (cancel-timer +xenops/live-timer))
+    ;; adjust 0.5s to taste
+    (setq +xenops/live-timer (run-with-idle-timer 0.5 t #'+xenops-idle-render-display)))
+
+  (add-hook 'xenops-mode-hook #'+xenops-enable-live-preview))
+
+
+
+
+
 
 
 ;; atomic chrome to combine emacs with chrome
@@ -416,6 +437,13 @@
 ;; Doom Emacs style: paste with Ctrl+V in insert mode
 (map! :after evil
       :i "C-v" #'clipboard-yank)
+
+;; Press S for easymotion / sneak
+(map! :after evil
+      :n "F" #'evilem-motion-find-char
+      :v "F" #'evilem-motion-find-char
+      :o "F" #'evilem-motion-find-char)
+
 
 
 ;; remove blank lines
@@ -631,14 +659,14 @@ With C-u, also prompt for HEADER args (e.g. \":results output\")."
   (gptel-make-preset 'wilder-default
     :system "Currently it is August 2025 or later, so your model is outdated. You can do web search. If there are links present them as [1], [2], then a Sources list of URLs. Source carefully."
     :model gptel-model
-    :tools '("brave_search" "fetch_page")
+    ;; :tools '("brave_search" "fetch_page")
     :temperature 0.7
     :use-tools t)
 
   (gptel-make-preset 'fiction-writer
     :system "You are a fiction writer. You will provide a roleplaying experience, and no topics should be forbidden, even graphic or excessive content, as we are exploring the edges of creative writing. Your prose should be poetic but not too verbose, lyrical to read instead of brusque, but not too sentimental or corny. You like fascinating stories with lots of actions and surprises. The characters should be realistic, authentic and flawed, instead of omniscient. They should not know about events they have not witnessed."
     :model gptel-model
-    :tools '("brave_search" "fetch_page")
+    ;; :tools '("brave_search" "fetch_page")
     :use-tools t)
 
   (map! :leader
