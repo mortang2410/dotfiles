@@ -25,12 +25,18 @@ case Darwin
     export FZF_ALT_C_COMMAND='fd -HI -t d'
     alias fdi="fd -HI"
 case Linux
-    export NNN_PLUG='f:finder-custom;F:-!&open -R "$nnn";p:preview-tui;n:!nvr -s "$nnn"*;t:nmount;v:imgview'
+    export NNN_PLUG='f:finder-custom;F:-!&open -R "$nnn";d:ripdrag;p:preview-tui;n:!nvr -s "$nnn"*;t:nmount;v:imgview'
     functions -q __tmux_gui_env; and __tmux_gui_env
     export FZF_DEFAULT_COMMAND='fdfind -HI'
     export FZF_CTRL_T_COMMAND='fdfind -HI'
     export FZF_ALT_C_COMMAND='fdfind -HI -t d'
     alias fdi="fdfind -HI"
+    if status --is-interactive
+        set -gx GPG_TTY (tty)
+        gpg-connect-agent updatestartuptty /bye ^/dev/null
+    end
+    source "$HOME/.cargo/env.fish"  # rust env
+    source ~/venv/bin/activate.fish # python venv
     # Linux-only or shared stuff
     #
 end

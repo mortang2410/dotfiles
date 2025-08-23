@@ -1,0 +1,6 @@
+#!/opt/homebrew/bin/fish
+# requires Dropover and fish to be installed on Mac OS
+# requires the .selection file of nnn to be at this right path
+open -a Dropover (tr '\0' '\n' < "$HOME/.config/nnn/.selection")
+
+

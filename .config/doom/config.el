@@ -34,7 +34,7 @@
 ;; `load-theme' function. This is the default:
 (server-start)
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dracula)
 (custom-set-faces!
   '(mode-line         :background "blue4" :foreground "#bbc2cf" :box nil)
   '(mode-line-inactive :background "wheat4" :foreground "#5B6268" :box nil))
@@ -46,6 +46,39 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+
+(after! org
+  (setq org-babel-python-command "python3")
+  (setq org-babel-load-languages
+        '((emacs-lisp . t)
+          (python     . t)
+          (shell      . t)
+          (C          . t)
+          (latex      . t)))
+  )
+
+
+;; python setup
+;; Use python3 REPL
+(setq python-shell-interpreter "python3")
+
+;; Pyright tuning
+(after! lsp-pyright
+  (setq lsp-pyright-auto-import-completions t
+        lsp-pyright-use-library-code-for-types t
+        ;; “basic” is fast; “strict” is loud. Pick per-project via .dir-locals if you like.
+        lsp-pyright-typechecking-mode "basic"))
+
+;; Optional: Ruff-LSP alongside Pyright (Pyright for types, Ruff for lint/format)
+;; Requires `ruff-lsp` on PATH.
+(use-package! lsp-ruff
+  :after lsp-mode
+  :hook (python-mode . (lambda ()
+                         ;; lsp-mode allows multiple servers; this adds Ruff next to Pyright
+                         (require 'lsp-ruff)
+                         (lsp-deferred))))
+
+
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -781,8 +814,18 @@ With C-u, also prompt for HEADER args (e.g. \":results output\")."
 
 
 ;; Never treat $HOME as a project
-(add-to-list 'projectile-ignored-projects
-             (file-name-as-directory (expand-file-name "~")))
+
+
+(after! projectile
+  ;; Never consider $HOME a project
+  (add-to-list 'projectile-ignored-projects (file-truename (expand-file-name "~")))
+  ;; If it’s already cached, drop it from the known list
+  (setq projectile-known-projects
+        (delete (file-truename (expand-file-name "~"))
+                projectile-known-projects))
+  (setq projectile-require-project-root t)
+  )
+
 
 ;; speed up sshfs editing in ~/mnt/linux
 ;;

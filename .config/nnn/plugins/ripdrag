@@ -1,0 +1,45 @@
+#!/usr/bin/env fish
+# nnn plugin: Dropover (macOS) or ripdrag (Linux) from the *selection only*.
+
+# Locate nnn selection file (NUL-separated)
+set -l sel
+if test -n "$NNN_SEL"
+    set sel "$NNN_SEL"
+else if test -n "$XDG_CONFIG_HOME"
+    set sel "$XDG_CONFIG_HOME/nnn/.selection"
+else
+    set sel "$HOME/.config/nnn/.selection"
+end
+if not test -f "$sel"
+    echo "nnn selection file not found: $sel" >&2
+    exit 1
+end
+
+# Read selection (NUL → newline). DO NOT mix in $argv items yet.
+set -l list (string split \n -- (command tr '\0' '\n' < "$sel"))
+if test (count $list) -eq 0 -o -z "$list[1]"
+    echo "nnn selection is empty." >&2
+    exit 0
+end
+
+# Keep only CLI flags from $argv (drop hovered path that nnn may pass)
+set -l ripflags
+for a in $argv
+    if string match -q -- '-*' "$a"
+        set ripflags $ripflags $a
+    end
+end
+
+switch (uname -s)
+case Darwin
+    # macOS → Dropover
+    open -a Dropover $list
+
+case Linux
+    # Linux → ripdrag (read paths from stdin; pass only flag-like args)
+    printf "%s\n" $list | ripdrag -Ianxtvr $ripflags
+
+case '*'
+    echo "Unsupported OS: "(uname -s) >&2
+    exit 3
+end
