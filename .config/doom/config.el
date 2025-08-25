@@ -147,7 +147,7 @@
   ;; GNU Emacs app ("NS" build):
 
   (set-frame-parameter nil 'alpha 100)
-  (set-frame-parameter nil 'alpha-background 80)
+  (set-frame-parameter nil 'alpha-background 98)
   ;; Main monospaced face (Ubuntu Mono Nerd Font)
   (setq doom-font (font-spec :family "UbuntuMono Nerd Font"))
 
@@ -196,8 +196,6 @@
         :nvm "gk"      #'evil-previous-line)
 
 
-(set-frame-parameter nil 'alpha-background 70)
-(add-to-list 'default-frame-alist '(alpha-background . 70))
 
 
 
@@ -489,7 +487,7 @@
   (defun +xenops-enable-live-preview ()
     (when +xenops/live-timer (cancel-timer +xenops/live-timer))
     ;; adjust 0.5s to taste
-    (setq +xenops/live-timer (run-with-idle-timer 0.5 t #'+xenops-idle-render-display)))
+    (setq +xenops/live-timer (run-with-idle-timer 2 t #'+xenops-idle-render-display)))
 
   (add-hook 'xenops-mode-hook #'+xenops-enable-live-preview))
 

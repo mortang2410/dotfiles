@@ -44,7 +44,7 @@ end
 #for fzf
 
 
-
+alias e="emacsclient -n"
 
 
 export NPM_CONFIG_PREFIX="~/.npm-global"

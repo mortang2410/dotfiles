@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export CUDA_HOME:/usr/local/cuda\x2d12\x2e9
 SETUVAR --export --path LD_LIBRARY_PATH:/usr/local/cuda\x2d12\x2e9/lib64
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2d8exKT41AQCkv/agent\x2e431638
 SETUVAR --export VLLM_ATTENTION_BACKEND:FLASHINFER
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_upgraded_to_4_4:\x1d
