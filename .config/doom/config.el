@@ -43,9 +43,24 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; Karthink org
+;;
+
+
+
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+
+(after! org
+  (add-hook 'org-mode-hook #'org-latex-preview-mode) ; live/auto previews
+  ;; Optional tuning:
+  (setq org-latex-preview-mode-display-live t
+        org-latex-preview-mode-update-delay 0.25)
+  ;; Make previews larger relative to window width:
+  (plist-put org-latex-preview-appearance-options :page-width 0.8))
+
 
 (after! org
   (setq org-babel-python-command "python3")
@@ -463,33 +478,34 @@
 ;; using xenops to preview latex
 
 ;; Xenops: idle re-render only for display math (never inline)
-(use-package! xenops
-  :hook (LaTeX-mode . xenops-mode)
-  :config
-  (setq xenops-reveal-on-entry t) ;; auto-show source on entry
-  (setq xenops-math-image-scale-factor 1.2)
-  (defvar-local +xenops/live-timer nil)
 
-  ;; Detect inline vs display using AUCTeX's texmathp/texmathp-why
-  (defun +tex-inline-math-p ()
-    "Return non-nil if point is in *inline* math ($…$, \\(…\\), \\ensuremath{…})."
-    (when (and (fboundp 'texmathp) (texmathp))
-      (let ((m (car texmathp-why)))           ; e.g. "$", "\\(", "\\[", "equation", …
-        (member m '("$" "\\(" "\\ensuremath")))))
+;; (use-package! xenops
+;;   :hook (LaTeX-mode . xenops-mode)
+;;   :config
+;;   (setq xenops-reveal-on-entry t) ;; auto-show source on entry
+;;   (setq xenops-math-image-scale-factor 1.2)
+;;   (defvar-local +xenops/live-timer nil)
 
-  (defun +xenops-idle-render-display ()
-    "Re-render only when editing display math to avoid kicking out of $…$."
-    (when (and (bound-and-true-p xenops-mode)
-               (fboundp 'texmathp) (texmathp) ; in math at all
-               (not (+tex-inline-math-p)))    ; but not inline math
-      (xenops-render)))
+;;   ;; Detect inline vs display using AUCTeX's texmathp/texmathp-why
+;;   (defun +tex-inline-math-p ()
+;;     "Return non-nil if point is in *inline* math ($…$, \\(…\\), \\ensuremath{…})."
+;;     (when (and (fboundp 'texmathp) (texmathp))
+;;       (let ((m (car texmathp-why)))           ; e.g. "$", "\\(", "\\[", "equation", …
+;;         (member m '("$" "\\(" "\\ensuremath")))))
 
-  (defun +xenops-enable-live-preview ()
-    (when +xenops/live-timer (cancel-timer +xenops/live-timer))
-    ;; adjust 0.5s to taste
-    (setq +xenops/live-timer (run-with-idle-timer 2 t #'+xenops-idle-render-display)))
+;;   (defun +xenops-idle-render-display ()
+;;     "Re-render only when editing display math to avoid kicking out of $…$."
+;;     (when (and (bound-and-true-p xenops-mode)
+;;                (fboundp 'texmathp) (texmathp) ; in math at all
+;;                (not (+tex-inline-math-p)))    ; but not inline math
+;;       (xenops-render)))
 
-  (add-hook 'xenops-mode-hook #'+xenops-enable-live-preview))
+;;   (defun +xenops-enable-live-preview ()
+;;     (when +xenops/live-timer (cancel-timer +xenops/live-timer))
+;;     ;; adjust 0.5s to taste
+;;     (setq +xenops/live-timer (run-with-idle-timer 2 t #'+xenops-idle-render-display)))
+
+;;   (add-hook 'xenops-mode-hook #'+xenops-enable-live-preview))
 
 
 

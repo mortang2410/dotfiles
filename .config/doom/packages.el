@@ -8,12 +8,52 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
 
+;; -*- no-byte-compile: t; -*-
+(unpin! org)
+
+(package! org
+  :recipe
+  (:host nil
+   :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror"
+   :fork (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git"
+                :branch "dev" :remote "tecosaur")
+   :files (:defaults "etc" "lisp/org-loaddefs.el" "org-version.el")
+   :build t
+   :pre-build
+   (progn
+     ;; 1) Generate org-version.el (Doom expects this during load)
+     (with-temp-file "org-version.el"
+       (require 'lisp-mnt)
+       (let ((version (with-temp-buffer
+                        (insert-file-contents "lisp/org.el")
+                        (lm-header "version")))
+             (git-version
+              (string-trim
+               (with-temp-buffer
+                 (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+                 (buffer-string)))))
+         (insert
+          (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+          (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+          "(provide 'org-version)\n")))
+     ;; 2) Generate autoloads: produces lisp/org-loaddefs.el
+     (let ((coding-system-for-read 'utf-8)
+           (coding-system-for-write 'utf-8))
+       (call-process "make" nil (get-buffer-create "*org-make*") nil "autoloads"))))
+  :pin nil)
+
+
+
+
 (package! dired-narrow)
-(package! xenops)
+;; (package! xenops)
 (package! gptel :recipe (:nonrecursive t))
 (package! rainbow-delimiters)
 (package! atomic-chrome)
 (package! evil-snipe :disable t)
+
+
+
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
