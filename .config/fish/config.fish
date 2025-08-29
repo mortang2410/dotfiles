@@ -6,6 +6,7 @@ if status is-interactive
 end
 
 
+
 switch (uname)
 case Darwin
     eval (/opt/homebrew/bin/brew shellenv)
@@ -24,6 +25,7 @@ case Darwin
     export FZF_CTRL_T_COMMAND='fd -HI'
     export FZF_ALT_C_COMMAND='fd -HI -t d'
     alias fdi="fd -HI"
+
 case Linux
     export NNN_PLUG='f:finder-custom;F:-!&open -R "$nnn";d:ripdrag;p:preview-tui;n:!nvr -s "$nnn"*;t:nmount;v:imgview'
     functions -q __tmux_gui_env; and __tmux_gui_env
@@ -37,8 +39,14 @@ case Linux
     end
     source "$HOME/.cargo/env.fish"  # rust env
     source ~/venv/bin/activate.fish # python venv
-    # Linux-only or shared stuff
-    #
+
+    # Always use a single ssh-agent with a fixed socket
+    set -l sock "$XDG_RUNTIME_DIR/ssh-agent.socket"   # choose a fixed socket path
+    set -Ux SSH_AUTH_SOCK $sock                       # export that path (universal)
+    if not ssh-add -l >/dev/null 2>/dev/null          # can we talk to an agent there?
+        ssh-agent -a $sock >/dev/null                 # no → start one bound to that socket
+    end
+
 end
 
 #for fzf

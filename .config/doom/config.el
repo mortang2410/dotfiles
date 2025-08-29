@@ -171,10 +171,10 @@
 
   ;; Optional but recommended: make sure icon glyphs render
   ;; (needs Symbols Nerd Font installed)
-  (setq doom-unicode-font (font-spec :family "Symbols Nerd Font Mono"))
+  (setq doom-symbol-font (font-spec :family "Noto Sans Math")) ;
 
   ;; If you also installed proportional Ubuntu Nerd Font, uncomment:
-  ;; (setq doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 15))
+  (setq doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 15))
 
 )
 
@@ -362,6 +362,37 @@
     ;; Work around occasional black-window issues in GTK on macOS.
     (setenv "GDK_GL" "disable"))
   (add-hook 'LaTeX-mode-hook #'LaTeX-math-mode)
+  (add-hook 'LaTeX-mode-hook #'prettify-symbols-mode)
+  (setq prettify-symbols-unprettify-at-point 1)
+
+  (require 'cl-lib)
+  (defvar +latex-mathbb-caps
+    '((?A . #x1D538) (?B . #x1D539) (?C . #x2102)  (?D . #x1D53B)
+      (?E . #x1D53C) (?F . #x1D53D) (?G . #x1D53E) (?H . #x210D)
+      (?I . #x1D540) (?J . #x1D541) (?K . #x1D542) (?L . #x1D543)
+      (?M . #x1D544) (?N . #x2115)  (?O . #x1D546) (?P . #x2119)
+      (?Q . #x211A)  (?R . #x211D)  (?S . #x1D54A) (?T . #x1D54B)
+      (?U . #x1D54C) (?V . #x1D54D) (?W . #x1D54E) (?X . #x1D54F)
+      (?Y . #x1D550) (?Z . #x2124)))
+
+  (defun +latex-prettify-mathbb-h ()
+    (let ((pairs (cl-loop for (c . code) in +latex-mathbb-caps
+                          ;; NOTE: two backslashes here in source => ONE in the string
+                          append (list (cons (format "\\mathbb{%c}" c) code)
+                                       (cons (format "\\mathbb %c"  c) code)))))
+      ;; Optional: remove any existing \mathbb rules to avoid dupes
+      (setq-local prettify-symbols-alist
+                  (append pairs
+                          (cl-remove-if (lambda (p)
+                                          (string-prefix-p "\\mathbb" (car p)))
+                                        prettify-symbols-alist))))
+    (prettify-symbols-mode 1))
+
+  (add-hook! 'LaTeX-mode-hook #'+latex-prettify-mathbb-h)
+
+  ;; Optional: reveal original text when point reaches the symbol
+
+
 )
 
 
@@ -482,30 +513,57 @@
 ;; (use-package! xenops
 ;;   :hook (LaTeX-mode . xenops-mode)
 ;;   :config
-;;   (setq xenops-reveal-on-entry t) ;; auto-show source on entry
-;;   (setq xenops-math-image-scale-factor 1.2)
+
+;;   (setq xenops-reveal-on-entry t
+;;         Xenops-math-image-scale-factor 1.2)
+
 ;;   (defvar-local +xenops/live-timer nil)
 
-;;   ;; Detect inline vs display using AUCTeX's texmathp/texmathp-why
 ;;   (defun +tex-inline-math-p ()
-;;     "Return non-nil if point is in *inline* math ($…$, \\(…\\), \\ensuremath{…})."
 ;;     (when (and (fboundp 'texmathp) (texmathp))
-;;       (let ((m (car texmathp-why)))           ; e.g. "$", "\\(", "\\[", "equation", …
-;;         (member m '("$" "\\(" "\\ensuremath")))))
+;;       (member (car texmathp-why) '("$" "\\(" "\\ensuremath"))))
 
 ;;   (defun +xenops-idle-render-display ()
-;;     "Re-render only when editing display math to avoid kicking out of $…$."
 ;;     (when (and (bound-and-true-p xenops-mode)
-;;                (fboundp 'texmathp) (texmathp) ; in math at all
-;;                (not (+tex-inline-math-p)))    ; but not inline math
+;;                (fboundp 'texmathp) (texmathp)
+;;                (not (+tex-inline-math-p)))
 ;;       (xenops-render)))
 
 ;;   (defun +xenops-enable-live-preview ()
 ;;     (when +xenops/live-timer (cancel-timer +xenops/live-timer))
-;;     ;; adjust 0.5s to taste
-;;     (setq +xenops/live-timer (run-with-idle-timer 2 t #'+xenops-idle-render-display)))
+;;     ;; 1–2s idle is a good sweet spot; you can tweak this
+;;     (setq +xenops/live-timer
+;;           (run-with-idle-timer 1.2 t #'+xenops-idle-render-display)))
 
-;;   (add-hook 'xenops-mode-hook #'+xenops-enable-live-preview))
+;;   (defun +xenops-disable-live-preview ()
+;;     (when (timerp +xenops/live-timer)
+;;       (cancel-timer +xenops/live-timer))
+;;     (setq +xenops/live-timer nil))
+
+;;   ;; Enable/disable cleanly when mode toggles
+;;   (add-hook 'xenops-mode-hook
+;;             (lambda ()
+;;               (if xenops-mode
+;;                   (+xenops-enable-live-preview)
+;;                 (+xenops-disable-live-preview))))
+
+;;   ;; Extra safety: kill timer when buffer is killed
+;;   (add-hook 'kill-buffer-hook #'+xenops-disable-live-preview)
+;;   (setq org-format-latex-header
+;;         "\\documentclass{article}
+;;         \\usepackage{amsmath,amssymb,mathtools}
+;;         \\usepackage{nohyperref} % disable hyperref in preview
+;;         \\providecommand{\\href}[2]{#2}
+;;         \\providecommand{\\url}[1]{#1}
+;;         \\providecommand{\\autoref}[1]{\\ref{#1}}
+;;         \\providecommand{\\nameref}[1]{\\ref{#1}}
+;;         \\pagestyle{empty}
+;;         \\begin{document}
+;;         [HEADER-END]")
+
+;; )
+
+
 
 
 
@@ -621,7 +679,19 @@ With C-u, also prompt for HEADER args (e.g. \":results output\")."
   (map! :map org-mode-map
         :localleader
         :desc "Toggle Emphasis Markers" "e" #'+org/toggle-emphasis-markers)
-  )
+)
+
+
+
+;; karthin's latex  live preview
+(use-package! org-latex-preview :after org) ; ensures backend is loaded
+
+(load "~/.config/doom/lisp/latex-anywhere.el") ; adjust path
+
+
+
+
+
 
 ;; yasnippet bug with gptel in org-mode
 ;; Temporary fix
@@ -632,6 +702,10 @@ With C-u, also prompt for HEADER args (e.g. \":results output\")."
                 (lambda (orig &rest args)
                   (unless (bound-and-true-p my/gptel--suppress-org-yas)
                     (apply orig args))))))
+
+
+
+
 
 (after! gptel
   ;; Runs in the *target buffer* before the first insert

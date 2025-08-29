@@ -12,7 +12,7 @@ set page-padding 0
 
 set recolor true
 set recolor-darkcolor "#c6c6c6"
-set recolor-lightcolor "#292929"
+set recolor-lightcolor "#333333"
 
 # colors
 set statusbar-fg "#000000"
@@ -28,7 +28,7 @@ set notification-bg "#333333"
 
 
 set synctex true
-set synctex-editor-command "/opt/homebrew/bin/emacsclient --no-wait +%{line} %{input}"
+set synctex-editor-command "emacsclient --no-wait +%{line} %{input}"
 set selection-clipboard clipboard
 
 
