@@ -161,8 +161,9 @@
 (when (eq system-type 'gnu/linux)
   ;; GNU Emacs app ("NS" build):
 
-  (set-frame-parameter nil 'alpha 100)
-  (set-frame-parameter nil 'alpha-background 98)
+  ;; (set-frame-parameter nil 'alpha 100)
+  ;; (set-frame-parameter nil 'alpha-background 80)
+
   ;; Main monospaced face (Ubuntu Mono Nerd Font)
   (setq doom-font (font-spec :family "UbuntuMono Nerd Font"))
 
